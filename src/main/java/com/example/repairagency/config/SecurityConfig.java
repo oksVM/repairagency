@@ -1,8 +1,8 @@
 package com.example.repairagency.config;
 
+import com.example.repairagency.auth.ApplicationUserService;
 import com.example.repairagency.model.Permission;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -25,59 +25,25 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity (prePostEnabled = true)
-public class пшеSecurityConfig extends WebSecurityConfigurerAdapter {
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/").permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/auth/login").permitAll()
-                .defaultSuccessUrl("/auth/success")
-                .and()
-                .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout", "POST"))
-                .invalidateHttpSession(true)
-                .clearAuthentication(true)
-                .deleteCookies("JSESSIONID")
-                .logoutSuccessUrl("/auth/login");
-
-    }
-
-
-    @Bean
-    @Override
-    protected UserDetailsService userDetailsService() {
-        return new InMemoryUserDetailsManager(
-                User.builder()
-                        .username("admin")
-                        .password(passwordEncoder().encode("admin"))
-                        .authorities(Role.ADMIN.getAuthorities())
-                        .build(),
-                User.builder()
-                        .username("customer")
-                        .password(passwordEncoder().encode("customer"))
-                        .authorities(Role.CUSTOMER.getAuthorities())
-                        .build()
-
-        );
-    }
-
-    @Bean
-    protected PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder(12);
-    }
-}
-/*    private final UserDetailsService userDetailsService;
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
+    private final PasswordEncoder passwordEncoder;
+    @Autowired
+    private final ApplicationUserService applicationUserService;
 
-    public SecurityConfig(@Qualifier("userDetailServiceImpl") UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
+
+    @Autowired
+    public SecurityConfig(PasswordEncoder passwordEncoder,
+                          ApplicationUserService applicationUserService) {
+        this.passwordEncoder = passwordEncoder;
+        this.applicationUserService = applicationUserService;
+    }
+
+    public SecurityConfig(boolean disableDefaults, PasswordEncoder passwordEncoder, ApplicationUserService applicationUserService) {
+        super(disableDefaults);
+        this.passwordEncoder = passwordEncoder;
+        this.applicationUserService = applicationUserService;
     }
 
     @Override
@@ -102,20 +68,8 @@ public class пшеSecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(daoAuthenticationProvider());
-    }
 
-    @Bean
-protected DaoAuthenticationProvider daoAuthenticationProvider(){
-        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
-        daoAuthenticationProvider.setUserDetailsService(userDetailsService);
-        return daoAuthenticationProvider;
-}
-
-@Bean
+   /* @Bean
     @Override
     protected UserDetailsService userDetailsService() {
         return new InMemoryUserDetailsManager(
@@ -129,12 +83,20 @@ protected DaoAuthenticationProvider daoAuthenticationProvider(){
                         .password(passwordEncoder().encode("customer"))
                         .authorities(Role.CUSTOMER.getAuthorities())
                         .build()
-
         );
+    }*/
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(daoAuthenticationProvider());
     }
 
-   @Bean
-    protected PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder(12);
+    @Bean
+    public DaoAuthenticationProvider daoAuthenticationProvider(){
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setPasswordEncoder(passwordEncoder);
+        provider.setUserDetailsService(applicationUserService);
+        return provider;
     }
-}*/
+
+}
