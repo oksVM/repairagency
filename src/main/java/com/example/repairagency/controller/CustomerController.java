@@ -24,12 +24,12 @@ public class CustomerController {
         return CUSTOMERS;
     }
 
-    @GetMapping(path ="{userId}")
-    @PreAuthorize("hasAuthority('customers:read @@')")
-    public Customer getUserById(@PathVariable("userId") Long userId){
+    @GetMapping(path ="{customerId}")
+    @PreAuthorize("hasAuthority('customers:read')")
+    public Customer getCustomerById(@PathVariable("customerId") Long customerId){
 //return userId;
-      return CUSTOMERS.stream()
-                .filter(customer -> userId.equals(customer.getCustomerId()))
+        return CUSTOMERS.stream()
+                .filter(customer -> customerId.equals(customer.getCustomerId()))
                 .findFirst()
                 .orElseThrow(()->new IllegalArgumentException("Student doesn`t exist"));
     }

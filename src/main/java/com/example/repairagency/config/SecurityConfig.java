@@ -25,9 +25,54 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity (prePostEnabled = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class пшеSecurityConfig extends WebSecurityConfigurerAdapter {
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/").permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/auth/login").permitAll()
+                .defaultSuccessUrl("/auth/success")
+                .and()
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout", "POST"))
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .deleteCookies("JSESSIONID")
+                .logoutSuccessUrl("/auth/login");
 
-    private final UserDetailsService userDetailsService;
+    }
+
+
+    @Bean
+    @Override
+    protected UserDetailsService userDetailsService() {
+        return new InMemoryUserDetailsManager(
+                User.builder()
+                        .username("admin")
+                        .password(passwordEncoder().encode("admin"))
+                        .authorities(Role.ADMIN.getAuthorities())
+                        .build(),
+                User.builder()
+                        .username("customer")
+                        .password(passwordEncoder().encode("customer"))
+                        .authorities(Role.CUSTOMER.getAuthorities())
+                        .build()
+
+        );
+    }
+
+    @Bean
+    protected PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder(12);
+    }
+}
+/*    private final UserDetailsService userDetailsService;
 
     @Autowired
 
@@ -70,7 +115,7 @@ protected DaoAuthenticationProvider daoAuthenticationProvider(){
         return daoAuthenticationProvider;
 }
 
-/* @Bean
+@Bean
     @Override
     protected UserDetailsService userDetailsService() {
         return new InMemoryUserDetailsManager(
@@ -86,10 +131,10 @@ protected DaoAuthenticationProvider daoAuthenticationProvider(){
                         .build()
 
         );
-    }*/
+    }
 
-    @Bean
+   @Bean
     protected PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder(12);
     }
-}
+}*/
