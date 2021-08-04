@@ -1,6 +1,7 @@
 package com.example.repairagency.model;
 
 import org.apache.el.stream.Stream;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.parameters.P;
 
