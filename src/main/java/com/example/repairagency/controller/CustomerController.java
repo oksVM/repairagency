@@ -1,11 +1,11 @@
 package com.example.repairagency.controller;
 
+
 import com.example.repairagency.entity.Customer;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -24,12 +24,12 @@ public class CustomerController {
         return CUSTOMERS;
     }
 
-    @GetMapping(path ="{customerId}")
+    @GetMapping(path ="{userId}")
     @PreAuthorize("hasAuthority('customers:read @@')")
-    public Customer getCustomerById(@PathVariable("customerId") Long customerId){
+    public Customer getUserById(@PathVariable("userId") Long userId){
 //return userId;
       return CUSTOMERS.stream()
-                .filter(customer -> customerId.equals(customer.getCustomerId()))
+                .filter(customer -> userId.equals(customer.getCustomerId()))
                 .findFirst()
                 .orElseThrow(()->new IllegalArgumentException("Student doesn`t exist"));
     }
@@ -41,10 +41,10 @@ public class CustomerController {
         return customer;
     }
 
-    @DeleteMapping("{customerId}")
+    @DeleteMapping("{userId}")
     @PreAuthorize("hasAuthority('customers:write')")
-    public void deleteById(@PathVariable Long customerId){
-        this.CUSTOMERS.removeIf(customer -> customerId.equals(customer.getCustomerId()));
+    public void deleteById(@PathVariable Long userId){
+        this.CUSTOMERS.removeIf(customer -> userId.equals(customer.getCustomerId()));
     }
 
 }

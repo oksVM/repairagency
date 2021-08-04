@@ -1,5 +1,4 @@
 package com.example.repairagency.entity;
-
 import lombok.*;
 
 @Data
