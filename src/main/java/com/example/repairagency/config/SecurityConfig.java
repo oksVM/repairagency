@@ -1,10 +1,14 @@
 package com.example.repairagency.config;
 
+import com.example.repairagency.auth.ApplicationUserService;
 import com.example.repairagency.model.Permission;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.access.method.P;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -22,6 +26,25 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity (prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private final PasswordEncoder passwordEncoder;
+    @Autowired
+    private final ApplicationUserService applicationUserService;
+
+
+   @Autowired
+    public SecurityConfig(PasswordEncoder passwordEncoder,
+                          ApplicationUserService applicationUserService) {
+        this.passwordEncoder = passwordEncoder;
+        this.applicationUserService = applicationUserService;
+    }
+
+    public SecurityConfig(boolean disableDefaults, PasswordEncoder passwordEncoder, ApplicationUserService applicationUserService) {
+        super(disableDefaults);
+        this.passwordEncoder = passwordEncoder;
+        this.applicationUserService = applicationUserService;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -46,7 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-    @Bean
+   /* @Bean
     @Override
     protected UserDetailsService userDetailsService() {
         return new InMemoryUserDetailsManager(
@@ -62,10 +85,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .build()
 
         );
+    }*/
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(daoAuthenticationProvider());
     }
 
     @Bean
-    protected PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder(12);
+    public DaoAuthenticationProvider daoAuthenticationProvider(){
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setPasswordEncoder(passwordEncoder);
+        provider.setUserDetailsService(applicationUserService);
+        return provider;
     }
+
 }
