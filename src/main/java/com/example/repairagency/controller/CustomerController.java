@@ -1,6 +1,7 @@
 package com.example.repairagency.controller;
 
 import com.example.repairagency.entity.Customer;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,7 +25,8 @@ public class CustomerController {
     }
 
     @GetMapping(path ="{customerId}")
-    public Customer getCustomer(@PathVariable("customerId") Long customerId){
+    @PreAuthorize("hasAuthority('customers:read')")
+    public Customer getCustomerById(@PathVariable("customerId") Long customerId){
 //return userId;
       return CUSTOMERS.stream()
                 .filter(customer -> customerId.equals(customer.getCustomerId()))
@@ -33,12 +35,14 @@ public class CustomerController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('customers:write')")
     public Customer create(@RequestBody Customer customer){
         this.CUSTOMERS.add(customer);
         return customer;
     }
 
     @DeleteMapping("{customerId}")
+    @PreAuthorize("hasAuthority('customers:write')")
     public void deleteById(@PathVariable Long customerId){
         this.CUSTOMERS.removeIf(customer -> customerId.equals(customer.getCustomerId()));
     }
