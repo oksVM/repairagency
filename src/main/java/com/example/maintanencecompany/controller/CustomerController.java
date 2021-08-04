@@ -1,11 +1,10 @@
-package com.example.repairagency.controller;
+package com.example.maintanencecompany.controller;
 
-import com.example.repairagency.entity.Customer;
+import com.example.maintanencecompany.entity.Customer;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 

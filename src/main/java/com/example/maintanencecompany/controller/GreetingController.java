@@ -1,4 +1,4 @@
-package com.example.repairagency.controller;
+package com.example.maintanencecompany.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

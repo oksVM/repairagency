@@ -1,7 +1,5 @@
-package com.example.repairagency.auth;
+package com.example.maintanencecompany.auth;
 
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;

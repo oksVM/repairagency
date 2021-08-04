@@ -1,13 +1,13 @@
-package com.example.repairagency;
+package com.example.maintanencecompany;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RepairAgency {
+public class git MaintanenceCompatyApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(RepairAgency.class, args);
+        SpringApplication.run(MaintanenceCompatyApplication.class, args);
     }
 
 }

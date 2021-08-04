@@ -1,12 +1,7 @@
-package com.example.repairagency.model;
+package com.example.maintanencecompany.model;
 
-import org.apache.el.stream.Stream;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.parameters.P;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 

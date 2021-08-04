@@ -1,6 +1,5 @@
-package com.example.repairagency.auth;
+package com.example.maintanencecompany.auth;
 
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,4 +1,4 @@
-package com.example.repairagency.model;
+package com.example.maintanencecompany.model;
 
 public enum Permission {
     CUSTOMERS_READ("customers:read"),

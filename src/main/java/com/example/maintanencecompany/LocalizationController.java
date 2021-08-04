@@ -1,4 +1,4 @@
-package com.example.repairagency;
+package com.example.maintanencecompany;
 
 public class LocalizationController {
 }

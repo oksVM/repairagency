@@ -1,4 +1,4 @@
-package com.example.repairagency.entity;
+package com.example.maintanencecompany.entity;
 
 import lombok.*;
 

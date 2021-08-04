@@ -1,4 +1,4 @@
-package com.example.repairagency.security;
+package com.example.maintanencecompany.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
