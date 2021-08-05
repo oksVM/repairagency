@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,6 +23,9 @@ import com.example.repairagency.model.Role;
 import org.springframework.security.web.util.matcher.AndRequestMatcher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import java.util.Collection;
+
+///!!!
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity (prePostEnabled = true)
@@ -46,12 +50,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.applicationUserService = applicationUserService;
     }
 
-    @Override
+ /*   @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/").permitAll()
+                .antMatchers("/","/registration").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -66,9 +70,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .deleteCookies("JSESSIONID")
                 .logoutSuccessUrl("/auth/login");
 
+    }*/
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/","/registration").permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login").permitAll()
+                //.defaultSuccessUrl("/")
+                .and()
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                //.deleteCookies("JSESSIONID")
+                .logoutSuccessUrl("/login?logout").permitAll();
+
     }
-
-
    /* @Bean
     @Override
     protected UserDetailsService userDetailsService() {
@@ -94,9 +118,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider(){
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setPasswordEncoder(passwordEncoder);
         provider.setUserDetailsService(applicationUserService);
+        provider.setPasswordEncoder(passwordEncoder);
         return provider;
     }
+
+
 
 }

@@ -1,6 +1,7 @@
 package com.example.repairagency.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import java.util.Collections;
 
 @Entity
 @Data
+@NoArgsConstructor
  public class AppUser {
 
     @Id
