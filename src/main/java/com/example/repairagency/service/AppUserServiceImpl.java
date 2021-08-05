@@ -15,6 +15,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class AppUserServiceImpl implements AppUserService{
@@ -47,8 +49,9 @@ public class AppUserServiceImpl implements AppUserService{
             throw new UsernameNotFoundException("Invalid username or password");
         }
         return new org.springframework.security.core.userdetails.User(appUser.getEmail(),
-                appUser.getPassword(), null);
+                appUser.getPassword(), appUser.getRole().getAuthorities());
     }
+
 
     }
 
