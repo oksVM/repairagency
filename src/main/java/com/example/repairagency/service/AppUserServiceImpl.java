@@ -36,7 +36,7 @@ public class AppUserServiceImpl implements AppUserService{
         AppUser user = new AppUser(appUserRegistrationDto.getFirstName(),
                 appUserRegistrationDto.getLastName(),
                 appUserRegistrationDto.getEmail(),
-                appUserRegistrationDto.getPassword(), Role.CUSTOMER, Status.ACTIVE);
+                passwordEncoder.encode(appUserRegistrationDto.getPassword()), Role.CUSTOMER, Status.ACTIVE);
         return appUserRepository.save(user);
     }
 
@@ -47,10 +47,11 @@ public class AppUserServiceImpl implements AppUserService{
             throw new UsernameNotFoundException("Invalid username or password");
         }
         return new org.springframework.security.core.userdetails.User(appUser.getEmail(),
-                passwordEncoder.encode(appUser.getPassword()),null);
+                appUser.getPassword(), null);
+    }
+
     }
 
 
 
 
-}
