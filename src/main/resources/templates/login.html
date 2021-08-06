@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="ISO-8859-1">
-    <title>Registration</title>
+    <title th:text="#{login}">Login</title>
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -20,7 +20,7 @@
                     class="icon-bar"></span> <span class="icon-bar"></span> <span
                     class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#" th:href="@{/}">Registration and
+            <a class="navbar-brand" href="#" th:href="@{/}" th:text="#{registration.and.login.module}">Registration and
                 Login Module</a>
         </div>
     </div>
@@ -32,28 +32,28 @@
     <div class = "row">
         <div class = "col-md-6 col-md-offset-3">
 
-            <h1> User Login Page </h1>
+            <h1 th:text="#{user.login.page}"> User Login Page </h1>
             <form th:action="@{/login}" method="post">
 
                 <!-- error message -->
                 <div th:if="${param.error}">
-                    <div class="alert alert-danger">Invalid username or
+                    <div class="alert alert-danger" th:text="#{invalid.username.or.password}">Invalid username or
                         password.</div>
                 </div>
 
                 <!-- logout message -->
                 <div th:if="${param.logout}">
-                    <div class="alert alert-info">You have been logged out.</div>
+                    <div class="alert alert-info" th:text="#{you.have.been.logged.out}">You have been logged out.</div>
                 </div>
 
                 <div class = "form-group">
-                    <label for ="username"> Username </label> :
+                    <label for ="username" th:text="#{username}"> Username </label> :
                     <input type="text" class = "form-control" id ="username" name = "username"
                            placeholder="Enter Email ID" autofocus="autofocus">
                 </div>
 
                 <div class="form-group">
-                    <label for="password">Password</label>: <input type="password"
+                    <label for="password" th:text="#{password}">Password</label>: <input type="password"
                                                                    id="password" name="password" class="form-control"
                                                                    placeholder="Enter Password" />
                 </div>
@@ -69,8 +69,8 @@
             </form>
 
             <div class="form-group">
-						<span>New user? <a href="/" th:href="@{/registration}">Register
-								here</a></span>
+                <span> <b th:text="#{new.user}"> New user?</b> <a href="/" th:href="@{/registration}"th:text="#{register.here}">Register
+								here</a> </span>
             </div>
         </div>
     </div>

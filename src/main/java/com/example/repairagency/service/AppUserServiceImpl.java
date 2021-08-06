@@ -1,6 +1,5 @@
 package com.example.repairagency.service;
 
-import com.example.repairagency.auth.ApplicationUser;
 import com.example.repairagency.dto.AppUserRegistrationDto;
 import com.example.repairagency.model.AppUser;
 import com.example.repairagency.model.Role;

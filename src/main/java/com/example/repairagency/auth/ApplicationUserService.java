@@ -1,3 +1,4 @@
+/*
 package com.example.repairagency.auth;
 
 import lombok.NoArgsConstructor;
@@ -24,3 +25,4 @@ public class ApplicationUserService implements UserDetailsService {
                 .orElseThrow(()->new UsernameNotFoundException(String.format("Username %s not found", username)));
     }
 }
+*/

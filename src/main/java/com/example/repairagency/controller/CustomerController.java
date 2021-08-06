@@ -28,7 +28,6 @@ public class CustomerController {
     //@PreAuthorize("hasAuthority('customers:read')")
     @PreAuthorize("hasAuthority('customers:write')")
     public Customer getCustomerById(@PathVariable("customerId") Long customerId){
-//return userId;
       return CUSTOMERS.stream()
                 .filter(customer -> customerId.equals(customer.getCustomerId()))
                 .findFirst()

@@ -1,6 +1,5 @@
 package com.example.repairagency.config;
 
-import com.example.repairagency.auth.ApplicationUserService;
 import com.example.repairagency.model.Permission;
 import com.example.repairagency.service.AppUserService;
 import org.checkerframework.checker.units.qual.A;

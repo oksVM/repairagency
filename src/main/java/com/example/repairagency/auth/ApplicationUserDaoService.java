@@ -1,3 +1,4 @@
+/*
 package com.example.repairagency.auth;
 
 import com.example.repairagency.model.Role;
@@ -43,3 +44,4 @@ public class ApplicationUserDaoService implements ApplicationUserDao{
         return applicationUsers;
     }
 }
+*/
