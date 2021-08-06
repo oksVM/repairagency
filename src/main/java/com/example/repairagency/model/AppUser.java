@@ -15,13 +15,21 @@ import java.util.Collections;
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private Long id;
+    @Column(nullable = false)
     private String firstname;
+    @Column(nullable = false)
     private String lastname;
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
+    @Column(nullable = false)
     private String password;
+    //@Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
     private Role role;
+    //@Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
     private Status status;
 
    public AppUser(String firstname, String lastname, String email, String password, Role role, Status status) {
@@ -33,3 +41,5 @@ import java.util.Collections;
       this.status = status;
    }
 }
+
+
