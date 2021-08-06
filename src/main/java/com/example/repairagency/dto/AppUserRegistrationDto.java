@@ -10,4 +10,5 @@ public class AppUserRegistrationDto {
     private String email;
     private String password;
 
+
 }

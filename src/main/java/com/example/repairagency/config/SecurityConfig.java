@@ -43,12 +43,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.appUserService = applicationUserService;
     }
 
-  /*  public SecurityConfig(boolean disableDefaults, PasswordEncoder passwordEncoder, AppUserService applicationUserService) {
-        super(disableDefaults);
-        this.passwordEncoder = passwordEncoder;
-        this.appUserService = applicationUserService;
-    }*/
-
 
  /*   @Override
     protected void configure(HttpSecurity http) throws Exception {
