@@ -27,15 +27,14 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.Collection;
 
-///!!!
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity (prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    //@Autowired
+
     private final PasswordEncoder passwordEncoder;
-    //@Autowired
     private final AppUserService appUserService;
 
     @Autowired
@@ -78,13 +77,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/","/registration").permitAll()
+                .antMatchers("/api/v1/startpage","/registration").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login").permitAll()
-                //.defaultSuccessUrl("/")
+                .defaultSuccessUrl("/")
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))

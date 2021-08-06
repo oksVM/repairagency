@@ -1,5 +1,6 @@
 package com.example.repairagency.service;
 
+import com.example.repairagency.auth.ApplicationUser;
 import com.example.repairagency.dto.AppUserRegistrationDto;
 import com.example.repairagency.model.AppUser;
 import com.example.repairagency.model.Role;
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -42,15 +44,18 @@ public class AppUserServiceImpl implements AppUserService{
         return appUserRepository.save(user);
     }
 
-    @Override
+
+@Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         AppUser appUser = appUserRepository.findByEmail(email);
         if(appUser==null){
-            throw new UsernameNotFoundException("Invalid username or password");
-        }
+            throw new UsernameNotFoundException("User not found");
+       }
         return new org.springframework.security.core.userdetails.User(appUser.getEmail(),
                 appUser.getPassword(), appUser.getRole().getAuthorities());
     }
+
+
 
 
     }
