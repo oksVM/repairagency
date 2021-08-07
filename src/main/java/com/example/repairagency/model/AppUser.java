@@ -18,23 +18,23 @@ import java.util.Collections;
     @Column(nullable = false)
     private Long id;
     @Column(nullable = false)
-    private String firstname;
+    private String firstName;
     @Column(nullable = false)
-    private String lastname;
+    private String lastName;
     @Column(unique = true, nullable = false)
     private String email;
     @Column(nullable = false)
     private String password;
-    //@Enumerated(value = EnumType.STRING)
+    @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
     private Role role;
-    //@Enumerated(value = EnumType.STRING)
+    @Enumerated(value = EnumType.STRING)
     @Column(nullable = false)
     private Status status;
 
-   public AppUser(String firstname, String lastname, String email, String password, Role role, Status status) {
-      this.firstname = firstname;
-      this.lastname = lastname;
+   public AppUser(String firstName, String lastName, String email, String password, Role role, Status status) {
+      this.firstName = firstName;
+      this.lastName = lastName;
       this.email = email;
       this.password = password;
       this.role = role;
