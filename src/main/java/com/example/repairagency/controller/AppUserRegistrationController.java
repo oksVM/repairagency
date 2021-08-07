@@ -2,6 +2,7 @@ package com.example.repairagency.controller;
 
 
 import com.example.repairagency.dto.AppUserRegistrationDto;
+import com.example.repairagency.dto.UserAlreadyExistAuthenticationException;
 import com.example.repairagency.service.AppUserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,11 +30,26 @@ public class AppUserRegistrationController {
 
 
 
-    @PostMapping
+   /* @PostMapping
     public String registerUserAccount(@ModelAttribute("user")
                                       AppUserRegistrationDto appUserRegistrationDto){
 
         appUserService.save(appUserRegistrationDto);
+        return "redirect:/registration?success";
+
+    }*/
+
+    @PostMapping
+    public String registerUserAccount(@ModelAttribute("user")
+                                              AppUserRegistrationDto appUserRegistrationDto){
+
+    try {
+    appUserService.save(appUserRegistrationDto);
+    } catch (UserAlreadyExistAuthenticationException exception){
+
+    return "redirect:/registration?userExist";
+
+     }
         return "redirect:/registration?success";
 
     }

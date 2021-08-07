@@ -1,6 +1,7 @@
 package com.example.repairagency.service;
 
 import com.example.repairagency.dto.AppUserRegistrationDto;
+import com.example.repairagency.dto.UserAlreadyExistAuthenticationException;
 import com.example.repairagency.model.AppUser;
 import com.example.repairagency.model.Role;
 import com.example.repairagency.model.Status;
@@ -35,7 +36,12 @@ public class AppUserServiceImpl implements AppUserService{
 
 
     @Override
-    public AppUser save(AppUserRegistrationDto appUserRegistrationDto) {
+    public AppUser save(AppUserRegistrationDto appUserRegistrationDto) throws UserAlreadyExistAuthenticationException {
+
+            if (emailExist(appUserRegistrationDto.getEmail())) {
+                throw new UserAlreadyExistAuthenticationException("There is an account with that email address: "
+                        + appUserRegistrationDto.getEmail());
+            }
         AppUser user = new AppUser(appUserRegistrationDto.getFirstName(),
                 appUserRegistrationDto.getLastName(),
                 appUserRegistrationDto.getEmail(),
@@ -55,6 +61,12 @@ public class AppUserServiceImpl implements AppUserService{
     }
 
 
+
+
+
+    private boolean emailExist(String email) {
+        return appUserRepository.findByEmail(email) != null;
+    }
 
 
     }
