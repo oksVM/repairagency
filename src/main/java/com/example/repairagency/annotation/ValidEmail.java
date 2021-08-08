@@ -1,4 +1,4 @@
-package com.example.repairagency.dto;
+package com.example.repairagency.annotation;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

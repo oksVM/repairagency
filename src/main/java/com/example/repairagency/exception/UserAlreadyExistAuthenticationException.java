@@ -1,4 +1,4 @@
-package com.example.repairagency.dto;
+package com.example.repairagency.exception;
 
 import javax.naming.AuthenticationException;
 

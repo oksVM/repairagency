@@ -21,8 +21,9 @@
                     class="icon-bar"></span> <span class="icon-bar"></span> <span
                     class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#" th:href="@{/}" th:text="#{registration.and.login.module}">Registration and
-                Login Module</a>
+            <a class="navbar-link" href="#" th:href="@{/api/v1/startpage}" th:text="#{home}">Home</a>
+            <a class="navbar-link" href="#" th:href="@{'?locale=en'}">EN</a>
+            <a class="navbar-link" href="#" th:href="@{'?locale=ua'}">UA</a>
         </div>
     </div>
 </nav>
@@ -78,10 +79,6 @@
 								here</a></span>
                 </div>
 
-                <div>
-                    <a th:href="@{'?locale=en'}">EN</a>
-                    <a th:href="@{'?locale=ua'}">UA</a>
-                </div>
 
             </form>
         </div>

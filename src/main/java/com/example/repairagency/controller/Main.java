@@ -8,7 +8,6 @@ public class Main {
 
     @GetMapping("login")
     public String login(){
-        //TODO problem with already existen email. Hundle exception
 
         return "login";
     }

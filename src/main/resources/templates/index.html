@@ -26,6 +26,8 @@
             <a class="navbar-brand" href="#" th:href="@{/login}"> Login Module</a>-->
         </div>
         <div id="navbar1" class="collapse navbar-collapse">
+            <a class="navbar-link"  href="#" th:href="@{'?locale=en'}">EN</a>
+            <a class="navbar-link"  href="#" th:href="@{'?locale=ua'}">UA</a>
             <ul class="nav navbar-nav">
                 <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}" th:text="#{logout}">Logout</a></li>
             </ul>

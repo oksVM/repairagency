@@ -1,12 +1,13 @@
-package com.example.repairagency.dto;
+package com.example.repairagency.annotation;
+
+import com.example.repairagency.annotation.ValidEmail;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class EmailValidator
-        implements ConstraintValidator<ValidEmail, String> {
+public class EmailValidator implements ConstraintValidator<ValidEmail, String> {
 
     private Pattern pattern;
     private Matcher matcher;
@@ -19,6 +20,7 @@ public class EmailValidator
     public boolean isValid(String email, ConstraintValidatorContext context){
         return (validateEmail(email));
     }
+
     private boolean validateEmail(String email) {
         pattern = Pattern.compile(EMAIL_PATTERN);
         matcher = pattern.matcher(email);

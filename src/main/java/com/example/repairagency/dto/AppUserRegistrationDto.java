@@ -1,9 +1,8 @@
 package com.example.repairagency.dto;
 
 
+import com.example.repairagency.annotation.ValidEmail;
 import lombok.Data;
-import lombok.NonNull;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.validation.constraints.Size;
 

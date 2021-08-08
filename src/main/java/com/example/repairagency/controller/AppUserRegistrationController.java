@@ -2,7 +2,7 @@ package com.example.repairagency.controller;
 
 
 import com.example.repairagency.dto.AppUserRegistrationDto;
-import com.example.repairagency.dto.UserAlreadyExistAuthenticationException;
+import com.example.repairagency.exception.UserAlreadyExistAuthenticationException;
 import com.example.repairagency.service.AppUserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
