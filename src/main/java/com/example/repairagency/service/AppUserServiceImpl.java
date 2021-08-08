@@ -29,28 +29,11 @@ public class AppUserServiceImpl implements AppUserService{
     }
 
 
-
-/*    @Override
-    public AppUser save(AppUserRegistrationDto appUserRegistrationDto) throws UserAlreadyExistAuthenticationException {
-
-            if (emailExist(appUserRegistrationDto.getEmail())) {
-                throw new UserAlreadyExistAuthenticationException("There is an account with that email address: "
-                        + appUserRegistrationDto.getEmail());
-            }
-        AppUser user = new AppUser(appUserRegistrationDto.getFirstName(),
-                appUserRegistrationDto.getLastName(),
-                appUserRegistrationDto.getEmail(),
-                passwordEncoder.encode(appUserRegistrationDto.getPassword()), Role.CUSTOMER, Status.ACTIVE);
-        return appUserRepository.save(user);
-    }
-
- */
-
     //TODO transaction???
     @Override
     public AppUser save(AppUserRegistrationDto appUserRegistrationDto) throws UserAlreadyExistAuthenticationException {
 
-            if (emailExist(appUserRegistrationDto.getEmail())) {
+            if (appUserRepository.findByEmail(appUserRegistrationDto.getEmail()).isPresent()) {
                 throw new UserAlreadyExistAuthenticationException("There is an account with that email address: "
                         + appUserRegistrationDto.getEmail());
             }
@@ -58,39 +41,14 @@ public class AppUserServiceImpl implements AppUserService{
                 appUserRegistrationDto.getLastName(),
                 appUserRegistrationDto.getEmail(),
                 passwordEncoder.encode(appUserRegistrationDto.getPassword()), Role.CUSTOMER, Status.ACTIVE);
-        //try {return appUserRepository.save(user);}
-        //catch()
+
         return appUserRepository.save(user);
     }
 
-    private boolean emailExist(String email) {
-        return appUserRepository.findByEmail(email) != null;
-    }
-
-
-
-/*
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        AppUser appUser = appUserRepository.findByEmail(email);
-        if(appUser==null){
-            throw new UsernameNotFoundException("User not found");
-       }
-        return new org.springframework.security.core.userdetails.User(appUser.getEmail(),
-                appUser.getPassword(), appUser.getRole().getAuthorities());
-    }
-*/
-
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-       // Optional <AppUser> appUser = appUserRepository.findByEmail(email);
-        //if(appUser==null){
-            //throw new UsernameNotFoundException("User not found");
-        //}
-        return (UserDetails) appUserRepository
-                .findByEmail(email)
-                .orElseThrow(()-> new UsernameNotFoundException("User with such login wasn't found"));
+        return appUserRepository.findByEmail(email).orElseThrow(()->new UsernameNotFoundException(""));
     }
 
 

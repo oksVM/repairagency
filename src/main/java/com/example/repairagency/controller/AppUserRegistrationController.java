@@ -4,13 +4,11 @@ package com.example.repairagency.controller;
 import com.example.repairagency.dto.AppUserRegistrationDto;
 import com.example.repairagency.exception.UserAlreadyExistAuthenticationException;
 import com.example.repairagency.service.AppUserService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -24,7 +22,20 @@ public class AppUserRegistrationController {
         this.appUserService = appUserService;
     }
 
+    @GetMapping("/1")
+    @PreAuthorize("hasAuthority('customers:write')")
+    public String getAll() {
+        return "hello";
+    }
 
+
+    @GetMapping("/2")
+    @PreAuthorize("hasAuthority('customers:read')")
+    //@PreAuthorize("hasAuthority('customers:write')")
+    public String getCustomerById() {
+
+        return "hello";
+    }
     @GetMapping
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new AppUserRegistrationDto());
