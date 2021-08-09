@@ -54,7 +54,7 @@ public class AppUserServiceImpl implements AppUserService{
             Customer customer = new Customer(appUserRegistrationDto.getFirstName(),
                     appUserRegistrationDto.getLastName(),
                     appUserRegistrationDto.getEmail(),
-                    passwordEncoder.encode(appUserRegistrationDto.getPassword()), Role.CUSTOMER, Status.ACTIVE, 0);
+                    passwordEncoder.encode(appUserRegistrationDto.getPassword()), Role.CUSTOMER, Status.ACTIVE, 0/*,null*/);//TODO null
          return customerRepository.save(customer);
 
         //return appUserRepository.save(user);

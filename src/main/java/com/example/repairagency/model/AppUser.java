@@ -18,7 +18,7 @@ import java.util.Collections;
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
+    @Column(name="app_user_id",nullable = false)
     private Long id;
     @Column(nullable = false)
     private String firstName;

@@ -14,12 +14,4 @@ import javax.persistence.Id;
 @NoArgsConstructor
 public class Administrator extends AppUser {
 
-   String entity;
-   int money;
-
-   public Administrator(String firstName, String lastName, String email, String password, Role role, Status status, String entity, int money) {
-      super(firstName, lastName, email, password, role, status);
-      this.entity = entity;
-      this.money = money;
-   }
 }
