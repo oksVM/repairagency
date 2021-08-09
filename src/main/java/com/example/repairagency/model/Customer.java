@@ -9,8 +9,8 @@ import javax.persistence.Entity;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Customer extends AppUser {
-
 
     long amountOfMoney;
 
@@ -19,7 +19,4 @@ public class Customer extends AppUser {
         this.amountOfMoney = amountOfMoney;
     }
 
-    public Customer() {
-        super();
-    }
 }

@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 
 @Data
 public class AppUserRegistrationDto {
-
+//TODO locale
     @Size(min = 5, max = 50, message = "first.name.should.be")
     private String firstName;
     @Size(min = 5, max = 50, message = "last.name.should.be")
