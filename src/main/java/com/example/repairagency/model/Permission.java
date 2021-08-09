@@ -1,8 +1,9 @@
 package com.example.repairagency.model;
 
 public enum Permission {
-    CUSTOMERS_READ("customers:read"),
-    CUSTOMERS_WRITE("customers:write");
+    CUSTOMER("customer"),
+    MASTER("master"),
+    ADMIN("admin");
 
     private final String permission;
 

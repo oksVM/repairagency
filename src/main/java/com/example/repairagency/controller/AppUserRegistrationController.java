@@ -22,20 +22,7 @@ public class AppUserRegistrationController {
         this.appUserService = appUserService;
     }
 
-    @GetMapping("/1")
-    @PreAuthorize("hasAuthority('customers:write')")
-    public String getAll() {
-        return "hello";
-    }
 
-
-    @GetMapping("/2")
-    @PreAuthorize("hasAuthority('customers:read')")
-    //@PreAuthorize("hasAuthority('customers:write')")
-    public String getCustomerById() {
-
-        return "hello";
-    }
     @GetMapping
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new AppUserRegistrationDto());
