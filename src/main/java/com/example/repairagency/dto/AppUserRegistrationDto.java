@@ -9,13 +9,13 @@ import javax.validation.constraints.Size;
 @Data
 public class AppUserRegistrationDto {
 
-    @Size(min = 5, max = 50, message = "FirstName should contain 5-50 symbols")
+    @Size(min = 5, max = 50, message = "first.name.should.be")
     private String firstName;
-    @Size(min = 5, max = 50, message = "LastName should contain 5-50 symbols")
+    @Size(min = 5, max = 50, message = "last.name.should.be")
     private String lastName;
     @ValidEmail
     private String email;
-    @Size(min = 5, max = 50, message = "Password should contain 5-50 symbols")
+    @Size(min = 5, max = 50, message = "password.should.be")
     private String password;
 
 

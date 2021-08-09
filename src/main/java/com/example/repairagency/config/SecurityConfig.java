@@ -43,28 +43,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
- /*   @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/","/registration").permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/auth/login").permitAll()
-                .defaultSuccessUrl("/auth/success")
-                .and()
-                .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout", "POST"))
-                .invalidateHttpSession(true)
-                .clearAuthentication(true)
-                .deleteCookies("JSESSIONID")
-                .logoutSuccessUrl("/auth/login");
-
-    }*/
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -86,22 +64,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/login?logout").permitAll();
 
     }
-   /* @Bean
-    @Override
-    protected UserDetailsService userDetailsService() {
-        return new InMemoryUserDetailsManager(
-                User.builder()
-                .username("admin")
-                .password(passwordEncoder().encode("admin"))
-                .authorities(Role.ADMIN.getAuthorities())
-                .build(),
-                User.builder()
-                        .username("customer")
-                        .password(passwordEncoder().encode("customer"))
-                        .authorities(Role.CUSTOMER.getAuthorities())
-                        .build()
-        );
-    }*/
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
