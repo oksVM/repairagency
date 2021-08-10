@@ -22,20 +22,20 @@ public class Order {
     private Long id;
     @Enumerated(value = EnumType.STRING)
     @Column(name = "service_item")
-   private ServiceItem serviceItem;
-   @Column(name = "amount")
-   private Integer amount;
-     @Enumerated(value = EnumType.STRING)
-     @Column(name = "order_status")
-     private OrderStatus orderStatus;
+    private ServiceItem serviceItem;
+    @Column(name = "amount")
+    private Integer amount;
+    @Enumerated(value = EnumType.STRING)
+    @Column(name = "order_status")
+    private OrderStatus orderStatus;
     @ManyToOne
-    @JoinColumn (name="app_user_id")
+    @JoinColumn(name = "app_user_id")
     private AppUser customer;
-   // @ManyToOne
+    // @ManyToOne
     //@JoinColumn (name="app_user_id")
-   // private AppUser master;
+    // private AppUser master;
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="offset_data_time")
+    @Column(name = "offset_data_time")
     private OffsetDateTime offsetDateTime;
     //private Review review;
 

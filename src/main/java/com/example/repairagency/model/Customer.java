@@ -18,7 +18,7 @@ public class Customer extends AppUser {
 
     @Column(name = "amount_of_money")
     private int amountOfMoney;
-  @Column(name = "order_set")
+    @Column(name = "order_set")
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
     private Set<Order> orderSet;
 
