@@ -1,4 +1,4 @@
 package com.example.repairagency.model;
 
-public class BankAccount {
+public enum Area {
 }

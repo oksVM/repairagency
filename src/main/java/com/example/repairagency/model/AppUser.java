@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Set;
 
 @Entity
 @Data
@@ -28,10 +29,20 @@ import java.util.Collections;
     @Column(nullable = false)
     private String password;
     @Enumerated(value = EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "role", nullable = false)
     private Role role;
-    private int amount;
-
+    @Column(name = "amount_of_money")
+    private Integer amountOfMoney;
+    @Column(name = "professional_area")
+    private Area professionalArea;
+    @Column(name = "score")
+    private Double score;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
+    private Set<Order> customerOrders;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "master")
+    private Set<Order> masterOrders;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "master")
+    private Set<Review> reviews;
 
    public AppUser(String firstName, String lastName, String email, String password, Role role) {
       this.firstName = firstName;

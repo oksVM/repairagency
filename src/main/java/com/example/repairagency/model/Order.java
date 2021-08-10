@@ -21,44 +21,25 @@ public class Order {
     @Column(name = "order_id")
     private Long id;
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "service_item")
-    private ServiceItem serviceItem;
-    @Column(name = "amount")
-    private Integer amount;
+    @Column(name = "area")
+    private Area area;
+    @Column(name="order_description")
+    @Lob
+    private String orderDescription;
+    @Column(name = "price")
+    private Integer price;
     @Enumerated(value = EnumType.STRING)
     @Column(name = "order_status")
     private OrderStatus orderStatus;
     @ManyToOne
-    @JoinColumn(name = "app_user_id")
+    @JoinColumn(name = "customer_id")
     private AppUser customer;
-    // @ManyToOne
-    //@JoinColumn (name="app_user_id")
-    // private AppUser master;
+    @ManyToOne
+    @JoinColumn (name="master_id")
+    private AppUser master;
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "offset_data_time")
     private OffsetDateTime offsetDateTime;
-    //private Review review;
 
-
-    public Order(Integer amount) {
-        //this.id = id;
-        this.amount = amount;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
 }
 
