@@ -11,6 +11,38 @@
 
     <div>
         <h1>Hello in controller</h1>
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th class="text-center">Item Id</th>
+                <th class="text-center">Item Name</th>
+                <th class="text-center">Description</th>
+                <th class="text-center">Created On</th>
+                <th class="text-center">Stock</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${itemList}">
+                <td class="text-center">
+                    <a th:href="@{'/view/'+${item.itemId}}" th:text="${item.itemId}">1</a>
+                </td>
+                <td class="text-center" th:text="1">1</td>
+                <td class="text-center" th:text="${item.description}">1</td>
+                <td class="text-center" th:text="${#dates.format(item.addedOn,'dd-MM-yyyy HH:mm')}">1</td>
+                <td class="text-center" th:text="${item.inventoryByItemId == null} ? 0 : ${item.inventoryByItemId.count}">1</td>
+                <td class="text-center">
+                    <a type="button" class="btn btn-danger" th:attr="data-id=${item.itemId}">Delete</a>
+                </td>
+                <td>
+                    <button class="btn btn-success" data-toggle="modal" data-target="#inventoryUpdateModal" th:attr="data-id=${item.itemId}">
+                        Update
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
 
 </div>
 
