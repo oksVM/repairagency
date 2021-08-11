@@ -28,13 +28,15 @@
                      <input   type="text" id="area" class="form-control" th:field="*{area}"
                             required autofocus="autofocus" />-->
 
-
-                     <label class="control-lable" th:text="#{category}"> Categoty </label>
-                     <input   type="text" id="area" class="form-control" th:field="*{area}"
-                              required autofocus="autofocus" />
+                     <!--id="area"-->
+                     <label class="control-label" th:text="#{category}"> Categoty </label>
+                     <select  class="form-control" th:field="*{area}">
+                              <!--required autofocus="autofocus" />-->
                      <th:block th:each="area : ${T(com.example.repairagency.model.Area).values()}">
-                     <optional th:text="${area.name()}" th:value="${area.name}"/>
+                     <option th:text="${area}" th:value="${area.valueOf(area)}"/>
                      </th:block>
+                        <!-- <option th:each="colorOpt : ${T(com.baeldung.thymeleaf.model.Color).values()}"
+                                 th:value="${colorOpt}" th:text="${colorOpt}"></option>-->
                      </select>
                    <!--  <select class="form-control" th:field="*{area}>
                          <option th:each="area : ${T(com.example.repairagency.model.Area).values()}"

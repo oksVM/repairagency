@@ -8,6 +8,7 @@ import com.example.repairagency.service.OrderService;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +29,12 @@ public class CustomerController {
         this.appUserService = appUserService;
         this.orderService = orderService;
         //this.area = area;
+    }
+
+    @GetMapping("/user_info")
+    public String userInfo (Model model){
+        model.addAttribute("user", appUserService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
+        return "customer/userinfo";
     }
 
     @GetMapping("/order/new")
