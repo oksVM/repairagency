@@ -16,33 +16,26 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 @Service
-public class AppUserServiceImpl implements AppUserService{
-
+public class AppUserServiceImpl implements AppUserService {
 
     private AppUserRepository appUserRepository;
-    //private CustomerServiceImpl customerService;
     private final PasswordEncoder passwordEncoder;
 
-@Autowired
+    @Autowired
     public AppUserServiceImpl(AppUserRepository appUserRepository, PasswordEncoder passwordEncoder) {
         this.appUserRepository = appUserRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
-
-
-
-
-
-    //TODO transaction???
     @Override
     public AppUser save(AppUserRegistrationDto appUserRegistrationDto) throws UserAlreadyExistAuthenticationException {
 
-            if (appUserRepository.findByEmail(appUserRegistrationDto.getEmail()).isPresent()) {
-                throw new UserAlreadyExistAuthenticationException("There is an account with that email address: "
-                        + appUserRegistrationDto.getEmail());
-            }
+        if (appUserRepository.findByEmail(appUserRegistrationDto.getEmail()).isPresent()) {
+            throw new UserAlreadyExistAuthenticationException("There is an account with that email address: "
+                    + appUserRegistrationDto.getEmail());
+        }
 
+        //TODO
         /*return appUserRepository.save(AppUser.builder()
                 .firstName(appUserRegistrationDto.getFirstName())
                 .lastName(appUserRegistrationDto.getLastName())
@@ -60,16 +53,11 @@ public class AppUserServiceImpl implements AppUserService{
         return appUserRepository.save(user);
     }
 
-
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return appUserRepository.findByEmail(email).orElseThrow(()->new UsernameNotFoundException(""));
+        return appUserRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(""));
     }
-
-
-
-
-    }
+}
 
 
 

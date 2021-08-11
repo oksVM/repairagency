@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="ISO-8859-1">
+    <title th:text="#{orders.list}">Orders List</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+</head>
+<body>
+<!-- navigation bar-->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                    data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                    aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span> <span
+                    class="icon-bar"></span> <span class="icon-bar"></span> <span
+                    class="icon-bar"></span>
+            </button>
+
+        </div>
+        <div id="navbar1" class="collapse navbar-collapse">
+            <a class="navbar-link" href="#" th:href="@{/customer/}" th:text="#{home}">Home</a>
+            <a class="navbar-link"  href="#" th:href="@{'?locale=en'}">EN</a>
+            <a class="navbar-link"  href="#" th:href="@{'?locale=ua'}">UA</a>
+            <a sec:authorize="isAuthenticated()"><a th:href="@{/logout}" th:text="#{logout}">Logout</a></a>
+        </div>
+    </div>
+</nav>
+<br>
+<br>
+
+<div class="container text-center">
+    <div><h1 th:text="#{orders.list}">Orders List</h1></div>
+
+    <table class="table table-bordered">
+        <thead class ="thead-dark">
+        <tr>
+            <th scope="col" th:text="#{id}">ID</th>
+            <th scope="col" th:text="#{name}">NAME</th>
+            <th scope="col" th:text="#{category}">CATEGORY</th>
+            <th scope="col" th:text="#{price}">PRICE</th>
+            <th scope="col" th:text="#{status}">STATUS</th>
+            <th scope="col" th:text="#{date}">DATE</th>
+            <th scope="col" th:text="#{master}">MASTER</th>
+            <th scope="col" th:text="#{action}">TO DO</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="orderlist : ${order}">
+            <td th:text="${orderlist.id}"></td>
+            <td th:text="${orderlist.orderName}"></td>
+            <td th:text="${orderlist.area}"></td>
+            <td th:text="${orderlist.price}"></td>
+            <td th:text="${orderlist.orderStatus}"></td>
+            <td th:text="${orderlist.offsetDateTime}"></td>
+            <td th:text="${orderlist.master}"></td>
+            <td>
+                <a th:href="@{'/customer/order/' + ${orderlist.id}}">MORE</a>
+            </td>
+
+
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>

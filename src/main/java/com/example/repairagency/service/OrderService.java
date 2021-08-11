@@ -25,29 +25,25 @@ import java.util.List;
 @Service
 public class OrderService {
 
-private OrderRepository orderRepository;
-private AppUserService appUserService;
+    private OrderRepository orderRepository;
+    private AppUserService appUserService;
 
-@Autowired
+    @Autowired
     public OrderService(OrderRepository orderRepository, AppUserService appUserService) {
         this.orderRepository = orderRepository;
         this.appUserService = appUserService;
     }
 
     public Order save(Order order) {
-order.setOrderStatus(OrderStatus.WAIT_FOR_ADMIN_CONFIRMATION);
-order.setOffsetDateTime(OffsetDateTime.now());
-order.setCustomer((AppUser) appUserService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
+        order.setOrderStatus(OrderStatus.WAIT_FOR_ADMIN_CONFIRMATION);
+        order.setOffsetDateTime(OffsetDateTime.now());
+        order.setCustomer((AppUser) appUserService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
         return this.orderRepository.save(order);
     }
 
-    public List<Order> findALlCurrentCustomerOrders(){
-List<Order> orders = orderRepository
-        .findAllByCustomerId(((AppUser) appUserService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName())).getId());
-    return orders;
+    public List<Order> findALlCurrentCustomerOrders() {
+        List<Order> orders = orderRepository
+                .findAllByCustomerId(((AppUser) appUserService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName())).getId());
+        return orders;
     }
-
-
-
-
 }

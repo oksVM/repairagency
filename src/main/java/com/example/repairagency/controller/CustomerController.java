@@ -1,11 +1,9 @@
 package com.example.repairagency.controller;
 
 
-import com.example.repairagency.model.Area;
 import com.example.repairagency.model.Order;
 import com.example.repairagency.service.AppUserService;
 import com.example.repairagency.service.OrderService;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import java.util.List;
 
 @Controller
 @RequestMapping("/customer")
@@ -24,10 +21,15 @@ public class CustomerController {
     AppUserService appUserService;
     OrderService orderService;
 
-@Autowired
+    @Autowired
     public CustomerController(AppUserService appUserService, OrderService orderService) {
         this.appUserService = appUserService;
         this.orderService = orderService;
+    }
+
+    @GetMapping
+    public String customerStartPage (){
+        return "customer/customerhomepage";
     }
 
     @GetMapping("/user_info")
@@ -38,22 +40,19 @@ public class CustomerController {
 
     @GetMapping("/order/new")
     public String newOrderForm(Model model){
-        //List<Area> areaList = Area.getAll();
-
         model.addAttribute("order", new Order());
-        //model.addAttribute("areaCategories", areaList);
         return "customer/neworder";
     }
+
     @PostMapping("/order/save")
     public String newOrder (@ModelAttribute("order") Order order) {
             orderService.save(order);
         return "redirect:/customer/order/new";
-
     }
 
     @GetMapping("/orders")
     public String allOrders(Model model){
         model.addAttribute("order", orderService.findALlCurrentCustomerOrders());
-        return "customer/customerhomepage";
+        return "customer/currentcustomerorders";
     }
 }
