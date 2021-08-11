@@ -23,19 +23,19 @@ public class CustomerController {
     AppUserService appUserService;
     OrderService orderService;
     Area area;
-
-    public CustomerController(AppUserService appUserService, OrderService orderService, Area area) {
+@Autowired
+    public CustomerController(AppUserService appUserService, OrderService orderService) {
         this.appUserService = appUserService;
         this.orderService = orderService;
-        this.area = area;
+        //this.area = area;
     }
 
     @GetMapping("/order/new")
     public String newOrderForm(Model model){
-        List<Area> areaList = Area.getAll();
+        //List<Area> areaList = Area.getAll();
 
         model.addAttribute("order", new Order());
-        model.addAttribute("areaCategories", areaList);
+        //model.addAttribute("areaCategories", areaList);
         return "customer/neworder";
     }
     @PostMapping("/order/save")

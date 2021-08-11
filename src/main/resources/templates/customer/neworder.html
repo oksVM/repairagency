@@ -23,15 +23,23 @@
                     <input type="text" id="name" class="form-control" th:field="*{orderName}"
                            required autofocus="autofocus" />
                 </div>
-                <div class="form-group">
-                    <label class="control-label" th:text="#{category}"> Category </label>
-                    <select th:field="*{area}" class="form-control" required>
-                     <th:block th:each = "area : ${areaCategories}>
-
-                        </th:block>
-                    </select>
-
-                </div>
+                 <div class="form-group">
+                     <label class="control-label" for="area" th:text="#{category}"> Categoty </label>
+                     <input   type="text" id="area" class="form-control" th:field="*{area}"
+                            required autofocus="autofocus" />
+                   <!--  <select class="form-control" th:field="*{area}>
+                         <option th:each="area : ${T(com.example.repairagency.model.Area).values()}"
+                                 th:value="${area}"
+                                 th:text="${area}">
+                         </option>
+                     </select>-->
+                    <!-- <select>
+                         <option th:each="area : ${T(com.example.repairagency.model.Area).values()}"
+                                 th:value="${area}"
+                                 th:text="${area}">
+                         </option>
+                     </select>-->
+               </div>
                 <div class="form-group">
                     <label class="control-label" for="orderDesc" th:text="#{problem.description}"> Problem description </label>
                     <input type="text" id="orderDesc" class="form-control" th:field="*{orderDescription}"
