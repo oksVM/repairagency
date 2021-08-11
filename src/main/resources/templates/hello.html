@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="ISO-8859-1">
     <title th:text="#{login}">Login</title>
@@ -11,40 +12,39 @@
 
     <div>
         <h1>Hello in controller</h1>
-        <table class="table table-striped table-bordered">
-            <thead class="thead-dark">
-            <tr>
-                <th class="text-center">Item Id</th>
-                <th class="text-center">Item Name</th>
-                <th class="text-center">Description</th>
-                <th class="text-center">Created On</th>
-                <th class="text-center">Stock</th>
-                <th></th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="item : ${itemList}">
-                <td class="text-center">
-                    <a th:href="@{'/view/'+${item.itemId}}" th:text="${item.itemId}">1</a>
-                </td>
-                <td class="text-center" th:text="1">1</td>
-                <td class="text-center" th:text="${item.description}">1</td>
-                <td class="text-center" th:text="${#dates.format(item.addedOn,'dd-MM-yyyy HH:mm')}">1</td>
-                <td class="text-center" th:text="${item.inventoryByItemId == null} ? 0 : ${item.inventoryByItemId.count}">1</td>
-                <td class="text-center">
-                    <a type="button" class="btn btn-danger" th:attr="data-id=${item.itemId}">Delete</a>
-                </td>
-                <td>
-                    <button class="btn btn-success" data-toggle="modal" data-target="#inventoryUpdateModal" th:attr="data-id=${item.itemId}">
-                        Update
-                    </button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+
+
+     <!--   <h1 th:text="#{welcome}"> Welcome </h1> <span sec:authentication="principal.username"> User</span>
+        <span sec:authentication="principal.id"> Use</span>
+        <span sec:authentication="principal.score"> Use</span>-->
+
 
 </div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+
+            <h1 th:text="#{create.new.order}">Create new order</h1>
+            <form th:action="@{/customer/order/save}" method="POST" th:object="${order}" >
+
+                <div class="form-group">
+                    <label class="control-label" for="firstName" th:text="#{problem.description}"> Problem description </label>
+                    <input type="text" id="firstName" class="form-control" th:field="*{orderDescription}"
+                           required autofocus="autofocus" />
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success" th:text="#{register}">Register</button>
+                </div>
+
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
 
 </body>
 </html>
