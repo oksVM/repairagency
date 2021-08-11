@@ -23,12 +23,11 @@ import java.util.List;
 public class CustomerController {
     AppUserService appUserService;
     OrderService orderService;
-    Area area;
+
 @Autowired
     public CustomerController(AppUserService appUserService, OrderService orderService) {
         this.appUserService = appUserService;
         this.orderService = orderService;
-        //this.area = area;
     }
 
     @GetMapping("/user_info")
@@ -47,22 +46,14 @@ public class CustomerController {
     }
     @PostMapping("/order/save")
     public String newOrder (@ModelAttribute("order") Order order) {
-
             orderService.save(order);
-
         return "redirect:/customer/order/new";
 
     }
 
     @GetMapping("/orders")
     public String allOrders(Model model){
-        //List<Area> areaList = Area.getAll();
-        List<Order> orderList = orderService.findOrdersAll(5L);
-        model.addAttribute("order", orderList);
-        //model.addAttribute("areaCategories", areaList);
+        model.addAttribute("order", orderService.findALlCurrentCustomerOrders());
         return "customer/customerhomepage";
     }
-
-
-
 }

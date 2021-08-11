@@ -41,8 +41,7 @@ order.setCustomer((AppUser) appUserService.loadUserByUsername(SecurityContextHol
         return this.orderRepository.save(order);
     }
 
-    public List<Order> findOrdersAll(Long id){
-    //List<Order> orders = orderRepository.findAllById(Collections.singleton(id));
+    public List<Order> findALlCurrentCustomerOrders(){
 List<Order> orders = orderRepository
         .findAllByCustomerId(((AppUser) appUserService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName())).getId());
     return orders;
