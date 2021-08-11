@@ -11,12 +11,16 @@ import javassist.NotFoundException;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.security.Principal;
 import java.time.OffsetDateTime;
+import java.util.Collections;
+import java.util.List;
 
 @Service
 public class OrderService {
@@ -37,6 +41,12 @@ order.setCustomer((AppUser) appUserService.loadUserByUsername(SecurityContextHol
         return this.orderRepository.save(order);
     }
 
+    public List<Order> findOrdersAll(Long id){
+    //List<Order> orders = orderRepository.findAllById(Collections.singleton(id));
+List<Order> orders = orderRepository
+        .findAllByCustomerId(((AppUser) appUserService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName())).getId());
+    return orders;
+    }
 
 
 

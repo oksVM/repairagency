@@ -47,6 +47,15 @@ public class CustomerController {
 
     }
 
+    @GetMapping("/orders")
+    public String allOrders(Model model){
+        //List<Area> areaList = Area.getAll();
+        List<Order> orderList = orderService.findOrdersAll(5L);
+        model.addAttribute("order", orderList);
+        //model.addAttribute("areaCategories", areaList);
+        return "customer/customerhomepage";
+    }
+
 
 
 }

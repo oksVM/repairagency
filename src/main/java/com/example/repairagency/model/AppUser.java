@@ -52,7 +52,11 @@ import java.util.Set;
       this.role = role;
    }
 
-   @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
    public Collection<? extends GrantedAuthority> getAuthorities() {
       return role.getAuthorities();
    }

@@ -13,4 +13,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     @Override
     List<Order> findAllById(Iterable<Long> iterable);
+
+    List<Order> findAllByCustomerId(Long id);
 }
