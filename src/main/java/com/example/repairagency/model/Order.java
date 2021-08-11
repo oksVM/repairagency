@@ -23,6 +23,8 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
     private Long id;
+    @Column(name="order_name")
+    private String orderName;
     @Enumerated(value = EnumType.STRING)
     @Column(name = "area")
     private Area area;

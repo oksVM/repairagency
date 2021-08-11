@@ -16,6 +16,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.time.OffsetDateTime;
+
 @Service
 public class OrderService {
 
@@ -30,6 +32,7 @@ private AppUserService appUserService;
 
     public Order save(Order order) {
 order.setOrderStatus(OrderStatus.WAIT_FOR_ADMIN_CONFIRMATION);
+order.setOffsetDateTime(OffsetDateTime.now());
 order.setCustomer((AppUser) appUserService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
         return this.orderRepository.save(order);
     }
