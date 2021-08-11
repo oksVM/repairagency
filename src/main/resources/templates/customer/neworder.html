@@ -24,9 +24,18 @@
                            required autofocus="autofocus" />
                 </div>
                  <div class="form-group">
-                     <label class="control-label" for="area" th:text="#{category}"> Categoty </label>
+                    <!-- <label class="control-label" for="area" th:text="#{category}"> Categoty </label>
                      <input   type="text" id="area" class="form-control" th:field="*{area}"
-                            required autofocus="autofocus" />
+                            required autofocus="autofocus" />-->
+
+
+                     <label class="control-lable" th:text="#{category}"> Categoty </label>
+                     <input   type="text" id="area" class="form-control" th:field="*{area}"
+                              required autofocus="autofocus" />
+                     <th:block th:each="area : ${T(com.example.repairagency.model.Area).values()}">
+                     <optional th:text="${area.name()}" th:value="${area.name}"/>
+                     </th:block>
+                     </select>
                    <!--  <select class="form-control" th:field="*{area}>
                          <option th:each="area : ${T(com.example.repairagency.model.Area).values()}"
                                  th:value="${area}"
