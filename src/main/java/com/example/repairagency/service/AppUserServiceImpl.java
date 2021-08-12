@@ -7,6 +7,7 @@ import com.example.repairagency.model.Role;
 import com.example.repairagency.repository.AppUserRepository;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,6 +27,9 @@ public class AppUserServiceImpl implements AppUserService {
         this.appUserRepository = appUserRepository;
         this.passwordEncoder = passwordEncoder;
     }
+
+
+
 
     @Override
     public AppUser save(AppUserRegistrationDto appUserRegistrationDto) throws UserAlreadyExistAuthenticationException {
@@ -50,6 +54,14 @@ public class AppUserServiceImpl implements AppUserService {
                 passwordEncoder.encode(appUserRegistrationDto.getPassword()), Role.CUSTOMER);
 
         return appUserRepository.save(user);*/
+    }
+
+    @Override
+    public AppUser updateDeposit(AppUser appUser) {
+        AppUser updatedAppUser = (AppUser) loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+        updatedAppUser.setAmountOfMoney(updatedAppUser.getAmountOfMoney()+appUser.getAmountOfMoney());
+        appUserRepository.save(updatedAppUser);
+        return updatedAppUser;
     }
 
     @Override

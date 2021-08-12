@@ -1,6 +1,7 @@
 package com.example.repairagency.controller;
 
 
+import com.example.repairagency.model.AppUser;
 import com.example.repairagency.model.Order;
 import com.example.repairagency.service.AppUserService;
 import com.example.repairagency.service.OrderService;
@@ -9,10 +10,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/customer")
@@ -54,5 +55,21 @@ public class CustomerController {
     public String allOrders(Model model){
         model.addAttribute("order", orderService.findALlCurrentCustomerOrders());
         return "customer/currentcustomerorders";
+    }
+
+    @GetMapping("/update_deposit")
+    public String addMoneyToDeposit (Model model){
+        model.addAttribute("user", (AppUser) appUserService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
+        return "customer/deposit";
+    }
+
+    //TODO
+    //@PostMapping("/{id}")
+    @PostMapping("/update_deposit")
+    public String update(@ModelAttribute("person") @Valid AppUser appUser, BindingResult bindingResult){
+        if(bindingResult.hasErrors())
+            return "customer/update_deposit";
+        appUserService.updateDeposit(appUser);
+        return "redirect:/customer/update_deposit";
     }
 }

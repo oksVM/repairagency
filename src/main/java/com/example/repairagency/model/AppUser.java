@@ -67,7 +67,11 @@ import java.util.Set;
       return email;
    }
 
-   @Override
+    public Integer getAmountOfMoney() {
+        return amountOfMoney;
+    }
+
+    @Override
    public boolean isAccountNonExpired() {
       return true;
    }
