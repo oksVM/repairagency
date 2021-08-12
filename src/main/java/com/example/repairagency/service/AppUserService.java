@@ -8,5 +8,5 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public interface AppUserService extends UserDetailsService {
    AppUser save(AppUserRegistrationDto appUserRegistrationDto) throws UserAlreadyExistAuthenticationException;
 
-   AppUser updateDeposit(AppUser appUser);
+   AppUser updateDeposit(Integer money);
 }

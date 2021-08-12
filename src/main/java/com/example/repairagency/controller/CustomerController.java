@@ -11,11 +11,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 
 @Controller
+@Validated
 @RequestMapping("/customer")
 @PreAuthorize("hasAuthority('customer')")
 public class CustomerController {
@@ -58,18 +61,17 @@ public class CustomerController {
     }
 
     @GetMapping("/update_deposit")
-    public String addMoneyToDeposit (Model model){
-        model.addAttribute("user", (AppUser) appUserService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
+    public String addMoneyToDeposit (){
         return "customer/deposit";
     }
 
-    //TODO
+    //TODO excaption handler
     //@PostMapping("/{id}")
     @PostMapping("/update_deposit")
-    public String update(@ModelAttribute("person") @Valid AppUser appUser, BindingResult bindingResult){
-        if(bindingResult.hasErrors())
-            return "customer/update_deposit";
-        appUserService.updateDeposit(appUser);
+    public String addMoneyToDeposit(@Min(1) @RequestParam("money") Integer money){
+        //if(bindingResult.hasErrors()) eroor with that field
+           // return "customer/update_deposit";
+        appUserService.updateDeposit(money);
         return "redirect:/customer/update_deposit";
     }
 }

@@ -57,9 +57,9 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
-    public AppUser updateDeposit(AppUser appUser) {
+    public AppUser updateDeposit(Integer money) {
         AppUser updatedAppUser = (AppUser) loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-        updatedAppUser.setAmountOfMoney(updatedAppUser.getAmountOfMoney()+appUser.getAmountOfMoney());
+        updatedAppUser.setAmountOfMoney(updatedAppUser.getAmountOfMoney()+money);
         appUserRepository.save(updatedAppUser);
         return updatedAppUser;
     }
