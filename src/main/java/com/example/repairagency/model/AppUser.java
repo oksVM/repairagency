@@ -12,6 +12,7 @@ import java.util.Set;
 
 @Entity
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
  public class AppUser implements UserDetails {

@@ -36,21 +36,20 @@ public class AppUserServiceImpl implements AppUserService {
         }
 
         //TODO
-        /*return appUserRepository.save(AppUser.builder()
+       return appUserRepository.save(AppUser.builder()
                 .firstName(appUserRegistrationDto.getFirstName())
                 .lastName(appUserRegistrationDto.getLastName())
                 .email(appUserRegistrationDto.getEmail())
                 .password(passwordEncoder.encode(appUserRegistrationDto.getPassword()))
                 .role(Role.CUSTOMER)
-                .status(Status.ACTIVE)
-                .build());*/
+                .build());
 
-        AppUser user = new AppUser(appUserRegistrationDto.getFirstName(),
+     /*AppUser user = new AppUser(appUserRegistrationDto.getFirstName(),
                 appUserRegistrationDto.getLastName(),
                 appUserRegistrationDto.getEmail(),
                 passwordEncoder.encode(appUserRegistrationDto.getPassword()), Role.CUSTOMER);
 
-        return appUserRepository.save(user);
+        return appUserRepository.save(user);*/
     }
 
     @Override
