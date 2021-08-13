@@ -30,7 +30,7 @@ public class CustomerController {
 
     @GetMapping
     public String customerStartPage (){
-        return "customerHomepage";
+        return "customer/homepage";
     }
 
     @GetMapping("/user_info")
@@ -54,7 +54,7 @@ public class CustomerController {
     @GetMapping("/orders")
     public String allOrders(Model model){
         model.addAttribute("order", orderService.findALlCurrentCustomerOrders());
-        return "customer/currentcustomerorders";
+        return "customer/orders";
     }
 
     @GetMapping("/update_deposit")
