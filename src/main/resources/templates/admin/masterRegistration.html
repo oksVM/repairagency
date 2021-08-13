@@ -26,6 +26,7 @@
             <a class="navbar-link" href="#" th:href="@{/admin/}" th:text="#{home}">Home</a>
             <a class="navbar-link" href="#" th:href="@{'?locale=en'}">EN</a>
             <a class="navbar-link" href="#" th:href="@{'?locale=ua'}">UA</a>
+            <a sec:authorize="isAuthenticated()"><a th:href="@{/logout}" th:text="#{logout}">Logout</a></a>
         </div>
     </div>
 </nav>

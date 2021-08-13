@@ -5,7 +5,6 @@ import com.example.repairagency.exception.UserAlreadyExistAuthenticationExceptio
 import com.example.repairagency.model.AppUser;
 import com.example.repairagency.model.Role;
 import com.example.repairagency.repository.AppUserRepository;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,7 +12,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,6 +59,14 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
+    public AppUser updateDeposit(Integer money, Long id) {
+        AppUser updatedAppUser = appUserRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException(""));
+        updatedAppUser.setAmountOfMoney(updatedAppUser.getAmountOfMoney()+money);
+        appUserRepository.save(updatedAppUser);
+        return updatedAppUser;
+    }
+
+    @Override
     public AppUser saveNewMaster(AppUserRegistrationDto appUserRegistrationDto) throws UserAlreadyExistAuthenticationException {
         if (appUserRepository.findByEmail(appUserRegistrationDto.getEmail()).isPresent()) {
             throw new UserAlreadyExistAuthenticationException("There is an account with that email address: "
@@ -76,14 +82,8 @@ public class AppUserServiceImpl implements AppUserService {
                 .role(Role.MASTER)
                 .build());
     }
+/*(AppUser) loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName())*/
 
-    @Override
-    public AppUser updateDeposit(Integer money) {
-        AppUser updatedAppUser = (AppUser) loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-        updatedAppUser.setAmountOfMoney(updatedAppUser.getAmountOfMoney()+money);
-        appUserRepository.save(updatedAppUser);
-        return updatedAppUser;
-    }
 
 
 

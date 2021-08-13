@@ -1,6 +1,7 @@
 package com.example.repairagency.controller;
 
 
+import com.example.repairagency.model.AppUser;
 import com.example.repairagency.model.Order;
 import com.example.repairagency.service.AppUserService;
 import com.example.repairagency.service.OrderService;
@@ -68,7 +69,7 @@ public class CustomerController {
     public String addMoneyToDeposit(@Min(1) @RequestParam("money") Integer money){
         //if(bindingResult.hasErrors()) eroor with that field
            // return "customer/update_deposit";
-        appUserService.updateDeposit(money);
+        appUserService.updateDeposit(money,((AppUser) appUserService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName())).getId() );
         return "redirect:/customer/update_deposit";
     }
 }
