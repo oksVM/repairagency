@@ -39,6 +39,8 @@
     <h1 th:text="#{welcome}"> Welcome </h1> <h1 sec:authentication="principal.firstName"> User</h1>
     <a  th:href="@{/admin/master_registration}" th:text="#{registration.for.new.master}">New master</a>
     <br>
+    <a  th:href="@{/admin/customers}" th:text="#{customers.accounts}">Customers</a>
+    <br>
     <!--<a  th:href="@{/customer/orders}" th:text="#{orders.list}">Orders list</a>-->
 </div>
 </body>

@@ -53,7 +53,7 @@ public class CustomerController {
 
     @GetMapping("/orders")
     public String allOrders(Model model){
-        model.addAttribute("order", orderService.findALlCurrentCustomerOrders());
+        model.addAttribute("orderlist", orderService.findALlCurrentCustomerOrders());
         return "customer/orders";
     }
 

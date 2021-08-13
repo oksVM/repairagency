@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,7 +30,10 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
 
-
+    @Override
+    public List<AppUser> findAllCustomers() {
+        return appUserRepository.findAllByRole(Role.CUSTOMER);
+    }
 
     @Override
     public AppUser saveNewCustomer(AppUserRegistrationDto appUserRegistrationDto) throws UserAlreadyExistAuthenticationException {

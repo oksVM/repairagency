@@ -7,12 +7,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 
 @Controller
 @RequestMapping("/admin")
@@ -51,5 +49,26 @@ public class AdminController {
         return "redirect:/admin/master_registration?success";
 
     }
+//////////////
+    @GetMapping("/customers")
+    public String allOrders(Model model){
+        model.addAttribute("customers", appUserService.findAllCustomers());
+        return "admin/customers";
+    }
+
+   /* @GetMapping("/update_deposit")
+    public String addMoneyToDeposit (){
+        return "customer/deposit";
+    }
+
+    //TODO excaption handler
+    //@PostMapping("/{id}")
+    @PostMapping("/update_deposit")
+    public String addMoneyToDeposit(@Min(1) @RequestParam("money") Integer money){
+        //if(bindingResult.hasErrors()) eroor with that field
+        // return "customer/update_deposit";
+        appUserService.updateDeposit(money);
+        return "redirect:/customer/update_deposit";
+    }*/
 }
 
