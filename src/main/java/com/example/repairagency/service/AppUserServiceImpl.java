@@ -59,6 +59,11 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
+    public Optional<AppUser> findById(Long id) {
+        return appUserRepository.findById(id);
+    }
+
+    @Override
     public AppUser updateDeposit(Integer money, Long id) {
         AppUser updatedAppUser = appUserRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException(""));
         updatedAppUser.setAmountOfMoney(updatedAppUser.getAmountOfMoney()+money);

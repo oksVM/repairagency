@@ -55,7 +55,7 @@
             <td th:text="${customer.lastName}"></td>
             <td th:text="${customer.amountOfMoney}"></td>
             <td>
-                <a th:href="@{'admin/customerDeposit/' + ${customer.id}}" th:text="#{deposit}">Deposit</a>
+                <a th:href="@{'/admin/customers/deposit/' + ${customer.id}}" th:text="#{deposit}">Deposit</a>
             </td>
 
 

@@ -52,8 +52,17 @@
             <h1 th:text="#{add.money.to.deposit}">Add money</h1>
 
 
-            <form th:action="@{/customer/update_deposit}" method="POST">
-
+            <form th:action="@{/admin/customers/deposit/{id}(id=${id})}" th:object="${customer}" method="POST">
+                <div class="form-group">
+                    <label class="control-label" for="firstName" th:text="#{firstname}"> First Name </label>
+                    <input type="text" id="firstName" class="form-control" th:field="*{firstName}"
+                           required autofocus="autofocus" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="deposit" th:text="#{deposit}"> Deposit </label>
+                    <input type="text" id="deposit" class="form-control" th:field="*{amountOfMoney}"
+                           required autofocus="autofocus" />
+                </div>
                 <div class="form-group">
                     <label class="control-label" for="deposit" th:text="#{add.money.to.deposit}"> Add money </label>
                     <input name="money" th:type="number" id="deposit" class="form-control"
