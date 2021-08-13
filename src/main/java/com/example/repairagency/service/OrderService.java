@@ -42,9 +42,13 @@ public class OrderService {
         return this.orderRepository.save(order);
     }
 
-    public List<Order> findALlCurrentCustomerOrders() {
-        List<Order> orders = orderRepository
-                .findAllByCustomerId(((AppUser) appUserService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName())).getId());
-        return orders;
+    public List<Order> findAllCurrentCustomerOrders() {
+        return orderRepository
+                .findAllByCustomerId(((AppUser) appUserService
+                        .loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName())).getId());
+    }
+
+    public List<Order> findAllOrders() {
+        return orderRepository.findAll();
     }
 }

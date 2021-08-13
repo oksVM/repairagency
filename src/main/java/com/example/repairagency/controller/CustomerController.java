@@ -54,7 +54,7 @@ public class CustomerController {
 
     @GetMapping("/orders")
     public String allOrders(Model model){
-        model.addAttribute("orderlist", orderService.findALlCurrentCustomerOrders());
+        model.addAttribute("orderlist", orderService.findAllCurrentCustomerOrders());
         return "customer/orders";
     }
 
@@ -64,7 +64,6 @@ public class CustomerController {
     }
 
     //TODO excaption handler
-    //@PostMapping("/{id}")
     @PostMapping("/update_deposit")
     public String addMoneyToDeposit(@Min(1) @RequestParam("money") Integer money){
         //if(bindingResult.hasErrors()) eroor with that field

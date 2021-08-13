@@ -11,6 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MasterController {
     @GetMapping()
     public String main(){
-        return "customerhomepage";
+        return "master/homepage";
     }
 }

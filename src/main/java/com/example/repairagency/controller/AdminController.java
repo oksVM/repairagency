@@ -2,10 +2,10 @@ package com.example.repairagency.controller;
 
 import com.example.repairagency.dto.AppUserRegistrationDto;
 import com.example.repairagency.exception.UserAlreadyExistAuthenticationException;
-import com.example.repairagency.model.AppUser;
 import com.example.repairagency.service.AppUserService;
+import com.example.repairagency.service.OrderService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,10 +20,14 @@ import javax.validation.constraints.Min;
 public class AdminController {
 
     private AppUserService appUserService;
+    private OrderService orderService;
 
-    public AdminController(AppUserService appUserService) {
+    @Autowired
+    public AdminController(AppUserService appUserService, OrderService orderService) {
         this.appUserService = appUserService;
+        this.orderService = orderService;
     }
+
     @GetMapping()
     public String main(){
         return "admin/adminHomepage";
@@ -51,28 +55,12 @@ public class AdminController {
         return "redirect:/admin/master_registration?success";
 
     }
-//////////////
+
     @GetMapping("/customers")
-    public String allOrders(Model model){
+    public String allCustomers(Model model){
         model.addAttribute("customers", appUserService.findAllCustomers());
         return "admin/customers";
     }
-
-   /* @GetMapping("/update_deposit")
-    public String addMoneyToDeposit (){
-        return "customer/deposit";
-    }
-
-    //TODO excaption handler
-    //@PostMapping("/{id}")
-    @PostMapping("/update_deposit")
-    public String addMoneyToDeposit(@Min(1) @RequestParam("money") Integer money){
-        //if(bindingResult.hasErrors()) eroor with that field
-        // return "customer/update_deposit";
-        appUserService.updateDeposit(money);
-        return "redirect:/customer/update_deposit";
-    }*/
-
 
     @GetMapping("customers/deposit/{id}")
     public String depositForm(@PathVariable("id") Long id, Model model){
@@ -80,8 +68,7 @@ public class AdminController {
         return "admin/customerDeposit";
     }
 
-
-    //TODO
+    //TODO exception
     @PostMapping ("customers/deposit/{id}")
     public String addMoneyToDeposit(@Min(1) @RequestParam("money") Integer money, @PathVariable("id") Long id){
         //if(bindingResult.hasErrors()) eroor with that field
@@ -90,26 +77,12 @@ public class AdminController {
         //return "redirect:/admin/customers/deposit/{id}";
         return "redirect:/admin/customers";
     }
-/*
-    public String update(@ModelAttribute("person") @Valid Person person,BindingResult bindingResult, @PathVariable("id") int id){
-        if(bindingResult.hasErrors())
-            return "people/edit";
-        personDAO.update(id, person);
-        return "redirect:/customers/deposit/{id}/edit";
-    }
-<form th:method="PATCH" th:action="@{/admin/customers/deposit/{id}(id=${person.getId()})}" th:object="${person}">
-  <label for="name">Enter name: </label>
-  <input type="text" th:field="*{name}" id="name">
-  <br/>
-  <label for="age">Enter age: </label>
-  <input type="text" th:field="*{age}" id="age">
-  <br/>
-  <label for="email">Enter email: </label>
-  <input type="text" th:field="*{email}" id="email">
-  <br/>
-  <input type="submit" value="Update!">
-</form>*/
 
+    @GetMapping("/orders")
+    public String allOrders(Model model){
+        model.addAttribute("orderlist", orderService.findAllOrders());
+        return "admin/allOrders";
+    }
 
 }
 
