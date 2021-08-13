@@ -26,7 +26,7 @@ public class AdminController {
     }
     @GetMapping()
     public String main(){
-        return "customer/customerhomepage";
+        return "admin/adminHomepage";
     }
 
     @GetMapping("/master_registration")

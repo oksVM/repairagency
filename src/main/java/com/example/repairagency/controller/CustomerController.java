@@ -1,7 +1,6 @@
 package com.example.repairagency.controller;
 
 
-import com.example.repairagency.model.AppUser;
 import com.example.repairagency.model.Order;
 import com.example.repairagency.service.AppUserService;
 import com.example.repairagency.service.OrderService;
@@ -10,11 +9,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import javax.validation.constraints.Min;
 
 @Controller
@@ -33,7 +30,7 @@ public class CustomerController {
 
     @GetMapping
     public String customerStartPage (){
-        return "customer/customerhomepage";
+        return "customerHomepage";
     }
 
     @GetMapping("/user_info")
