@@ -56,10 +56,10 @@
             <td th:text="${orderlist.id}"></td>
             <td th:text="${orderlist.orderName}"></td>
             <td th:text="${orderlist.area}"></td>
-            <td th:text="${orderlist.price}"></td>
+            <td th:text="${orderlist.price}?: '-'"></td>
             <td th:text="${orderlist.orderStatus}"></td>
             <td th:text="${orderlist.offsetDateTime}"></td>
-            <td th:text="${orderlist.master}"></td>
+            <td th:text="${orderlist.master}?: '-'"></td>
             <td>
                 <a th:href="@{'/customer/order/' + ${orderlist.id}}">MORE</a>
             </td>

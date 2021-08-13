@@ -1,15 +1,18 @@
 package com.example.repairagency.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.checkerframework.checker.units.qual.A;
 import org.checkerframework.checker.units.qual.C;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.util.Date;
 
 
 @Entity
@@ -41,7 +44,10 @@ public class Order {
     @ManyToOne
     @JoinColumn (name="master_id")
     private AppUser master;
+    //@Temporal(TemporalType.TIMESTAMP)
+    //@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone="Europe/Paris")
     @GeneratedValue(strategy = GenerationType.AUTO)
+    //@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @Column(name = "offset_data_time")
     private OffsetDateTime offsetDateTime;
 

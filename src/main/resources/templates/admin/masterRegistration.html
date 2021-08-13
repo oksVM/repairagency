@@ -22,7 +22,7 @@
                     class="icon-bar"></span> <span class="icon-bar"></span> <span
                     class="icon-bar"></span>
             </button>
-            <a class="navbar-link" href="#" th:href="@{/starthomepage}" th:text="#{home}">Home</a>
+           <!-- <a class="navbar-link" href="#" th:href="@{/starthomepage}" th:text="#{home}">Home</a>-->
             <a class="navbar-link" href="#" th:href="@{'?locale=en'}">EN</a>
             <a class="navbar-link" href="#" th:href="@{'?locale=ua'}">UA</a>
         </div>
@@ -42,18 +42,19 @@
             </div>
 
 
-            <h1 th:text="#{registration.for.new}">Registration for new users</h1>
+            <h1 th:text="#{registration.for.new.master}">Registration for new Master</h1>
 
-            <form th:action="@{/registration}" method="POST" th:object="${user}">
-              <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
-                  <p th:each="err : ${#fields.errors('firstName')}"
-                     th:text="#{first.name.should.be}" >Validation error</p>
+            <!--<form th:action="@{/registration}" method="POST" th:object="${user}">-->
+            <form th:action="@{master_registration}" method="POST" th:object="${user}">
+                <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+                    <p th:each="err : ${#fields.errors('firstName')}"
+                       th:text="#{first.name.should.be}" >Validation error</p>
                     <p th:each="err : ${#fields.errors('lastName')}"
                        th:text="#{last.name.should.be}" >Validation error</p>
-                  <p th:each="err : ${#fields.errors('email')}"
-                     th:text="#{invalid.email}" >Validation error</p>
-                  <p th:each="err : ${#fields.errors('password')}"
-                     th:text="#{password.should.be}" >Validation error</p>
+                    <p th:each="err : ${#fields.errors('email')}"
+                       th:text="#{invalid.email}" >Validation error</p>
+                    <p th:each="err : ${#fields.errors('password')}"
+                       th:text="#{password.should.be}" >Validation error</p>
                 </div>
 
                 <div class="form-group">
@@ -76,15 +77,9 @@
                     <input type="text" id="password" class="form-control" th:field="*{password}"
                            required autofocus="autofocus" />
                 </div>
-
-
                 <div class="form-group">
-                    <button type="submit" class="btn btn-success" th:text="#{register}">Register</button>
-                    <span> <b th:text="#{already.registered}"> Already registered? </b> <a href="/" th:href="@{/login}" th:text="#{login.here}">Login
-								here</a></span>
+                    <button type="submit" class="btn btn-success" th:text="#{submit}">Register</button>
                 </div>
-
-
             </form>
         </div>
     </div>

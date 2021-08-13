@@ -36,7 +36,7 @@ public class AppUserRegistrationController {
         if (bindingResult.hasErrors()) return "registration";
 
         try {
-            appUserService.save(appUserRegistrationDto);
+            appUserService.saveNewCustomer(appUserRegistrationDto);
         } catch (UserAlreadyExistAuthenticationException exception) {
             bindingResult.rejectValue("email", "userData.email", "An account already exists for this email.");
             return "registration";

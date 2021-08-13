@@ -32,7 +32,7 @@ public class AppUserServiceImpl implements AppUserService {
 
 
     @Override
-    public AppUser save(AppUserRegistrationDto appUserRegistrationDto) throws UserAlreadyExistAuthenticationException {
+    public AppUser saveNewCustomer(AppUserRegistrationDto appUserRegistrationDto) throws UserAlreadyExistAuthenticationException {
 
         if (appUserRepository.findByEmail(appUserRegistrationDto.getEmail()).isPresent()) {
             throw new UserAlreadyExistAuthenticationException("There is an account with that email address: "
@@ -57,12 +57,31 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
+    public AppUser saveNewMaster(AppUserRegistrationDto appUserRegistrationDto) throws UserAlreadyExistAuthenticationException {
+        if (appUserRepository.findByEmail(appUserRegistrationDto.getEmail()).isPresent()) {
+            throw new UserAlreadyExistAuthenticationException("There is an account with that email address: "
+                    + appUserRegistrationDto.getEmail());
+        }
+
+        //TODO
+        return appUserRepository.save(AppUser.builder()
+                .firstName(appUserRegistrationDto.getFirstName())
+                .lastName(appUserRegistrationDto.getLastName())
+                .email(appUserRegistrationDto.getEmail())
+                .password(passwordEncoder.encode(appUserRegistrationDto.getPassword()))
+                .role(Role.MASTER)
+                .build());
+    }
+
+    @Override
     public AppUser updateDeposit(Integer money) {
         AppUser updatedAppUser = (AppUser) loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
         updatedAppUser.setAmountOfMoney(updatedAppUser.getAmountOfMoney()+money);
         appUserRepository.save(updatedAppUser);
         return updatedAppUser;
     }
+
+
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

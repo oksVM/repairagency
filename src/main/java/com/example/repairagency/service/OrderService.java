@@ -36,6 +36,7 @@ public class OrderService {
 
     public Order save(Order order) {
         order.setOrderStatus(OrderStatus.WAIT_FOR_ADMIN_CONFIRMATION);
+        //TODO DATE
         order.setOffsetDateTime(OffsetDateTime.now());
         order.setCustomer((AppUser) appUserService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
         return this.orderRepository.save(order);
