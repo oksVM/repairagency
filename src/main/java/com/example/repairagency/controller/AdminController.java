@@ -2,10 +2,14 @@ package com.example.repairagency.controller;
 
 import com.example.repairagency.dto.AppUserRegistrationDto;
 import com.example.repairagency.exception.UserAlreadyExistAuthenticationException;
+import com.example.repairagency.model.Order;
 import com.example.repairagency.service.AppUserService;
 import com.example.repairagency.service.OrderService;
+import com.example.repairagency.service.OrderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -28,10 +33,10 @@ public class AdminController {
         this.orderService = orderService;
     }
 
-    @GetMapping()
+   /* @GetMapping()
     public String main(){
         return "admin/adminHomepage";
-    }
+    }*/
 
     @GetMapping("/master_registration")
     public String showRegistrationForm(Model model) {
@@ -64,7 +69,10 @@ public class AdminController {
 
     @GetMapping("customers/deposit/{id}")
     public String depositForm(@PathVariable("id") Long id, Model model){
-        model.addAttribute("customer", appUserService.findById(id));
+        try{
+        model.addAttribute("customer", appUserService.findById(id));} catch (UsernameNotFoundException u){
+            System.out.println("hbfvgnhbgvfd");
+        }
         return "admin/customerDeposit";
     }
 
@@ -78,10 +86,30 @@ public class AdminController {
         return "redirect:/admin/customers";
     }
 
-    @GetMapping("/orders")
+   /* @GetMapping("/orders")
     public String allOrders(Model model){
         model.addAttribute("orderlist", orderService.findAllOrders());
         return "admin/allOrders";
+    }*/
+
+    @GetMapping("/")
+    public String viewAllOrders(Model model){
+        return allOrdersPaginated(1, model);
+    }
+
+    @GetMapping("/page/{pageNo}")
+    public String allOrdersPaginated(@PathVariable(value = "pageNo") int pageNo, Model model){
+        int pageSize = 5;
+
+        Page<Order> page = orderService.findAllOrdersPaginated(pageNo, pageSize);
+        List<Order> orderList = page.getContent();
+
+        model.addAttribute("currentPage", pageNo );
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("orderList", orderList);
+
+       return "admin/allOrders";
     }
 
 }

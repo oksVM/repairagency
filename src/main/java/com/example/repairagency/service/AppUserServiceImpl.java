@@ -6,14 +6,12 @@ import com.example.repairagency.model.AppUser;
 import com.example.repairagency.model.Role;
 import com.example.repairagency.repository.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AppUserServiceImpl implements AppUserService {
@@ -59,8 +57,8 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
-    public Optional<AppUser> findById(Long id) {
-        return appUserRepository.findById(id);
+    public AppUser findById(Long id) throws UsernameNotFoundException{
+        return appUserRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException(""));
     }
 
     @Override
