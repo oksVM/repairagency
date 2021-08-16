@@ -61,7 +61,7 @@
             <td th:text="${order.orderStatus}"></td>
             <td th:text="${order.offsetDateTime}"></td>
             <td th:text="${order.customer.username}"></td>
-            <td th:text="${order.master}?: '-'"></td>
+            <td th:text="${order.master}? ${order.master.username} : '-'"></td>
             <td>
                 <a th:href="@{'/customer/order/' + ${order.id}}">MORE</a>
             </td>

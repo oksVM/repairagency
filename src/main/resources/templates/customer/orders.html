@@ -46,7 +46,7 @@
             <th scope="col" th:text="#{price}">PRICE</th>
             <th scope="col" th:text="#{status}">STATUS</th>
             <th scope="col" th:text="#{date}">DATE</th>
-            <!--<th scope="col" th:text="#{master}">MASTER</th>-->
+            <th scope="col" th:text="#{master}">MASTER</th>
             <th scope="col" th:text="#{action}">TO DO</th>
 
         </tr>
@@ -59,7 +59,7 @@
             <td th:text="${order.price}?: '-'"></td>
             <td th:text="${order.orderStatus}"></td>
             <td th:text="${order.offsetDateTime}"></td>
-            <!--<td th:text="${order.master.username}?: '-'"></td>-->
+            <td th:text="${order.master}? ${order.master.username} : '-'"></td>
             <td>
                 <a th:href="@{'/customer/order/' + ${order.id}}">MORE</a>
             </td>

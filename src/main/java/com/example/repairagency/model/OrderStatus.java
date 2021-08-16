@@ -5,7 +5,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 public enum OrderStatus {
     WAIT_FOR_ADMIN_CONFIRMATION("Order wait for administrator confirmation"),
-    WAIT_FOR_PAYMENT ("Order wait for waiment"),
+    WAIT_FOR_PAYMENT ("Order wait for payment"),
     PAID("Order is paid"),
     CANCELED("Order is canceled"),
     IN_WORK("Order in work"),
