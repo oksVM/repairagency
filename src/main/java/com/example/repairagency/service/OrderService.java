@@ -17,7 +17,7 @@ public interface OrderService {
     Page<Order> findAllCurrentCustomerOrders(int pageNo, int pageSize);
 
     List<Order> findAllOrders();
-    Page<Order> findAllOrdersPaginated(int pageNo, int pageSize);
+    Page<Order> findAllOrdersPaginated(int pageNo, int pageSize, String sortField, String sortDirection);
 
 
     }

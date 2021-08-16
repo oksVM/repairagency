@@ -37,6 +37,7 @@
 <div class="container">
     <h1 th:text="#{you.are.in.our.repair.agency}">You are in out Repair Agency</h1>
     <h1 th:text="#{welcome}"> Welcome </h1> <h1 sec:authentication="principal.firstName"> User</h1>
+    <h1 th:text="#{welcome}"> Welcome </h1> <h1 sec:authentication="principal.role"> User</h1>
     <a  th:href="@{/admin/master_registration}" th:text="#{registration.for.new.master}">New master</a>
     <br>
     <a  th:href="@{/admin/customers}" th:text="#{customers.accounts}">Customers</a>

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -58,8 +59,10 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public Page<Order> findAllOrdersPaginated(int pageNo, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNo-1, pageSize);
+    public Page<Order> findAllOrdersPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name())? Sort.by(sortField):
+                Sort.by(sortField).descending();
+        Pageable pageable = PageRequest.of(pageNo-1, pageSize, sort);
         return orderRepository.findAll(pageable);
     }
 }

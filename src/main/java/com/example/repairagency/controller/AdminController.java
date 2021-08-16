@@ -104,19 +104,27 @@ public class AdminController {
 
     @GetMapping("/orders")
     public String viewAllOrders(Model model){
-        return allOrdersPaginated(1, model);
+        return allOrdersPaginated(1, "id", "asc", model);
     }
 
     @GetMapping("/orders/page/{pageNo}")
-    public String allOrdersPaginated(@PathVariable(value = "pageNo") int pageNo, Model model){
+    public String allOrdersPaginated(@PathVariable(value = "pageNo") int pageNo,
+                                     @RequestParam("sortField") String sortField,
+                                     @RequestParam("sortDir") String sortDir,
+                                     Model model){
         int pageSize = 5;
 
-        Page<Order> page = orderService.findAllOrdersPaginated(pageNo, pageSize);
+        Page<Order> page = orderService.findAllOrdersPaginated(pageNo, pageSize, sortField,sortDir);
         List<Order> orderList = page.getContent();
 
         model.addAttribute("currentPage", pageNo );
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
+
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc")?"desc":"asc");
+
         model.addAttribute("orderList", orderList);
 
        return "admin/allOrders";
