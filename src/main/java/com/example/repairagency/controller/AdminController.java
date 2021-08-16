@@ -104,17 +104,17 @@ public class AdminController {
 
     @GetMapping("/orders")
     public String viewAllOrders(Model model){
-        return allOrdersPaginated(1, "id", "asc", model);
+        return allOrdersPaginated( 1, "gf","id", "asc", model);
     }
 
     @GetMapping("/orders/page/{pageNo}")
-    public String allOrdersPaginated(@PathVariable(value = "pageNo") int pageNo,
+    public String allOrdersPaginated(@PathVariable(value = "pageNo") int pageNo, @RequestParam("keyWord") String keyWord,
                                      @RequestParam("sortField") String sortField,
                                      @RequestParam("sortDir") String sortDir,
                                      Model model){
         int pageSize = 5;
 
-        Page<Order> page = orderService.findAllOrdersPaginated(pageNo, pageSize, sortField,sortDir);
+        Page<Order> page = orderService.findAllOrdersPaginated(keyWord, pageNo, pageSize, sortField,sortDir);
         List<Order> orderList = page.getContent();
 
         model.addAttribute("currentPage", pageNo );

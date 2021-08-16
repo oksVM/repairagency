@@ -59,10 +59,10 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public Page<Order> findAllOrdersPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
+    public Page<Order> findAllOrdersPaginated(String keyWord, int pageNo, int pageSize, String sortField, String sortDirection) {
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name())? Sort.by(sortField):
                 Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNo-1, pageSize, sort);
-        return orderRepository.findAll(pageable);
+        return orderRepository.findAll(keyWord, pageable);
     }
 }
