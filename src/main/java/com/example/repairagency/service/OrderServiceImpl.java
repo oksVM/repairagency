@@ -45,10 +45,12 @@ public class OrderServiceImpl implements OrderService{
         return this.orderRepository.save(order);
     }
 
-    public List<Order> findAllCurrentCustomerOrders() {
+    @Override
+    public Page<Order> findAllCurrentCustomerOrders(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo-1, pageSize);
         return orderRepository
                 .findAllByCustomerId(((AppUser) appUserService
-                        .loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName())).getId());
+                        .loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName())).getId(), pageable);
     }
 
     public List<Order> findAllOrders() {

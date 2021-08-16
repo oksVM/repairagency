@@ -14,7 +14,7 @@ public interface OrderService {
 
     Order save(Order order);
 
-    List<Order> findAllCurrentCustomerOrders();
+    Page<Order> findAllCurrentCustomerOrders(int pageNo, int pageSize);
 
     List<Order> findAllOrders();
     Page<Order> findAllOrdersPaginated(int pageNo, int pageSize);

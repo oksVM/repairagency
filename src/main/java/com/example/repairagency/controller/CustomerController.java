@@ -7,6 +7,7 @@ import com.example.repairagency.service.AppUserService;
 import com.example.repairagency.service.OrderService;
 import com.example.repairagency.service.OrderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Min;
+import java.util.List;
 
 @Controller
 @Validated
@@ -53,9 +55,24 @@ public class CustomerController {
         return "redirect:/customer/order/new";
     }
 
+
     @GetMapping("/orders")
-    public String allOrders(Model model){
-        model.addAttribute("orderlist", orderService.findAllCurrentCustomerOrders());
+    public String viewAllOrders(Model model){
+        return allOrdersPaginated(1, model);
+    }
+
+    @GetMapping("/orders/page/{pageNo}")
+    public String allOrdersPaginated(@PathVariable(value = "pageNo") int pageNo, Model model){
+        int pageSize = 5;
+
+        Page<Order> page = orderService.findAllCurrentCustomerOrders(pageNo, pageSize);
+        List<Order> orderList = page.getContent();
+
+        model.addAttribute("currentPage", pageNo );
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("orderList", orderList);
+
         return "customer/orders";
     }
 
