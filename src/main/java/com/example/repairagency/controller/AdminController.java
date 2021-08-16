@@ -101,11 +101,6 @@ public class AdminController {
         return "redirect:/admin/customers";
     }
 
-   /* @GetMapping("/orders")
-    public String allOrders(Model model){
-        model.addAttribute("orderlist", orderService.findAllOrders());
-        return "admin/allOrders";
-    }*/
 
     @GetMapping("/orders")
     public String viewAllOrders(Model model){
