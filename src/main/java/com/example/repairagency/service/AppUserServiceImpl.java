@@ -6,11 +6,15 @@ import com.example.repairagency.model.AppUser;
 import com.example.repairagency.model.Role;
 import com.example.repairagency.repository.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.List;
 
 @Service
@@ -85,14 +89,20 @@ public class AppUserServiceImpl implements AppUserService {
                 .role(Role.MASTER)
                 .build());
     }
-/*(AppUser) loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName())*/
+
+    @Override
+    public Page<AppUser> findAllCustomersPaginated(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo-1, pageSize);
+        return appUserRepository.findAll(pageable);
+    }
+    /*(AppUser) loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName())*/
 
 
 
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return appUserRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(""));
+       return appUserRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(""));
     }
 }
 

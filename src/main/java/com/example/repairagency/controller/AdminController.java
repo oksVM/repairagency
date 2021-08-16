@@ -2,6 +2,7 @@ package com.example.repairagency.controller;
 
 import com.example.repairagency.dto.AppUserRegistrationDto;
 import com.example.repairagency.exception.UserAlreadyExistAuthenticationException;
+import com.example.repairagency.model.AppUser;
 import com.example.repairagency.model.Order;
 import com.example.repairagency.service.AppUserService;
 import com.example.repairagency.service.OrderService;
@@ -33,10 +34,10 @@ public class AdminController {
         this.orderService = orderService;
     }
 
-   /* @GetMapping()
+    @GetMapping()
     public String main(){
         return "admin/adminHomepage";
-    }*/
+    }
 
     @GetMapping("/master_registration")
     public String showRegistrationForm(Model model) {
@@ -63,7 +64,21 @@ public class AdminController {
 
     @GetMapping("/customers")
     public String allCustomers(Model model){
-        model.addAttribute("customers", appUserService.findAllCustomers());
+        return allCustomersPaginated(1, model);
+    }
+
+    @GetMapping("/customers/page/{pageNo}")
+    public String allCustomersPaginated(@PathVariable(value = "pageNo") int pageNo, Model model){
+        int pageSize = 5;
+
+        Page<AppUser> page = appUserService.findAllCustomersPaginated(pageNo, pageSize);
+        List<AppUser> appUsersList = page.getContent();
+
+        model.addAttribute("currentPage", pageNo );
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("appUsersList", appUsersList);
+
         return "admin/customers";
     }
 
