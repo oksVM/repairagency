@@ -104,7 +104,7 @@ public class AdminController {
 
     @GetMapping("/orders")
     public String viewAllOrders(Model model){
-        return allOrdersPaginated( 1, "gf","id", "asc", model);
+        return allOrdersPaginated( 1, "AIT","id", "asc", model);
     }
 
     @GetMapping("/orders/page/{pageNo}")
