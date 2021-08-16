@@ -92,12 +92,12 @@ public class AdminController {
         return "admin/allOrders";
     }*/
 
-    @GetMapping("/")
+    @GetMapping("/orders")
     public String viewAllOrders(Model model){
         return allOrdersPaginated(1, model);
     }
 
-    @GetMapping("/page/{pageNo}")
+    @GetMapping("/orders/page/{pageNo}")
     public String allOrdersPaginated(@PathVariable(value = "pageNo") int pageNo, Model model){
         int pageSize = 5;
 
