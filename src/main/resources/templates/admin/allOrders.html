@@ -83,7 +83,7 @@
             <td th:text="${order.customer.username}"></td>
             <td th:text="${order.master}? ${order.master.username} : '-'"></td>
             <td>
-                <a th:href="@{'/customer/order/' + ${order.id}}">MORE</a>
+                <a th:href="@{'/customer/order/' + ${order.id}}" th:text="#{more}">MORE</a>
             </td>
         </tr>
         </tbody>
@@ -91,7 +91,7 @@
 
     <div th:if="${totalPages > 1}">
         <div class="row col-sm-10">
-            <div class="col-sm-2">
+            <div class="col-sm-2" th:text="#{total.items}+${totalItems}">
                 Total Rows: [[${totalItems}]]
             </div>
             <div class="col-sm-1">
@@ -101,13 +101,13 @@
             </span>
             </div>
           <div class="col-sm-1">
-                <a th:if="${currentPage < totalPages}" th:href="@{'/admin/orders/page/' + ${currentPage + 1}+ '?sortField='+ ${sortField} + '&sortDir='+${sortDir}}">Next</a>
-                <span th:unless="${currentPage < totalPages}">Next</span>
+                <a th:if="${currentPage < totalPages}" th:href="@{'/admin/orders/page/' + ${currentPage + 1}+ '?sortField='+ ${sortField} + '&sortDir='+${sortDir}}" th:text="#{next}">Next</a>
+                <span th:unless="${currentPage < totalPages}" th:text="#{next}">Next</span>
             </div>
 
             <div class="col-sm-1">
-                <a th:if="${currentPage < totalPages}" th:href="@{'/admin/orders/page/' + ${totalPages}+ '?sortField='+ ${sortField} + '&sortDir='+${sortDir}}">Last</a>
-                <span th:unless="${currentPage < totalPages}">Last</span>
+                <a th:if="${currentPage < totalPages}" th:href="@{'/admin/orders/page/' + ${totalPages}+ '?sortField='+ ${sortField} + '&sortDir='+${sortDir}}" th:text="#{last}">Last</a>
+                <span th:unless="${currentPage < totalPages}" th:text="#{last}">Last</span>
             </div>
         </div>
     </div>
