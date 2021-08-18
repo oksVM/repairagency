@@ -99,7 +99,7 @@ public class AdminController {
         // return "customer/update_deposit";
         appUserService.updateDeposit(money,id);
         //return "redirect:/admin/customers/deposit/{id}";
-        return "redirect:/admin/customers";
+        return "redirect:/admin/customers/deposit/{id}";
     }
 
 

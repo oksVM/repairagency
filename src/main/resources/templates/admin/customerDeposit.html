@@ -48,14 +48,27 @@
                  <div class="alert alert-info" th:text="#{successfully.registered}">You've successfully registered!</div>
              </div>-->
 
-
-
+            <div><h2 th:text="#{customer.info}">Customer info</h2></div>
+            <table class="table table-bordered">
+                <thead class ="thead-dark">
+                <tr>
+                    <th scope="col" th:text="#{id}">ID</th>
+                    <th scope="col" th:text="#{firstname}">Firstname</th>
+                    <th scope="col" th:text="#{lastname}">LastName</th>
+                    <th scope="col" th:text="#{deposit}">Deposit</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="c : ${customer}">
+                    <td th:text="${customer.id}"></td>
+                    <td th:text="${customer.firstName}"></td>
+                    <td th:text="${customer.lastName}"></td>
+                    <td th:text="${customer.amountOfMoney}?: '0'"></td>
+                </tr>
+                </tbody>
+            </table>
 
             <form th:action="@{/admin/customers/deposit/{id}(id=${id})}" th:object="${customer}" method="POST">
-
-                <div class="row">
-                    <h3 th:text="#{current.deposit} + ${customer.amountOfMoney}">Add money</h3>
-                </div>
 
                 <div class="form-group">
                     <label class="control-label" for="depositAdd" th:text="#{add.money.to.deposit}"> Add money </label>
