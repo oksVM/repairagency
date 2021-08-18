@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+  <meta charset="ISO-8859-1">
+  <title th:text="#{masters.accounts}">Masters</title>
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+</head>
+<body>
+<!-- navigation bar-->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed"
+              data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+              aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span> <span
+              class="icon-bar"></span> <span class="icon-bar"></span> <span
+              class="icon-bar"></span>
+      </button>
+
+    </div>
+    <div id="navbar1" class="collapse navbar-collapse">
+      <a class="navbar-link" href="#" th:href="@{/homepage}" th:text="#{home}">Home</a>
+      <a class="navbar-link"  href="#" th:href="@{'?locale=en'}">EN</a>
+      <a class="navbar-link"  href="#" th:href="@{'?locale=ua'}">UA</a>
+      <a sec:authorize="isAuthenticated()"><a th:href="@{/logout}" th:text="#{logout}">Logout</a></a>
+    </div>
+  </div>
+</nav>
+<br>
+<br>
+
+<div class="container text-center">
+  <div><h1 th:text="#{masters.accounts}">Masters</h1></div>
+
+  <table class="table table-bordered">
+    <thead class ="thead-dark">
+    <tr>
+      <th scope="col" th:text="#{id}">ID</th>
+      <th scope="col" th:text="#{firstname}">Firstname</th>
+      <th scope="col" th:text="#{lastname}">LastName</th>
+      <th scope="col" th:text="#{action}">TO DO</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="master : ${mastersList}">
+      <td th:text="${master.id}"></td>
+      <td th:text="${master.firstName}"></td>
+      <td th:text="${master.lastName}"></td>
+      <td>
+        <a th:href="@{'/admin/masters/reviews/' + ${master.id}}" th:text="#{reviews}">Reviews</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div th:if="${totalPages > 1}">
+    <div class="row col-sm-10">
+      <div class="col-sm-2" th:text="#{total.items}+${totalItems}">
+        Total Rows: [[${totalItems}]]
+      </div>
+      <div class="col-sm-1">
+            <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+      <a th:if="${currentPage != i}" th:href="@{'/admin/masters/page/' + ${i}}">[[${i}]]</a>
+      <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
+            </span>
+      </div>
+      <div class="col-sm-1">
+        <a th:if="${currentPage < totalPages}" th:href="@{'/admin/masters/page/' + ${currentPage + 1}}" th:text="#{next}">Next</a>
+        <span th:unless="${currentPage < totalPages}" th:text="#{next}">Next</span>
+      </div>
+
+      <div class="col-sm-1">
+        <a th:if="${currentPage < totalPages}" th:href="@{'/admin/masters/page/' + ${totalPages}}" th:text="#{last}">Last</a>
+        <span th:unless="${currentPage < totalPages}" th:text="#{last}">Last</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Controller
 @RequestMapping("/admin")
@@ -86,8 +87,9 @@ public class AdminController {
     @GetMapping("customers/deposit/{id}")
     public String depositForm(@PathVariable("id") Long id, Model model){
         try{
-        model.addAttribute("customer", appUserService.findById(id));} catch (UsernameNotFoundException u){
-            System.out.println("hbfvgnhbgvfd");
+        model.addAttribute("customer", appUserService.findById(id));
+        } catch (UsernameNotFoundException u){
+            //TODO
         }
         return "admin/customerDeposit";
     }
@@ -133,6 +135,46 @@ public class AdminController {
         model.addAttribute("orderList", orderList);
 
        return "admin/allOrders";
+    }
+
+    @GetMapping("orders/{id}")
+    public String orderProcessing(@PathVariable("id") Long id, Model model){
+        try{
+            model.addAttribute("order", orderService.findOrderById(id));
+        } catch (NoSuchElementException u){
+            //TODO
+        }
+        return "admin/order";
+    }
+
+    @GetMapping("/masters")
+    public String allMasters(Model model){
+        return allMastersPaginated(1, model);
+    }
+
+    @GetMapping("/masters/page/{pageNo}")
+    public String allMastersPaginated(@PathVariable(value = "pageNo") int pageNo, Model model){
+        int pageSize = 5;
+
+        Page<AppUser> page = appUserService.findAllMastersPaginated(pageNo, pageSize);
+        List<AppUser> mastersList = page.getContent();
+
+        model.addAttribute("currentPage", pageNo );
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("mastersList", mastersList);
+
+        return "admin/masters";
+    }
+
+    @GetMapping("masters/reviews/{id}")
+    public String showReviews(@PathVariable("id") Long id, Model model){
+        try{
+            model.addAttribute("master", appUserService.findById(id));
+        } catch (UsernameNotFoundException u){
+            //TODO
+        }
+        return "admin/reviews";
     }
 
 }

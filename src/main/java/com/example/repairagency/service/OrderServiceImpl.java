@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,6 +26,7 @@ import java.security.Principal;
 import java.time.OffsetDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class OrderServiceImpl implements OrderService{
@@ -67,5 +69,10 @@ public class OrderServiceImpl implements OrderService{
             return orderRepository.findAll(keyWord,pageable);
         }
         return orderRepository.findAll(pageable);
+    }
+
+    @Override
+    public Order findOrderById(Long id) {
+        return orderRepository.findById(id).orElseThrow(() -> new NoSuchElementException(""));
     }
 }

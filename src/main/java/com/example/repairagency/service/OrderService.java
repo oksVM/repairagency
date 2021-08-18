@@ -20,5 +20,6 @@ public interface OrderService {
     Page<Order> findAllOrdersPaginated(String keyWord, int pageNo, int pageSize, String sortField, String sortDirection);
 
 
-    }
+    Order findOrderById(Long id);
+}
 

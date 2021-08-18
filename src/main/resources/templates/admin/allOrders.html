@@ -82,7 +82,7 @@
             <td th:text="${order.customer.username}"></td>
             <td th:text="${order.master}? ${order.master.username} : '-'"></td>
             <td>
-                <a th:href="@{'/customer/order/' + ${order.id}}" th:text="#{more}">MORE</a>
+                <a th:href="@{'/admin/orders/' + ${order.id}}" th:text="#{more}">MORE</a>
             </td>
         </tr>
         </tbody>

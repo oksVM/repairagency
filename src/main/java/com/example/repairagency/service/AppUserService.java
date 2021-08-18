@@ -17,4 +17,6 @@ public interface AppUserService extends UserDetailsService {
     AppUser updateDeposit(Integer money, Long id);
     AppUser saveNewMaster(AppUserRegistrationDto appUserRegistrationDto) throws UserAlreadyExistAuthenticationException;
     Page<AppUser> findAllCustomersPaginated(int pageNo, int pageSize);
+
+    Page<AppUser> findAllMastersPaginated(int pageNo, int pageSize);
 }
