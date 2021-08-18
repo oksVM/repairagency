@@ -140,6 +140,7 @@ public class AdminController {
     public String orderProcessing(@PathVariable("id") Long id, Model model){
         try{
             model.addAttribute("order", orderService.findOrderById(id));
+            model.addAttribute("mastersList", appUserService.findAllMasters());
         } catch (NoSuchElementException u){
             //TODO
         }
@@ -152,6 +153,25 @@ public class AdminController {
         // return "customer/update_deposit";
         orderService.setPrice(price,id);
         return "redirect:/admin/orders/{id}";
+    }
+
+    @PostMapping ("orders/setmaster/{id}")
+    public String setMaster(@RequestParam("master") Integer master, @PathVariable("id") Long id){
+        //if(bindingResult.hasErrors()) eroor with that field
+        // return "customer/update_deposit";
+
+
+        //TODO
+        System.out.println("==============================");
+        System.out.println(master);
+        System.out.println("==============================");
+        //orderService.setMaster(master,id);
+        return "redirect:/admin/orders/{id}";
+    }
+    @PostMapping("/order/save")
+    public String newOrder (@ModelAttribute("order") Order order) {
+        orderService.save(order);
+        return "redirect:/customer/order/new";
     }
 
     @GetMapping("/masters")

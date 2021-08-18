@@ -92,6 +92,11 @@ public class AppUserServiceImpl implements AppUserService {
         Pageable pageable = PageRequest.of(pageNo-1, pageSize);
         return appUserRepository.findAllByRole(Role.MASTER, pageable);
     }
+
+    @Override
+    public List<AppUser> findAllMasters() {
+        return appUserRepository.findAllByRole(Role.MASTER);
+    }
     /*(AppUser) loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName())*/
 
 

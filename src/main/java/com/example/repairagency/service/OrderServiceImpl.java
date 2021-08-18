@@ -108,4 +108,9 @@ public class OrderServiceImpl implements OrderService{
 
         return order;
     }
+
+    @Override
+    public Order setMaster(AppUser master, Long id) {
+        return null;
+    }
 }

@@ -75,6 +75,34 @@
         </div>
     </form>
 </div>
+    <div th:if="${order.orderStatus == T(com.example.repairagency.model.OrderStatus).PAID}">
+        <form th:action="@{/admin/orders/setmaster/{id}(id=${id})}" th:object="${order}" method="POST">
+
+
+            <div class="form-group">
+              <label class="control-label" th:text="#{set.master}"> Categoty </label>
+                <select  class="form-control" th:field="*{master}">
+                    <option value="0" th:text="#{set.master}"></option>
+                    <option th:each="master : ${mastersList}" th:value="${master.id}" th:text="${master.email}"></option>
+                    </th:block>
+                </select>
+            </div>
+           <!-- <div class="form-group">
+                <label class="control-label" th:text="#{set.master}"> Categoty </label>
+                <select  class="form-control" th:field="*{master}">
+
+                    <th:block th:each="master : ${mastersList}">
+                        <option th:text="${master.email}" th:value="1"/>
+                    </th:block>
+                </select>
+            </div>-->
+
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-success" th:text="#{submit}">Submit</button>
+            </div>
+        </form>
+    </div>
 </div>
 </body>
 </html>

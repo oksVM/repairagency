@@ -4,6 +4,7 @@ import com.example.repairagency.dto.AppUserRegistrationDto;
 import com.example.repairagency.exception.UserAlreadyExistAuthenticationException;
 import com.example.repairagency.model.AppUser;
 import com.example.repairagency.model.Order;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -19,4 +20,6 @@ public interface AppUserService extends UserDetailsService {
     Page<AppUser> findAllCustomersPaginated(int pageNo, int pageSize);
 
     Page<AppUser> findAllMastersPaginated(int pageNo, int pageSize);
+
+    List<AppUser> findAllMasters();
 }

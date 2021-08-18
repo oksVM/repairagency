@@ -26,5 +26,7 @@ public interface OrderService {
     Order setPrice(Integer price, Long id);
 
     Order payForOrder(Long id) throws NotEnoughMoneyException;
+
+    Order setMaster(AppUser master, Long id);
 }
 
