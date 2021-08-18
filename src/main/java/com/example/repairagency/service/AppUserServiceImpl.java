@@ -2,10 +2,9 @@ package com.example.repairagency.service;
 
 import com.example.repairagency.dto.AppUserRegistrationDto;
 import com.example.repairagency.exception.UserAlreadyExistAuthenticationException;
-import com.example.repairagency.model.AppUser;
-import com.example.repairagency.model.Review;
-import com.example.repairagency.model.Role;
+import com.example.repairagency.model.*;
 import com.example.repairagency.repository.AppUserRepository;
+import com.example.repairagency.repository.OrderRepository;
 import com.example.repairagency.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,8 +15,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class AppUserServiceImpl implements AppUserService {
@@ -25,13 +24,16 @@ public class AppUserServiceImpl implements AppUserService {
     private AppUserRepository appUserRepository;
     private final PasswordEncoder passwordEncoder;
     private ReviewRepository reviewRepository;
+    private OrderRepository orderRepository;
 
     @Autowired
-    public AppUserServiceImpl(AppUserRepository appUserRepository, PasswordEncoder passwordEncoder, ReviewRepository reviewRepository) {
+    public AppUserServiceImpl(AppUserRepository appUserRepository, PasswordEncoder passwordEncoder, ReviewRepository reviewRepository, OrderRepository orderRepository) {
         this.appUserRepository = appUserRepository;
         this.passwordEncoder = passwordEncoder;
         this.reviewRepository = reviewRepository;
+        this.orderRepository = orderRepository;
     }
+
 
     @Override
     public List<AppUser> findAllCustomers() {
@@ -102,12 +104,16 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
-    public AppUser leaveFeedback(String feedback, Long masterId) {
+    public AppUser leaveFeedback(String feedback, Long orderId) {
+        Order order = orderRepository.findById(orderId).orElseThrow(()->new NoSuchElementException(""));
+        Long masterId = order.getMaster().getId();
         AppUser updatedMaster = appUserRepository.findById(masterId).orElseThrow(() -> new UsernameNotFoundException(""));
         Review review = reviewRepository.save(Review.builder()
         .master(updatedMaster)
         .reviewDescription(feedback)
         .build());
+        order.setOrderStatus(OrderStatus.REVIEWED);
+        orderRepository.save(order);
 
         return updatedMaster;
     }

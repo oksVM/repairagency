@@ -4,6 +4,7 @@ package com.example.repairagency.controller;
 import com.example.repairagency.exception.NotEnoughMoneyException;
 import com.example.repairagency.model.AppUser;
 import com.example.repairagency.model.Order;
+import com.example.repairagency.model.Review;
 import com.example.repairagency.service.AppUserService;
 import com.example.repairagency.service.OrderService;
 import com.example.repairagency.service.OrderServiceImpl;
@@ -112,9 +113,8 @@ public class CustomerController {
     }
 
     @PostMapping("/orders/feedback/{id}")
-    public String leaveFeedback(@RequestParam("feedback") String feedback,  @PathVariable("id") Long id){
-        Long masterId = orderService.findOrderById(id).getMaster().getId();
-        appUserService.leaveFeedback (feedback, masterId);
+    public String leaveFeedback(@RequestParam("feedback") String feedback,  @PathVariable("id") Long orderId){
+        appUserService.leaveFeedback (feedback, orderId);
         return "redirect:/customer/order/{id}";
     }
 

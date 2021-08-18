@@ -10,7 +10,8 @@ public enum OrderStatus {
     WAIT_FOR_MASTER_CONFIRMATION("WAIT_FOR_MASTER_CONFIRMATION"),
     CANCELED("CANCELED"),
     IN_WORK("IN_WORK"),
-    DONE("DONE");
+    DONE("DONE"),
+    REVIEWED("REVIEWED");
 
     private String orderStatusDescription;
 
