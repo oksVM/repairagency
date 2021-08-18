@@ -22,4 +22,6 @@ public interface AppUserService extends UserDetailsService {
     Page<AppUser> findAllMastersPaginated(int pageNo, int pageSize);
 
     List<AppUser> findAllMasters();
+
+    AppUser leaveFeedback(String feedback, Long masterId);
 }

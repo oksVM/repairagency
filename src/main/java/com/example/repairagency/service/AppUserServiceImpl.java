@@ -3,8 +3,10 @@ package com.example.repairagency.service;
 import com.example.repairagency.dto.AppUserRegistrationDto;
 import com.example.repairagency.exception.UserAlreadyExistAuthenticationException;
 import com.example.repairagency.model.AppUser;
+import com.example.repairagency.model.Review;
 import com.example.repairagency.model.Role;
 import com.example.repairagency.repository.AppUserRepository;
+import com.example.repairagency.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,13 +24,14 @@ public class AppUserServiceImpl implements AppUserService {
 
     private AppUserRepository appUserRepository;
     private final PasswordEncoder passwordEncoder;
+    private ReviewRepository reviewRepository;
 
     @Autowired
-    public AppUserServiceImpl(AppUserRepository appUserRepository, PasswordEncoder passwordEncoder) {
+    public AppUserServiceImpl(AppUserRepository appUserRepository, PasswordEncoder passwordEncoder, ReviewRepository reviewRepository) {
         this.appUserRepository = appUserRepository;
         this.passwordEncoder = passwordEncoder;
+        this.reviewRepository = reviewRepository;
     }
-
 
     @Override
     public List<AppUser> findAllCustomers() {
@@ -97,10 +100,17 @@ public class AppUserServiceImpl implements AppUserService {
     public List<AppUser> findAllMasters() {
         return appUserRepository.findAllByRole(Role.MASTER);
     }
-    /*(AppUser) loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName())*/
 
+    @Override
+    public AppUser leaveFeedback(String feedback, Long masterId) {
+        AppUser updatedMaster = appUserRepository.findById(masterId).orElseThrow(() -> new UsernameNotFoundException(""));
+        Review review = reviewRepository.save(Review.builder()
+        .master(updatedMaster)
+        .reviewDescription(feedback)
+        .build());
 
-
+        return updatedMaster;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

@@ -110,4 +110,12 @@ public class CustomerController {
         appUserService.updateDeposit(money,((AppUser) appUserService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName())).getId() );
         return "redirect:/customer/update_deposit";
     }
+
+    @PostMapping("/orders/feedback/{id}")
+    public String leaveFeedback(@RequestParam("feedback") String feedback,  @PathVariable("id") Long id){
+        Long masterId = orderService.findOrderById(id).getMaster().getId();
+        appUserService.leaveFeedback (feedback, masterId);
+        return "redirect:/customer/order/{id}";
+    }
+
 }
