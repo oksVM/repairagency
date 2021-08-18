@@ -58,6 +58,10 @@
         <a  th:href="@{/admin/orders}" th:text="#{orders.list}">Orders list</a>
         <br>
     </div>
+    <div th:if="${ #authorization.expression('isAuthenticated()') and #strings.contains(#authentication.principal.role,'MASTER')}">
+        <a  th:href="@{/master/orders}" th:text="#{orders.list}">Orders list</a>
+        <br>
+    </div>
 
 </div>
 </body>

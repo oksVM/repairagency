@@ -92,8 +92,7 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    //TODO
-    //@Transactional
+    @Transactional
     public Order payForOrder(Long id) throws NotEnoughMoneyException {
         Order order = orderRepository.findById(id).orElseThrow(() -> new NoSuchElementException(""));
         AppUser currentAppUser = ((AppUser) appUserService
