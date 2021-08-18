@@ -58,7 +58,7 @@
             <td th:text="${order.area}"></td>
             <td th:text="${order.price}?: '-'"></td>
             <td th:text="${order.orderStatus}"></td>
-            <td th:text="${order.offsetDateTime}"></td>
+            <td th:text="${#temporals.format(order.offsetDateTime, 'dd/MM/yyyy HH:mm')}">31/12/2015 15:00</td>
             <td th:text="${order.master}? ${order.master.username} : '-'"></td>
             <td>
                 <a th:href="@{'/customer/order/' + ${order.id}}">MORE</a>
