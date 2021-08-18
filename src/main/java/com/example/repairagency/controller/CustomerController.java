@@ -91,8 +91,6 @@ public class CustomerController {
 
     @PostMapping ("orders/payment/{id}")
     public String payForOrder(@PathVariable("id") Long id) throws NotEnoughMoneyException {
-        //if(bindingResult.hasErrors()) eroor with that field
-        // return "customer/update_deposit";
         orderService.payForOrder(id);
         return "redirect:/customer/order/{id}";
     }
@@ -103,11 +101,8 @@ public class CustomerController {
         return "customer/deposit";
     }
 
-    //TODO excaption handler
     @PostMapping("/update_deposit")
     public String addMoneyToDeposit(@Min(1) @RequestParam("money") Integer money){
-        //if(bindingResult.hasErrors()) eroor with that field
-           // return "customer/update_deposit";
         appUserService.updateDeposit(money,((AppUser) appUserService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName())).getId() );
         return "redirect:/customer/update_deposit";
     }

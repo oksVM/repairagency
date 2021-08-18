@@ -22,13 +22,11 @@ public class AppUserRegistrationController {
         this.appUserService = appUserService;
     }
 
-
     @GetMapping
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new AppUserRegistrationDto());
         return "registration";
     }
-
 
     @PostMapping
     public String registerUserAccount(@ModelAttribute("user")

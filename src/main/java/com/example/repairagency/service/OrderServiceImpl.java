@@ -48,7 +48,6 @@ public class OrderServiceImpl implements OrderService{
 
     public Order save(Order order) {
         order.setOrderStatus(OrderStatus.WAIT_FOR_ADMIN_CONFIRMATION);
-        //TODO DATE
         order.setOffsetDateTime(OffsetDateTime.now());
         order.setCustomer((AppUser) appUserService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
         return this.orderRepository.save(order);
@@ -104,7 +103,6 @@ public class OrderServiceImpl implements OrderService{
         appUserRepository.save(currentAppUser);
         order.setOrderStatus(OrderStatus.PAID);
         orderRepository.save(order);
-
         return order;
     }
 
@@ -115,7 +113,6 @@ public class OrderServiceImpl implements OrderService{
         order.setMaster(master);
         order.setOrderStatus(OrderStatus.WAIT_FOR_MASTER_CONFIRMATION);
         orderRepository.save(order);
-
         return order;
     }
 
@@ -132,7 +129,6 @@ public class OrderServiceImpl implements OrderService{
         Order order = orderRepository.findById(id).orElseThrow(() -> new NoSuchElementException(""));
         order.setOrderStatus(OrderStatus.IN_WORK);
         orderRepository.save(order);
-
         return order;
     }
 
@@ -141,7 +137,6 @@ public class OrderServiceImpl implements OrderService{
         Order order = orderRepository.findById(id).orElseThrow(() -> new NoSuchElementException(""));
         order.setOrderStatus(OrderStatus.DONE);
         orderRepository.save(order);
-
         return order;
     }
 }

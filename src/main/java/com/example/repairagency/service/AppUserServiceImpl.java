@@ -34,7 +34,6 @@ public class AppUserServiceImpl implements AppUserService {
         this.orderRepository = orderRepository;
     }
 
-
     @Override
     public List<AppUser> findAllCustomers() {
         return appUserRepository.findAllByRole(Role.CUSTOMER);
@@ -42,7 +41,6 @@ public class AppUserServiceImpl implements AppUserService {
 
     @Override
     public AppUser saveNewCustomer(AppUserRegistrationDto appUserRegistrationDto) throws UserAlreadyExistAuthenticationException {
-
         if (appUserRepository.findByEmail(appUserRegistrationDto.getEmail()).isPresent()) {
             throw new UserAlreadyExistAuthenticationException("There is an account with that email address: "
                     + appUserRegistrationDto.getEmail());

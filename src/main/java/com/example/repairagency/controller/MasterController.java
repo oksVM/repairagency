@@ -63,16 +63,12 @@ public class MasterController {
 
     @PostMapping("order/inwork/{id}")
     public String takeInWork(@PathVariable("id") Long id) throws NotEnoughMoneyException {
-        //if(bindingResult.hasErrors()) eroor with that field
-        // return "customer/update_deposit";
         orderService.takeInWork(id);
         return "redirect:/master/order/{id}";
     }
 
     @PostMapping("order/done/{id}")
     public String markAsDOne(@PathVariable("id") Long id) throws NotEnoughMoneyException {
-        //if(bindingResult.hasErrors()) eroor with that field
-        // return "customer/update_deposit";
         orderService.markAsDone(id);
         return "redirect:/master/order/{id}";
     }

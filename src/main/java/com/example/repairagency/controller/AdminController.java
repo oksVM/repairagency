@@ -6,7 +6,7 @@ import com.example.repairagency.model.AppUser;
 import com.example.repairagency.model.Order;
 import com.example.repairagency.service.AppUserService;
 import com.example.repairagency.service.OrderService;
-import com.example.repairagency.service.OrderServiceImpl;
+import com.example.repairagency.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
@@ -29,11 +29,13 @@ public class AdminController {
 
     private AppUserService appUserService;
     private OrderService orderService;
+    private ReviewService reviewService;
 
     @Autowired
-    public AdminController(AppUserService appUserService, OrderService orderService) {
+    public AdminController(AppUserService appUserService, OrderService orderService, ReviewService reviewService) {
         this.appUserService = appUserService;
         this.orderService = orderService;
+        this.reviewService = reviewService;
     }
 
     @GetMapping()
@@ -58,7 +60,6 @@ public class AdminController {
         } catch (UserAlreadyExistAuthenticationException exception) {
             bindingResult.rejectValue("email", "userData.email", "An account already exists for this email.");
             return "admin/masterRegistration";
-
         }
         return "redirect:/admin/master_registration?success";
 
@@ -94,11 +95,8 @@ public class AdminController {
         return "admin/customerDeposit";
     }
 
-    //TODO exception
     @PostMapping ("customers/deposit/{id}")
     public String addMoneyToDeposit(@Min(1) @RequestParam("money") Integer money, @PathVariable("id") Long id){
-        //if(bindingResult.hasErrors()) eroor with that field
-        // return "customer/update_deposit";
         appUserService.updateDeposit(money,id);
         return "redirect:/admin/customers/deposit/{id}";
     }
@@ -107,7 +105,6 @@ public class AdminController {
     @GetMapping("/orders")
     public String viewAllOrders(Model model){
         String keyWord = null;
-
         return allOrdersPaginated( 1,"id", "asc", keyWord, model);
     }
 
@@ -122,15 +119,12 @@ public class AdminController {
         List<Order> orderList = page.getContent();
 
         model.addAttribute("keyWord", keyWord);
-
         model.addAttribute("currentPage", pageNo );
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
-
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equals("asc")?"desc":"asc");
-
         model.addAttribute("orderList", orderList);
 
        return "admin/allOrders";
@@ -149,17 +143,12 @@ public class AdminController {
 
     @PostMapping ("orders/setprice/{id}")
     public String setPrice(@Min(1) @RequestParam("price") Integer price, @PathVariable("id") Long id){
-        //if(bindingResult.hasErrors()) eroor with that field
-        // return "customer/update_deposit";
         orderService.setPrice(price,id);
         return "redirect:/admin/orders/{id}";
     }
 
     @PostMapping ("orders/setmaster/{id}")
     public String setMaster(@RequestParam("master") Long masterId, @PathVariable("id") Long id){
-        //if(bindingResult.hasErrors()) eroor with that field
-        // return "customer/update_deposit";
-        System.out.println("-----"+masterId);
         orderService.setMaster(masterId,id);
         return "redirect:/admin/orders/{id}";
     }
@@ -193,6 +182,7 @@ public class AdminController {
     public String showReviews(@PathVariable("id") Long id, Model model){
         try{
             model.addAttribute("master", appUserService.findById(id));
+            model.addAttribute("review", reviewService.findAllByMasterId(id));
         } catch (UsernameNotFoundException u){
             //TODO
         }
