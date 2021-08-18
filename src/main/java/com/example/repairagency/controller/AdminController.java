@@ -156,16 +156,11 @@ public class AdminController {
     }
 
     @PostMapping ("orders/setmaster/{id}")
-    public String setMaster(@RequestParam("master") Integer master, @PathVariable("id") Long id){
+    public String setMaster(@RequestParam("master") Long masterId, @PathVariable("id") Long id){
         //if(bindingResult.hasErrors()) eroor with that field
         // return "customer/update_deposit";
-
-
-        //TODO
-        System.out.println("==============================");
-        System.out.println(master);
-        System.out.println("==============================");
-        //orderService.setMaster(master,id);
+        System.out.println("-----"+masterId);
+        orderService.setMaster(masterId,id);
         return "redirect:/admin/orders/{id}";
     }
     @PostMapping("/order/save")

@@ -110,7 +110,13 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public Order setMaster(AppUser master, Long id) {
-        return null;
+    public Order setMaster(Long masterId, Long id) {
+        Order order = orderRepository.findById(id).orElseThrow(() -> new NoSuchElementException(""));
+        AppUser master = appUserService.findById(masterId);
+        order.setMaster(master);
+        order.setOrderStatus(OrderStatus.WAIT_FOR_MASTER_CONFIRMATION);
+        orderRepository.save(order);
+
+        return order;
     }
 }

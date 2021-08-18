@@ -27,6 +27,6 @@ public interface OrderService {
 
     Order payForOrder(Long id) throws NotEnoughMoneyException;
 
-    Order setMaster(AppUser master, Long id);
+    Order setMaster(Long masterId, Long id);
 }
 
