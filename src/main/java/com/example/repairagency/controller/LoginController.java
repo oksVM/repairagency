@@ -10,9 +10,14 @@ public class LoginController {
     public String login(){
         return "login";}
 
-//TODO redirect
     @GetMapping("/")
     public String home(){
-        return "index";
+        return "redirect:/homepage";
+    }
+
+    @GetMapping("/homepage")
+    public String homePage(){
+        return "homepage";
     }
 }
+

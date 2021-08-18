@@ -9,6 +9,7 @@ import com.example.repairagency.service.OrderService;
 import com.example.repairagency.service.OrderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
@@ -104,7 +105,7 @@ public class AdminController {
 
     @GetMapping("/orders")
     public String viewAllOrders(Model model){
-        return allOrdersPaginated( 1, "AIT","id", "asc", model);
+        return allOrdersPaginated( 1, "","id", "asc", model);
     }
 
     @GetMapping("/orders/page/{pageNo}")
@@ -116,6 +117,8 @@ public class AdminController {
 
         Page<Order> page = orderService.findAllOrdersPaginated(keyWord, pageNo, pageSize, sortField,sortDir);
         List<Order> orderList = page.getContent();
+
+        model.addAttribute("keyWord", keyWord);
 
         model.addAttribute("currentPage", pageNo );
         model.addAttribute("totalPages", page.getTotalPages());
