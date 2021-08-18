@@ -97,7 +97,8 @@ public class CustomerController {
     }
 
     @GetMapping("/update_deposit")
-    public String addMoneyToDeposit (){
+    public String addMoneyToDeposit (Model model){
+        model.addAttribute("customer", appUserService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
         return "customer/deposit";
     }
 
