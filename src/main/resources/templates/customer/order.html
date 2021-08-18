@@ -62,19 +62,15 @@
     </tr>
     </tbody>
 </table>
-<div th:if="${order.orderStatus == T(com.example.repairagency.model.OrderStatus).WAIT_FOR_ADMIN_CONFIRMATION}">
-    <form th:action="@{/admin/orders/setprice/{id}(id=${id})}" th:object="${order}" method="POST">
+<div th:if="${order.orderStatus == T(com.example.repairagency.model.OrderStatus).WAIT_FOR_PAYMENT}">
+    <form th:action="@{/customer/orders/payment/{id}(id=${id})}" th:object="${order}" method="POST">
 
         <div class="form-group">
-            <label class="control-label" for="setPrice" th:text="#{set.price}"> Add money </label>
-            <input name="price" th:type="number" id="setPrice" class="form-control"
-                   required autofocus="autofocus" />
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-success" th:text="#{submit}">Submit</button>
+            <button type="submit" class="btn btn-success" th:text="#{pay}">Pay</button>
         </div>
     </form>
 </div>
+
 </div>
 </body>
 </html>

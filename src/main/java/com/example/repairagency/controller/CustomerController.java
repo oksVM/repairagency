@@ -1,6 +1,7 @@
 package com.example.repairagency.controller;
 
 
+import com.example.repairagency.exception.NotEnoughMoneyException;
 import com.example.repairagency.model.AppUser;
 import com.example.repairagency.model.Order;
 import com.example.repairagency.service.AppUserService;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Min;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Controller
 @Validated
@@ -74,6 +76,24 @@ public class CustomerController {
         model.addAttribute("orderList", orderList);
 
         return "customer/orders";
+    }
+
+    @GetMapping("order/{id}")
+    public String orderProcessing(@PathVariable("id") Long id, Model model){
+        try{
+            model.addAttribute("order", orderService.findOrderById(id));
+        } catch (NoSuchElementException u){
+            //TODO
+        }
+        return "customer/order";
+    }
+
+    @PostMapping ("orders/payment/{id}")
+    public String setPrice(@PathVariable("id") Long id) throws NotEnoughMoneyException {
+        //if(bindingResult.hasErrors()) eroor with that field
+        // return "customer/update_deposit";
+        orderService.payForOrder(id);
+        return "redirect:/customer/order/{id}";
     }
 
     @GetMapping("/update_deposit")

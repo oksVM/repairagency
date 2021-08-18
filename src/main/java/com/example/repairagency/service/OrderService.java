@@ -1,5 +1,6 @@
 package com.example.repairagency.service;
 
+import com.example.repairagency.exception.NotEnoughMoneyException;
 import com.example.repairagency.model.AppUser;
 import com.example.repairagency.model.Order;
 import com.example.repairagency.model.OrderStatus;
@@ -21,5 +22,9 @@ public interface OrderService {
 
 
     Order findOrderById(Long id);
+
+    Order setPrice(Integer price, Long id);
+
+    Order payForOrder(Long id) throws NotEnoughMoneyException;
 }
 

@@ -43,7 +43,6 @@ public class AppUserServiceImpl implements AppUserService {
                     + appUserRegistrationDto.getEmail());
         }
 
-        //TODO
        return appUserRepository.save(AppUser.builder()
                 .firstName(appUserRegistrationDto.getFirstName())
                 .lastName(appUserRegistrationDto.getLastName())
@@ -51,13 +50,6 @@ public class AppUserServiceImpl implements AppUserService {
                 .password(passwordEncoder.encode(appUserRegistrationDto.getPassword()))
                 .role(Role.CUSTOMER)
                 .build());
-
-     /*AppUser user = new AppUser(appUserRegistrationDto.getFirstName(),
-                appUserRegistrationDto.getLastName(),
-                appUserRegistrationDto.getEmail(),
-                passwordEncoder.encode(appUserRegistrationDto.getPassword()), Role.CUSTOMER);
-
-        return appUserRepository.save(user);*/
     }
 
     @Override
@@ -80,7 +72,6 @@ public class AppUserServiceImpl implements AppUserService {
                     + appUserRegistrationDto.getEmail());
         }
 
-        //TODO
         return appUserRepository.save(AppUser.builder()
                 .firstName(appUserRegistrationDto.getFirstName())
                 .lastName(appUserRegistrationDto.getLastName())

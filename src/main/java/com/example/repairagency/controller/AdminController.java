@@ -100,7 +100,6 @@ public class AdminController {
         //if(bindingResult.hasErrors()) eroor with that field
         // return "customer/update_deposit";
         appUserService.updateDeposit(money,id);
-        //return "redirect:/admin/customers/deposit/{id}";
         return "redirect:/admin/customers/deposit/{id}";
     }
 
@@ -145,6 +144,14 @@ public class AdminController {
             //TODO
         }
         return "admin/order";
+    }
+
+    @PostMapping ("orders/setprice/{id}")
+    public String setPrice(@Min(1) @RequestParam("price") Integer price, @PathVariable("id") Long id){
+        //if(bindingResult.hasErrors()) eroor with that field
+        // return "customer/update_deposit";
+        orderService.setPrice(price,id);
+        return "redirect:/admin/orders/{id}";
     }
 
     @GetMapping("/masters")
