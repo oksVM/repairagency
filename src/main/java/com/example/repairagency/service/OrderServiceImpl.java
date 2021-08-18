@@ -63,6 +63,9 @@ public class OrderServiceImpl implements OrderService{
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name())? Sort.by(sortField):
                 Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNo-1, pageSize, sort);
-        return orderRepository.findAll(keyWord, pageable);
+        if(keyWord!=null){
+            return orderRepository.findAll(keyWord,pageable);
+        }
+        return orderRepository.findAll(pageable);
     }
 }

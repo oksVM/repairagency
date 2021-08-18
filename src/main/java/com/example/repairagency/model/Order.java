@@ -66,5 +66,10 @@ public class Order {
 
     public Order(OrderStatus waitForAdminConfirmation) {
     }
+
+    @Override
+    public String toString() {
+        return orderStatus.toString();
+    }
 }
 

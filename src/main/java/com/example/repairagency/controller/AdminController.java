@@ -105,13 +105,15 @@ public class AdminController {
 
     @GetMapping("/orders")
     public String viewAllOrders(Model model){
-        return allOrdersPaginated( 1, "","id", "asc", model);
+        String keyWord = null;
+
+        return allOrdersPaginated( 1,"id", "asc", keyWord, model);
     }
 
     @GetMapping("/orders/page/{pageNo}")
-    public String allOrdersPaginated(@PathVariable(value = "pageNo") int pageNo, @RequestParam("keyWord") String keyWord,
+    public String allOrdersPaginated(@PathVariable(value = "pageNo") int pageNo,
                                      @RequestParam("sortField") String sortField,
-                                     @RequestParam("sortDir") String sortDir,
+                                     @RequestParam("sortDir") String sortDir,@Param("keyWord") String keyWord,
                                      Model model){
         int pageSize = 5;
 

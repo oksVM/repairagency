@@ -13,13 +13,9 @@ import java.util.List;
 import java.util.Optional;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
-//@Query("SELECT o FROM orders o WHERE o.orderStatus LIKE %?1%")
-//List<Order> findAll(String keyWord);
-/*@Query("SELECT o FROM Order o  WHERE o.orderName LIKE %?1%")
-Page<Order> findAll(String keyWord, Pageable pageable);*/
-@Query(value = "SELECT * FROM orders   WHERE order_status LIKE  '%' || :keyword || '%' ", nativeQuery=true)
+
+//@Query("SELECT o FROM Order o  WHERE o.master.email LIKE %?1%")
+@Query("SELECT o FROM Order o WHERE LOWER(o.orderStatus) LIKE LOWER(CONCAT('%', ?1,'%'))")
 Page<Order> findAll(@Param("keyword") String keyword, Pageable pageable);
-
-
-    Page<Order> findAllByCustomerId(Long id, Pageable pageable);
+Page<Order> findAllByCustomerId(Long id, Pageable pageable);
 }

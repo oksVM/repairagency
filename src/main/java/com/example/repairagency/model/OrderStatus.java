@@ -4,12 +4,12 @@ import lombok.Data;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 public enum OrderStatus {
-    WAIT_FOR_ADMIN_CONFIRMATION("Order wait for administrator confirmation"),
-    WAIT_FOR_PAYMENT ("Order wait for payment"),
-    PAID("Order is paid"),
-    CANCELED("Order is canceled"),
-    IN_WORK("Order in work"),
-    DONE("Order is done");
+    WAIT_FOR_ADMIN_CONFIRMATION("WAIT_FOR_ADMIN_CONFIRMATION"),
+    WAIT_FOR_PAYMENT ("WAIT_FOR_PAYMENT"),
+    PAID("PAID"),
+    CANCELED("CANCELED"),
+    IN_WORK("IN_WORK"),
+    DONE("DONE");
 
     private String orderStatusDescription;
 
@@ -23,5 +23,10 @@ public enum OrderStatus {
 
     public void setOrderStatusDescription(String orderStatusDescription) {
         this.orderStatusDescription = orderStatusDescription;
+    }
+
+    @Override
+    public String toString() {
+        return orderStatusDescription;
     }
 }
