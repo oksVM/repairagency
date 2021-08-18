@@ -18,4 +18,5 @@ Optional <Order> findById(Long id);
 @Query("SELECT o FROM Order o WHERE LOWER(o.orderStatus) LIKE LOWER(CONCAT('%', ?1,'%'))")
 Page<Order> findAll(@Param("keyword") String keyword, Pageable pageable);
 Page<Order> findAllByCustomerId(Long id, Pageable pageable);
+Page<Order> findAllByMasterId(Long id, Pageable pageable);
 }

@@ -118,4 +118,30 @@ public class OrderServiceImpl implements OrderService{
 
         return order;
     }
+
+    @Override
+    public Page<Order> findAllMasterOrders(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo-1, pageSize);
+        return orderRepository
+                .findAllByMasterId(((AppUser) appUserService
+                        .loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName())).getId(), pageable);
+    }
+
+    @Override
+    public Order takeInWork(Long id) {
+        Order order = orderRepository.findById(id).orElseThrow(() -> new NoSuchElementException(""));
+        order.setOrderStatus(OrderStatus.IN_WORK);
+        orderRepository.save(order);
+
+        return order;
+    }
+
+    @Override
+    public Order markAsDone(Long id) {
+        Order order = orderRepository.findById(id).orElseThrow(() -> new NoSuchElementException(""));
+        order.setOrderStatus(OrderStatus.DONE);
+        orderRepository.save(order);
+
+        return order;
+    }
 }

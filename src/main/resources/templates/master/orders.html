@@ -46,7 +46,7 @@
             <th scope="col" th:text="#{price}">PRICE</th>
             <th scope="col" th:text="#{status}">STATUS</th>
             <th scope="col" th:text="#{date}">DATE</th>
-            <th scope="col" th:text="#{master}">MASTER</th>
+            <th scope="col" th:text="#{customer}">MASTER</th>
             <th scope="col" th:text="#{action}">TO DO</th>
 
         </tr>
@@ -59,9 +59,9 @@
             <td th:text="${order.price}?: '-'"></td>
             <td th:text="${order.orderStatus}"></td>
             <td th:text="${#temporals.format(order.offsetDateTime, 'dd/MM/yyyy HH:mm')}">31/12/2015 15:00</td>
-            <td th:text="${order.master}? ${order.master.username} : '-'"></td>
+            <td th:text="${order.customer}? ${order.customer.username} : '-'"></td>
             <td>
-                <a th:href="@{'/customer/order/' + ${order.id}}" th:text="#{more}">MORE</a>
+                <a th:href="@{'/master/order/' + ${order.id}}" th:text="#{more}">MORE</a>
             </td>
 
         </tr>

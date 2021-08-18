@@ -89,7 +89,7 @@ public class CustomerController {
     }
 
     @PostMapping ("orders/payment/{id}")
-    public String setPrice(@PathVariable("id") Long id) throws NotEnoughMoneyException {
+    public String payForOrder(@PathVariable("id") Long id) throws NotEnoughMoneyException {
         //if(bindingResult.hasErrors()) eroor with that field
         // return "customer/update_deposit";
         orderService.payForOrder(id);

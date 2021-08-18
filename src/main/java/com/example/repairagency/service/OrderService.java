@@ -28,5 +28,11 @@ public interface OrderService {
     Order payForOrder(Long id) throws NotEnoughMoneyException;
 
     Order setMaster(Long masterId, Long id);
+
+    Page<Order> findAllMasterOrders(int pageNo, int pageSize);
+
+    Order takeInWork(Long id);
+
+    Order markAsDone(Long id);
 }
 

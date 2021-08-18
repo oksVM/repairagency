@@ -45,8 +45,6 @@
         <th scope="col" th:text="#{status}">Status</th>
         <th scope="col"  th:text="#{date}">Date</th>
         <th scope="col" th:text="#{customer}">Customer</th>
-        <th scope="col" th:text="#{master}">MASTER</th>
-
     </tr>
     </thead>
     <tbody>
@@ -58,18 +56,25 @@
         <td th:text="${order.orderStatus}"></td>
         <td th:text="${#temporals.format(order.offsetDateTime, 'dd/MM/yyyy HH:mm')}">DateTime</td>
         <td th:text="${order.customer.username}"></td>
-        <td th:text="${order.master}? ${order.master.username} : '-'"></td>
     </tr>
     </tbody>
 </table>
-<div th:if="${order.orderStatus == T(com.example.repairagency.model.OrderStatus).WAIT_FOR_PAYMENT}">
-    <form th:action="@{/customer/orders/payment/{id}(id=${id})}" th:object="${order}" method="POST">
+<div th:if="${order.orderStatus == T(com.example.repairagency.model.OrderStatus).WAIT_FOR_MASTER_CONFIRMATION}">
+    <form th:action="@{/master/order/inwork/{id}(id=${id})}" th:object="${order}" method="POST">
 
         <div class="form-group">
-            <button type="submit" class="btn btn-success" th:text="#{pay}">Pay</button>
+            <button type="submit" class="btn btn-success" th:text="#{in.work}">In work</button>
         </div>
     </form>
 </div>
+    <div th:if="${order.orderStatus == T(com.example.repairagency.model.OrderStatus).IN_WORK}">
+        <form th:action="@{/master/order/done/{id}(id=${id})}" th:object="${order}" method="POST">
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-success" th:text="#{done}">In work</button>
+            </div>
+        </form>
+    </div>
 
 </div>
 </body>
