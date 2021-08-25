@@ -92,9 +92,15 @@ public class CustomerController {
     }
 
     @PostMapping ("orders/payment/{id}")
-    public String payForOrder(@PathVariable("id") Long id) throws NotEnoughMoneyException {
-        orderService.payForOrder(id);
-        return "redirect:/customer/order/{id}";
+    public String payForOrder(@PathVariable("id") Long id){
+        try{
+            orderService.payForOrder(id);
+        } catch (NotEnoughMoneyException exception){
+            //model.addAttribute("notEnoughMoney", true);
+            //bindingResult.rejectValue("email", "userData.email", "An account already exists for this email.");
+            return "redirect:/customer/order/{id}?errorPayment";
+        }
+        return "redirect:/customer/order/{id}?successPayment";
     }
 
     @GetMapping("/update_deposit")

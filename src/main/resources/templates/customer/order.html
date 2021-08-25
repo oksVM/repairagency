@@ -62,9 +62,14 @@
     </tr>
     </tbody>
 </table>
+    <div th:if="${param.successPayment}">
+        <div class="alert alert-info" th:text="#{success.paid}">You've successfully registered!</div>
+    </div>
 <div th:if="${order.orderStatus == T(com.example.repairagency.model.OrderStatus).WAIT_FOR_PAYMENT}">
     <form th:action="@{/customer/orders/payment/{id}(id=${id})}" th:object="${order}" method="POST">
-
+        <div th:if="${param.errorPayment}">
+            <div class="alert alert-danger" th:text="#{error.paid}"></div>
+        </div>
         <div class="form-group">
             <button type="submit" class="btn btn-success" th:text="#{pay}">Pay</button>
         </div>
