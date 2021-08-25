@@ -70,6 +70,7 @@ public class OrderServiceImpl implements OrderService{
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name())? Sort.by(sortField):
                 Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNo-1, pageSize, sort);
+        //TODO
         if(keyWord!=null){
             return orderRepository.findAll(keyWord,pageable);
         }
@@ -82,6 +83,7 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
+    @Transactional
     public Order setPrice(Integer price, Long id) {
         Order order = orderRepository.findById(id).orElseThrow(() -> new NoSuchElementException(""));
         order.setPrice(price);
@@ -107,6 +109,7 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
+    @Transactional
     public Order setMaster(Long masterId, Long id) {
         Order order = orderRepository.findById(id).orElseThrow(() -> new NoSuchElementException(""));
         AppUser master = appUserService.findById(masterId);
@@ -125,6 +128,7 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
+    @Transactional
     public Order takeInWork(Long id) {
         Order order = orderRepository.findById(id).orElseThrow(() -> new NoSuchElementException(""));
         order.setOrderStatus(OrderStatus.IN_WORK);
@@ -133,6 +137,7 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
+    @Transactional
     public Order markAsDone(Long id) {
         Order order = orderRepository.findById(id).orElseThrow(() -> new NoSuchElementException(""));
         order.setOrderStatus(OrderStatus.DONE);

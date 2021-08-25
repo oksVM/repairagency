@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -61,6 +62,7 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
+    @Transactional
     public AppUser updateDeposit(Integer money, Long id) {
         AppUser updatedAppUser = appUserRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException(""));
         updatedAppUser.setAmountOfMoney(updatedAppUser.getAmountOfMoney()+money);
@@ -102,6 +104,7 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
+    @Transactional
     public AppUser leaveFeedback(String feedback, Long orderId) {
         Order order = orderRepository.findById(orderId).orElseThrow(()->new NoSuchElementException(""));
         Long masterId = order.getMaster().getId();
