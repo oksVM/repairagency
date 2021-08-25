@@ -161,7 +161,7 @@ public class AdminController {
     @PostMapping ("orders/setmaster/{id}")
     public String setMaster(@RequestParam("master") Long masterId, @PathVariable("id") Long id){
         orderService.setMaster(masterId,id);
-        return "redirect:/admin/orders/{id}";
+        return "redirect:/admin/orders/{id}?successSetMaster";
     }
     @PostMapping("/order/save")
     public String newOrder (@ModelAttribute("order") Order order) {

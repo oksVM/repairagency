@@ -84,15 +84,6 @@ public class OrderServiceImpl implements OrderService{
         return orderRepository.findById(id).orElseThrow(() -> new NoSuchElementException(""));
     }
 
-   /* @Override
-    @Transactional
-    public Order setPrice(PriceDto price, Long id) {
-        Order order = orderRepository.findById(id).orElseThrow(() -> new NoSuchElementException(""));
-        order.setPrice(price.getAmountOfMoney());
-        order.setOrderStatus(OrderStatus.WAIT_FOR_PAYMENT);
-        orderRepository.save(order);
-        return order;
-    }*/
    @Override
    @Transactional
    public Order setPrice(PriceDto price, Long id) {

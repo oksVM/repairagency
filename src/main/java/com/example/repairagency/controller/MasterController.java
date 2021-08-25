@@ -64,12 +64,12 @@ public class MasterController {
     @PostMapping("order/inwork/{id}")
     public String takeInWork(@PathVariable("id") Long id) throws NotEnoughMoneyException {
         orderService.takeInWork(id);
-        return "redirect:/master/order/{id}";
+        return "redirect:/master/order/{id}?successInWork";
     }
 
     @PostMapping("order/done/{id}")
     public String markAsDOne(@PathVariable("id") Long id) throws NotEnoughMoneyException {
         orderService.markAsDone(id);
-        return "redirect:/master/order/{id}";
+        return "redirect:/master/order/{id}?successDone";
     }
 }

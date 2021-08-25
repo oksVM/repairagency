@@ -59,6 +59,12 @@
     </tr>
     </tbody>
 </table>
+    <div th:if="${param.successInWork}">
+        <div class="alert alert-info" th:text="#{success.inwork}"></div>
+    </div>
+    <div th:if="${param.successDone}">
+        <div class="alert alert-info" th:text="#{success.done}"></div>
+    </div>
 <div th:if="${order.orderStatus == T(com.example.repairagency.model.OrderStatus).WAIT_FOR_MASTER_CONFIRMATION}">
     <form th:action="@{/master/order/inwork/{id}(id=${id})}" th:object="${order}" method="POST">
 

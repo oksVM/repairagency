@@ -65,6 +65,9 @@
     <div th:if="${param.successPayment}">
         <div class="alert alert-info" th:text="#{success.paid}">You've successfully registered!</div>
     </div>
+    <div th:if="${param.successReview}">
+        <div class="alert alert-info" th:text="#{success.review}"></div>
+    </div>
 <div th:if="${order.orderStatus == T(com.example.repairagency.model.OrderStatus).WAIT_FOR_PAYMENT}">
     <form th:action="@{/customer/orders/payment/{id}(id=${id})}" th:object="${order}" method="POST">
         <div th:if="${param.errorPayment}">

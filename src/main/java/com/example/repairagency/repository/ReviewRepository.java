@@ -1,6 +1,5 @@
 package com.example.repairagency.repository;
 
-import com.example.repairagency.model.Order;
 import com.example.repairagency.model.Review;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

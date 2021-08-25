@@ -9,6 +9,7 @@ import com.example.repairagency.model.Review;
 import com.example.repairagency.service.AppUserService;
 import com.example.repairagency.service.OrderService;
 import com.example.repairagency.service.OrderServiceImpl;
+import com.example.repairagency.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,11 +31,13 @@ import java.util.NoSuchElementException;
 public class CustomerController {
     AppUserService appUserService;
     OrderService orderService;
+    ReviewService reviewService;
 
     @Autowired
-    public CustomerController(AppUserService appUserService, OrderService orderService) {
+    public CustomerController(AppUserService appUserService, OrderService orderService, ReviewService reviewService) {
         this.appUserService = appUserService;
         this.orderService = orderService;
+        this.reviewService=reviewService;
     }
 
     @GetMapping
@@ -121,8 +124,8 @@ public class CustomerController {
 
     @PostMapping("/orders/feedback/{id}")
     public String leaveFeedback(@RequestParam("feedback") String feedback,  @PathVariable("id") Long orderId){
-        appUserService.leaveFeedback (feedback, orderId);
-        return "redirect:/customer/order/{id}";
+        reviewService.leaveFeedback (feedback, orderId);
+        return "redirect:/customer/order/{id}?successReview";
     }
 
 }

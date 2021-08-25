@@ -100,21 +100,6 @@ public class AppUserServiceImpl implements AppUserService {
         return appUserRepository.findAllByRole(Role.MASTER);
     }
 
-    @Override
-    @Transactional
-    public AppUser leaveFeedback(String feedback, Long orderId) {
-        Order order = orderRepository.findById(orderId).orElseThrow(()->new NoSuchElementException(""));
-        Long masterId = order.getMaster().getId();
-        AppUser updatedMaster = appUserRepository.findById(masterId).orElseThrow(() -> new UsernameNotFoundException(""));
-        Review review = reviewRepository.save(Review.builder()
-        .master(updatedMaster)
-        .reviewDescription(feedback)
-        .build());
-        order.setOrderStatus(OrderStatus.REVIEWED);
-        orderRepository.save(order);
-
-        return updatedMaster;
-    }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
