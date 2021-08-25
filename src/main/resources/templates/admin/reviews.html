@@ -51,7 +51,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="r : ${review}">
+        <tr th:each="r : ${reviewsList}">
             <td th:text="${r.id}"></td>
             <td th:text="${r.reviewDescription}"></td>
             <td th:text="${r.master.email}"></td>
@@ -60,6 +60,29 @@
     </table>
 
 
+    <div th:if="${totalPages > 1}">
+        <div class="row col-sm-10">
+            <div class="col-sm-2" th:text="#{total.items}+${totalItems}">
+                Total Rows: [[${totalItems}]]
+            </div>
+            <div class="col-sm-1">
+            <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+      <a th:if="${currentPage != i}" th:href="@{'/admin/masters/reviews/'+ ${master.id}+'/page/' + ${i}}">[[${i}]]</a>
+      <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
+            </span>
+            </div>
+            <div class="col-sm-1">
+                <a th:if="${currentPage < totalPages}" th:href="@{'/admin/masters/reviews/'+ ${master.id}+'/page/' + ${currentPage + 1}}" th:text="#{next}">Next</a>
+                <span th:unless="${currentPage < totalPages}" th:text="#{next}">Next</span>
+            </div>
+
+            <div class="col-sm-1">
+                <a th:if="${currentPage < totalPages}" th:href="@{'/admin/masters/reviews/'+ ${master.id}+'/page/' + ${totalPages}}" th:text="#{last}">Last</a>
+                <span th:unless="${currentPage < totalPages}" th:text="#{last}">Last</span>
+            </div>
+        </div>
+    </div>
 </div>
+
 </body>
 </html>

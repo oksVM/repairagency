@@ -35,10 +35,6 @@ public class AppUserServiceImpl implements AppUserService {
         this.orderRepository = orderRepository;
     }
 
-    @Override
-    public List<AppUser> findAllCustomers() {
-        return appUserRepository.findAllByRole(Role.CUSTOMER);
-    }
 
     @Override
     public AppUser saveNewCustomer(AppUserRegistrationDto appUserRegistrationDto) throws UserAlreadyExistAuthenticationException {

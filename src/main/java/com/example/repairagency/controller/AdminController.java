@@ -4,8 +4,10 @@ import com.example.repairagency.dto.AppUserRegistrationDto;
 import com.example.repairagency.exception.UserAlreadyExistAuthenticationException;
 import com.example.repairagency.model.AppUser;
 import com.example.repairagency.model.Order;
+import com.example.repairagency.model.Review;
 import com.example.repairagency.service.AppUserService;
 import com.example.repairagency.service.OrderService;
+import com.example.repairagency.service.ReviewService;
 import com.example.repairagency.service.ReviewServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,13 +31,13 @@ public class AdminController {
 
     private AppUserService appUserService;
     private OrderService orderService;
-    private ReviewServiceImpl reviewServiceImpl;
+    private ReviewService reviewService;
 
     @Autowired
-    public AdminController(AppUserService appUserService, OrderService orderService, ReviewServiceImpl reviewServiceImpl) {
+    public AdminController(AppUserService appUserService, OrderService orderService, ReviewService reviewService) {
         this.appUserService = appUserService;
         this.orderService = orderService;
-        this.reviewServiceImpl = reviewServiceImpl;
+        this.reviewService = reviewService;
     }
 
     @GetMapping()
@@ -178,16 +180,25 @@ public class AdminController {
         return "admin/masters";
     }
 
-    @GetMapping("masters/reviews/{id}")
-    public String showReviews(@PathVariable("id") Long id, Model model){
-        try{
-            model.addAttribute("master", appUserService.findById(id));
-            model.addAttribute("review", reviewServiceImpl.findAllByMasterId(id));
-        } catch (UsernameNotFoundException u){
-            //TODO
-        }
+
+   @GetMapping("/masters/reviews/{id}")
+   public String allMasterReviews(@PathVariable("id") Long id,Model model){
+       return allMasterReviewsPaginated(id,1, model);
+   }
+
+    @GetMapping("/masters/reviews/{id}/page/{pageNo}")
+    public String allMasterReviewsPaginated(@PathVariable("id") Long id, @PathVariable(value = "pageNo") int pageNo, Model model){
+        int pageSize = 5;
+
+        Page<Review> page = reviewService.findAllReviewsByMasterId(id,pageNo, pageSize);
+        List<Review> reviewsList = page.getContent();
+        model.addAttribute("master", appUserService.findById(id));
+        model.addAttribute("currentPage", pageNo );
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("reviewsList", reviewsList);
+
         return "admin/reviews";
     }
-
 }
 
