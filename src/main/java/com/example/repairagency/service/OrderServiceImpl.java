@@ -53,11 +53,15 @@ public class OrderServiceImpl implements OrderService{
         order.setCustomer((AppUser) appUserService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
         return this.orderRepository.save(order);*/
         return orderRepository.save(Order.builder()
+                .orderName(order.getOrderName())
+                .orderDescription(order.getOrderDescription())
+                .area(order.getArea())
                 .orderStatus(OrderStatus.WAIT_FOR_ADMIN_CONFIRMATION)
                 .offsetDateTime(OffsetDateTime.now())
                 .customer((AppUser) appUserService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()))
                 .build());
     }
+
 
     @Override
     public Page<Order> findAllCurrentCustomerOrders(int pageNo, int pageSize) {
