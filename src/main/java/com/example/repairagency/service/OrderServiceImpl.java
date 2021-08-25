@@ -1,6 +1,7 @@
 package com.example.repairagency.service;
 
 import com.example.repairagency.dto.AppUserRegistrationDto;
+import com.example.repairagency.dto.PriceDto;
 import com.example.repairagency.exception.NotEnoughMoneyException;
 import com.example.repairagency.exception.UserAlreadyExistAuthenticationException;
 import com.example.repairagency.model.AppUser;
@@ -47,10 +48,15 @@ public class OrderServiceImpl implements OrderService{
 
 
     public Order save(Order order) {
-        order.setOrderStatus(OrderStatus.WAIT_FOR_ADMIN_CONFIRMATION);
+        /*order.setOrderStatus(OrderStatus.WAIT_FOR_ADMIN_CONFIRMATION);
         order.setOffsetDateTime(OffsetDateTime.now());
         order.setCustomer((AppUser) appUserService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
-        return this.orderRepository.save(order);
+        return this.orderRepository.save(order);*/
+        return orderRepository.save(Order.builder()
+                .orderStatus(OrderStatus.WAIT_FOR_ADMIN_CONFIRMATION)
+                .offsetDateTime(OffsetDateTime.now())
+                .customer((AppUser) appUserService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()))
+                .build());
     }
 
     @Override
@@ -78,20 +84,28 @@ public class OrderServiceImpl implements OrderService{
         return orderRepository.findById(id).orElseThrow(() -> new NoSuchElementException(""));
     }
 
-    @Override
+   /* @Override
     @Transactional
-    public Order setPrice(Integer price, Long id) {
+    public Order setPrice(PriceDto price, Long id) {
         Order order = orderRepository.findById(id).orElseThrow(() -> new NoSuchElementException(""));
-        order.setPrice(price);
+        order.setPrice(price.getAmountOfMoney());
         order.setOrderStatus(OrderStatus.WAIT_FOR_PAYMENT);
         orderRepository.save(order);
         return order;
-    }
+    }*/
+   @Override
+   @Transactional
+   public Order setPrice(PriceDto price, Long id) {
+       Order order = findOrderById(id);
+       order.setPrice(price.getAmountOfMoney());
+       order.setOrderStatus(OrderStatus.WAIT_FOR_PAYMENT);
+       return order;
+   }
 
     @Override
     @Transactional
     public Order payForOrder(Long id) throws NotEnoughMoneyException {
-        Order order = orderRepository.findById(id).orElseThrow(() -> new NoSuchElementException(""));
+        Order order = findOrderById(id);
         AppUser currentAppUser = ((AppUser) appUserService
                 .loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
         if(order.getPrice()>currentAppUser.getAmountOfMoney()){
@@ -107,7 +121,7 @@ public class OrderServiceImpl implements OrderService{
     @Override
     @Transactional
     public Order setMaster(Long masterId, Long id) {
-        Order order = orderRepository.findById(id).orElseThrow(() -> new NoSuchElementException(""));
+        Order order = findOrderById(id);
         AppUser master = appUserService.findById(masterId);
         order.setMaster(master);
         order.setOrderStatus(OrderStatus.WAIT_FOR_MASTER_CONFIRMATION);
@@ -126,7 +140,7 @@ public class OrderServiceImpl implements OrderService{
     @Override
     @Transactional
     public Order takeInWork(Long id) {
-        Order order = orderRepository.findById(id).orElseThrow(() -> new NoSuchElementException(""));
+        Order order = findOrderById(id);
         order.setOrderStatus(OrderStatus.IN_WORK);
         orderRepository.save(order);
         return order;
@@ -135,7 +149,7 @@ public class OrderServiceImpl implements OrderService{
     @Override
     @Transactional
     public Order markAsDone(Long id) {
-        Order order = orderRepository.findById(id).orElseThrow(() -> new NoSuchElementException(""));
+        Order order = findOrderById(id);
         order.setOrderStatus(OrderStatus.DONE);
         orderRepository.save(order);
         return order;

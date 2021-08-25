@@ -2,6 +2,7 @@ package com.example.repairagency.controller;
 
 import com.example.repairagency.dto.AppUserRegistrationDto;
 import com.example.repairagency.dto.DepositDTO;
+import com.example.repairagency.dto.PriceDto;
 import com.example.repairagency.exception.UserAlreadyExistAuthenticationException;
 import com.example.repairagency.model.AppUser;
 import com.example.repairagency.model.Order;
@@ -140,6 +141,7 @@ public class AdminController {
     @GetMapping("orders/{id}")
     public String orderProcessing(@PathVariable("id") Long id, Model model){
         try{
+            model.addAttribute("price", new PriceDto());
             model.addAttribute("order", orderService.findOrderById(id));
             model.addAttribute("mastersList", appUserService.findAllMasters());
         } catch (NoSuchElementException u){
@@ -149,9 +151,11 @@ public class AdminController {
     }
 
     @PostMapping ("orders/setprice/{id}")
-    public String setPrice(@Min(1) @RequestParam("price") Integer price, @PathVariable("id") Long id){
-        orderService.setPrice(price,id);
-        return "redirect:/admin/orders/{id}";
+    public String setPrice(@ModelAttribute("money") @Valid PriceDto depositDTO, BindingResult bindingResult, @PathVariable("id") Long id){
+        if (bindingResult.hasErrors())
+            return "redirect:/admin/orders/{id}?error";
+        orderService.setPrice(depositDTO,id);
+        return "redirect:/admin/orders/{id}?successPrice";
     }
 
     @PostMapping ("orders/setmaster/{id}")
