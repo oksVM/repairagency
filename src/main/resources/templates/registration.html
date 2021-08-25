@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="ISO-8859-1">
-    <title th:text="#{registration}">Registration</title>
+    <title th:text="#{page.registration}">Registration</title>
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -22,7 +22,7 @@
                     class="icon-bar"></span> <span class="icon-bar"></span> <span
                     class="icon-bar"></span>
             </button>
-            <a class="navbar-link" href="#" th:href="@{/starthomepage}" th:text="#{home}">Home</a>
+            <a class="navbar-link" href="#" th:href="@{/starthomepage}" th:text="#{page.home}">Home</a>
             <a class="navbar-link" href="#" th:href="@{'?locale=en'}">EN</a>
             <a class="navbar-link" href="#" th:href="@{'?locale=ua'}">UA</a>
         </div>
@@ -38,54 +38,54 @@
 
             <!-- success message -->
             <div th:if="${param.success}">
-                <div class="alert alert-info" th:text="#{successfully.registered}">You've successfully registered!</div>
+                <div class="alert alert-info" th:text="#{success.registered}">You've successfully registered!</div>
             </div>
             <div th:if="${alreadyExist}">
-                <div class="alert alert-danger" role="alert" th:text="#{username.already.exists}"></div>
+                <div class="alert alert-danger" role="alert" th:text="#{error.username.already.exists}"></div>
             </div>
 
-            <h1 th:text="#{registration.for.new}">Registration for new users</h1>
+            <h1 th:text="#{page.registration.for.new}">Registration for new users</h1>
 
             <form th:action="@{/registration}" method="POST" th:object="${user}">
                 <div th:if="${alreadyExist}">
-                    <div class="alert alert-danger" role="alert" th:text="#{username.already.exists}"></div>
+                    <div class="alert alert-danger" role="alert" th:text="#{error.username.already.exists}"></div>
                 </div>
               <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
                   <p th:each="err : ${#fields.errors('firstName')}"
-                     th:text="#{first.name.should.be}" >Validation error</p>
+                     th:text="#{error.firstname}" >Validation error</p>
                     <p th:each="err : ${#fields.errors('lastName')}"
-                       th:text="#{last.name.should.be}" >Validation error</p>
+                       th:text="#{error.lastname}" >Validation error</p>
                   <p th:each="err : ${#fields.errors('email')}"
-                     th:text="#{invalid.email}" >Validation error</p>
+                     th:text="#{error.email}" >Validation error</p>
                   <p th:each="err : ${#fields.errors('password')}"
-                     th:text="#{password.should.be}" >Validation error</p>
+                     th:text="#{error.password}" >Validation error</p>
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label" for="firstName" th:text="#{firstname}"> First Name </label>
+                    <label class="control-label" for="firstName" th:text="#{data.firstname}"> First Name </label>
                     <input type="text" id="firstName" class="form-control" th:field="*{firstName}"
                            required autofocus="autofocus" />
                 </div>
                 <div class="form-group">
-                    <label class="control-label" for="lastName" th:text="#{lastname}"> Last Name </label>
+                    <label class="control-label" for="lastName" th:text="#{data.lastname}"> Last Name </label>
                     <input type="text" id="lastName" class="form-control" th:field="*{lastName}"
                            required autofocus="autofocus" />
                 </div>
                 <div class="form-group">
-                    <label class="control-label" for="email" th:text="#{username}"> Username </label>
+                    <label class="control-label" for="email" th:text="#{data.username}"> Username </label>
                     <input type="text" id="email" class="form-control" th:field="*{email}"
                            required autofocus="autofocus" />
                 </div>
                 <div class="form-group">
-                    <label class="control-label" for="password" th:text="#{password}"> Password </label>
+                    <label class="control-label" for="password" th:text="#{data.password}"> Password </label>
                     <input type="text" id="password" class="form-control" th:field="*{password}"
                            required autofocus="autofocus" />
                 </div>
 
 
                 <div class="form-group">
-                    <button type="submit" class="btn btn-success" th:text="#{register}">Register</button>
-                    <span> <b th:text="#{already.registered}"> Already registered? </b> <a href="/" th:href="@{/login}" th:text="#{login.here}">Login
+                    <button type="submit" class="btn btn-success" th:text="#{page.register}">Register</button>
+                    <span> <b th:text="#{page.already.registered}"> Already registered? </b> <a href="/" th:href="@{/login}" th:text="#{page.login.here}">Login
 								here</a></span>
                 </div>
 

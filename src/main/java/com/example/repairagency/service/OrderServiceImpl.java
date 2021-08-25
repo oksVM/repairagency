@@ -48,10 +48,6 @@ public class OrderServiceImpl implements OrderService{
 
 
     public Order save(Order order) {
-        /*order.setOrderStatus(OrderStatus.WAIT_FOR_ADMIN_CONFIRMATION);
-        order.setOffsetDateTime(OffsetDateTime.now());
-        order.setCustomer((AppUser) appUserService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
-        return this.orderRepository.save(order);*/
         return orderRepository.save(Order.builder()
                 .orderName(order.getOrderName())
                 .orderDescription(order.getOrderDescription())

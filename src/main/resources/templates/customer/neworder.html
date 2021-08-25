@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="ISO-8859-1">
-    <title th:text="#{create.new.order}">Create new order</title>
+    <title th:text="#{page.create.new.order}">Create new order</title>
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -25,10 +25,10 @@
 
         </div>
         <div id="navbar1" class="collapse navbar-collapse">
-            <a class="navbar-link" href="#" th:href="@{/homepage}" th:text="#{home}">Home</a>
+            <a class="navbar-link" href="#" th:href="@{/homepage}" th:text="#{page.home}">Home</a>
             <a class="navbar-link"  href="#" th:href="@{'?locale=en'}">EN</a>
             <a class="navbar-link"  href="#" th:href="@{'?locale=ua'}">UA</a>
-            <a sec:authorize="isAuthenticated()"><a th:href="@{/logout}" th:text="#{logout}">Logout</a></a>
+            <a sec:authorize="isAuthenticated()"><a th:href="@{/logout}" th:text="#{page.logout}">Logout</a></a>
         </div>
     </div>
 </nav>
@@ -41,17 +41,17 @@
             <div th:if="${param.success}">
                 <div class="alert alert-info" th:text="#{success.order}"></div>
             </div>
-            <h1 th:text="#{create.new.order}">Create new order</h1>
+            <h1 th:text="#{page.create.new.order}">Create new order</h1>
             <form th:action="@{/customer/order/save}" method="POST" th:object="${order}" >
                 <div class="form-group">
-                    <label class="control-label" for="name" th:text="#{short.name}"> Name </label>
+                    <label class="control-label" for="name" th:text="#{data.short.name}"> Name </label>
                     <input type="text" id="name" class="form-control" th:field="*{orderName}"
                            required autofocus="autofocus" />
                 </div>
 
                  <div class="form-group">
 
-                     <label class="control-label" th:text="#{category}"> Categoty </label>
+                     <label class="control-label" th:text="#{data.category}"> Categoty </label>
                      <select  class="form-control" th:field="*{area}">
                      <th:block th:each="area : ${T(com.example.repairagency.model.Area).values()}">
                      <option th:text="${area}" th:value="${area.valueOf(area)}"/>
@@ -60,13 +60,13 @@
                </div>
 
                 <div class="form-group">
-                    <label class="control-label" for="orderDesc" th:text="#{problem.description}"> Problem description </label>
+                    <label class="control-label" for="orderDesc" th:text="#{data.problem.description}"> Problem description </label>
                     <input type="text" id="orderDesc" class="form-control" th:field="*{orderDescription}"
                            required autofocus="autofocus" />
                 </div>
 
                 <div class="form-group">
-                    <button type="submit" class="btn btn-success" th:text="#{submit}">Register</button>
+                    <button type="submit" class="btn btn-success" th:text="#{page.submit}">Register</button>
                 </div>
 
 

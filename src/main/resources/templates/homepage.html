@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="ISO-8859-1">
-    <title th:text="#{home}">Home</title>
+    <title th:text="#{page.home}">Home</title>
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -25,10 +25,10 @@
 
         </div>
         <div id="navbar1" class="collapse navbar-collapse">
-            <a class="navbar-link" href="#" th:href="@{/homepage}" th:text="#{home}">Home</a>
+            <a class="navbar-link" href="#" th:href="@{/homepage}" th:text="#{page.home}">Home</a>
             <a class="navbar-link"  href="#" th:href="@{'?locale=en'}">EN</a>
             <a class="navbar-link"  href="#" th:href="@{'?locale=ua'}">UA</a>
-            <a sec:authorize="isAuthenticated()"><a th:href="@{/logout}" th:text="#{logout}">Logout</a></a>
+            <a sec:authorize="isAuthenticated()"><a th:href="@{/logout}" th:text="#{page.logout}">Logout</a></a>
         </div>
     </div>
 </nav>
@@ -38,28 +38,28 @@
 
 
 <div class="container">
-    <h1 th:text="#{welcome.to.our.repair.agency}">Welcome</h1>
-    <h1 th:text="#{you.login}"> Welcome </h1> <h1 sec:authentication="principal.firstName"> User</h1>
-    <h1 th:text="#{your.role}"> Role </h1> <h1 sec:authentication="principal.role"> User</h1>
+    <h1 th:text="#{page.welcome.to.our.repair.agency}">Welcome</h1>
+    <h1 th:text="#{page.you.login}"> Welcome </h1> <h1 sec:authentication="principal.firstName"> User</h1>
+    <h1 th:text="#{page.your.role}"> Role </h1> <h1 sec:authentication="principal.role"> User</h1>
     <div th:if="${ #authorization.expression('isAuthenticated()') and #strings.contains(#authentication.principal.role,'CUSTOMER')}">
-        <a  th:href="@{/customer/order/new}" th:text="#{create.new.order}">New Order</a>
+        <a  th:href="@{/customer/order/new}" th:text="#{page.create.new.order}">New Order</a>
         <br>
-        <a  th:href="@{/customer/orders}" th:text="#{orders.list}">Orders list</a>
+        <a  th:href="@{/customer/orders}" th:text="#{page.orders.list}">Orders list</a>
         <br>
-        <a  th:href="@{/customer/update_deposit}" th:text="#{deposit}">Deposit</a>
+        <a  th:href="@{/customer/update_deposit}" th:text="#{page.deposit}">Deposit</a>
     </div>
     <div th:if="${ #authorization.expression('isAuthenticated()') and #strings.contains(#authentication.principal.role,'ADMIN')}">
-        <a  th:href="@{/admin/master_registration}" th:text="#{registration.for.new.master}">New master</a>
+        <a  th:href="@{/admin/master_registration}" th:text="#{page.registration.for.new.master}">New master</a>
         <br>
-        <a  th:href="@{/admin/customers}" th:text="#{customers.accounts}">Customers</a>
+        <a  th:href="@{/admin/customers}" th:text="#{page.customers.accounts}">Customers</a>
         <br>
-        <a  th:href="@{/admin/masters}" th:text="#{masters.accounts}">Masters</a>
+        <a  th:href="@{/admin/masters}" th:text="#{page.masters.accounts}">Masters</a>
         <br>
-        <a  th:href="@{/admin/orders}" th:text="#{orders.list}">Orders list</a>
+        <a  th:href="@{/admin/orders}" th:text="#{page.orders.list}">Orders list</a>
         <br>
     </div>
     <div th:if="${ #authorization.expression('isAuthenticated()') and #strings.contains(#authentication.principal.role,'MASTER')}">
-        <a  th:href="@{/master/orders}" th:text="#{orders.list}">Orders list</a>
+        <a  th:href="@{/master/orders}" th:text="#{page.orders.list}">Orders list</a>
         <br>
     </div>
 

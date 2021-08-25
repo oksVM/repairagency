@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="ISO-8859-1">
-    <title th:text="#{orders.list}">Orders List</title>
+    <title th:text="#{page.orders.list}"></title>
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -24,10 +24,10 @@
 
         </div>
         <div id="navbar1" class="collapse navbar-collapse">
-            <a class="navbar-link" href="#" th:href="@{/homepage}" th:text="#{home}">Home</a>
+            <a class="navbar-link" href="#" th:href="@{/homepage}" th:text="#{page.home}">Home</a>
             <a class="navbar-link"  href="#" th:href="@{'?locale=en'}">EN</a>
             <a class="navbar-link"  href="#" th:href="@{'?locale=ua'}">UA</a>
-            <a sec:authorize="isAuthenticated()"><a th:href="@{/logout}" th:text="#{logout}">Logout</a></a>
+            <a sec:authorize="isAuthenticated()"><a th:href="@{/logout}" th:text="#{page.logout}">Logout</a></a>
         </div>
     </div>
 </nav>
@@ -35,19 +35,19 @@
 <br>
 
 <div class="container text-center">
-    <div><h1 th:text="#{orders.list}">Orders List</h1></div>
+    <div><h1 th:text="#{page.orders.list}">Orders List</h1></div>
 
     <table class="table table-bordered">
         <thead class ="thead-dark">
         <tr>
-            <th scope="col" th:text="#{id}">ID</th>
-            <th scope="col" th:text="#{name}">NAME</th>
-            <th scope="col" th:text="#{category}">CATEGORY</th>
-            <th scope="col" th:text="#{price}">PRICE</th>
-            <th scope="col" th:text="#{status}">STATUS</th>
-            <th scope="col" th:text="#{date}">DATE</th>
-            <th scope="col" th:text="#{customer}">MASTER</th>
-            <th scope="col" th:text="#{action}">TO DO</th>
+            <th scope="col" th:text="#{table.id}">ID</th>
+            <th scope="col" th:text="#{table.name}">NAME</th>
+            <th scope="col" th:text="#{table.category}">CATEGORY</th>
+            <th scope="col" th:text="#{table.price}">PRICE</th>
+            <th scope="col" th:text="#{table.status}">STATUS</th>
+            <th scope="col" th:text="#{table.date}">DATE</th>
+            <th scope="col" th:text="#{table.customer}">MASTER</th>
+            <th scope="col" th:text="#{table.action}">TO DO</th>
 
         </tr>
         </thead>
@@ -61,7 +61,7 @@
             <td th:text="${#temporals.format(order.offsetDateTime, 'dd/MM/yyyy HH:mm')}">31/12/2015 15:00</td>
             <td th:text="${order.customer}? ${order.customer.username} : '-'"></td>
             <td>
-                <a th:href="@{'/master/order/' + ${order.id}}" th:text="#{more}">MORE</a>
+                <a th:href="@{'/master/order/' + ${order.id}}" th:text="#{page.more}">MORE</a>
             </td>
 
         </tr>
@@ -70,7 +70,7 @@
 
     <div th:if="${totalPages > 1}">
         <div class="row col-sm-10">
-            <div class="col-sm-2" th:text="#{total.items}+${totalItems}">
+            <div class="col-sm-2" th:text="#{page.total.items}+${totalItems}">
                 Total Rows: [[${totalItems}]]
             </div>
             <div class="col-sm-1">
@@ -80,13 +80,13 @@
             </span>
             </div>
             <div class="col-sm-1">
-                <a th:if="${currentPage < totalPages}" th:href="@{'/customer/orders/page/' + ${currentPage + 1}}" th:text="#{next}">Next</a>
-                <span th:unless="${currentPage < totalPages}" th:text="#{next}">Next</span>
+                <a th:if="${currentPage < totalPages}" th:href="@{'/customer/orders/page/' + ${currentPage + 1}}" th:text="#{page.next}">Next</a>
+                <span th:unless="${currentPage < totalPages}" th:text="#{page.next}">Next</span>
             </div>
 
             <div class="col-sm-1">
-                <a th:if="${currentPage < totalPages}" th:href="@{'/customer/orders/page/' + ${totalPages}}" th:text="#{last}">Last</a>
-                <span th:unless="${currentPage < totalPages}" th:text="#{last}">Last</span>
+                <a th:if="${currentPage < totalPages}" th:href="@{'/customer/orders/page/' + ${totalPages}}" th:text="#{page.last}">Last</a>
+                <span th:unless="${currentPage < totalPages}" th:text="#{page.last}">Last</span>
             </div>
         </div>
     </div>

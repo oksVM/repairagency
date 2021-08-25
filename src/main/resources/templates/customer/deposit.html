@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="ISO-8859-1">
-    <title th:text="#{deposit}">Deposit</title>
+    <title th:text="#{page.deposit}">Deposit</title>
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
@@ -22,10 +22,10 @@
                     class="icon-bar"></span> <span class="icon-bar"></span> <span
                     class="icon-bar"></span>
             </button>
-            <a class="navbar-link" href="#" th:href="@{/homepage}" th:text="#{home}">Home</a>
+            <a class="navbar-link" href="#" th:href="@{/homepage}" th:text="#{page.home}">Home</a>
             <a class="navbar-link" href="#" th:href="@{'?locale=en'}">EN</a>
             <a class="navbar-link" href="#" th:href="@{'?locale=ua'}">UA</a>
-            <a sec:authorize="isAuthenticated()"><a th:href="@{/logout}" th:text="#{logout}">Logout</a></a>
+            <a sec:authorize="isAuthenticated()"><a th:href="@{/logout}" th:text="#{page.logout}">Logout</a></a>
         </div>
     </div>
 </nav>
@@ -43,15 +43,15 @@
             </div>-->
 
 
-            <h1 th:text="#{add.money.to.deposit}">Add money</h1>
-            <div><h2 th:text="#{customer.info}">Customer info</h2></div>
+            <h1 th:text="#{page.add.money.to.deposit}">Add money</h1>
+            <div><h2 th:text="#{page.customer.info}">Customer info</h2></div>
             <table class="table table-bordered">
                 <thead class ="thead-dark">
                 <tr>
-                    <th scope="col" th:text="#{id}">ID</th>
-                    <th scope="col" th:text="#{firstname}"></th>
-                    <th scope="col" th:text="#{lastname}"></th>
-                    <th scope="col" th:text="#{deposit}"></th>
+                    <th scope="col" th:text="#{table.id}">ID</th>
+                    <th scope="col" th:text="#{data.firstname}"></th>
+                    <th scope="col" th:text="#{data.lastname}"></th>
+                    <th scope="col" th:text="#{page.deposit}"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -73,12 +73,12 @@
                 </div>
 
                     <div class="form-group">
-                        <label class="control-label" for="amountOfMoney" th:text="#{add.money.to.deposit}"></label>
+                        <label class="control-label" for="amountOfMoney" th:text="#{page.add.money.to.deposit}"></label>
                         <input type="number" id="amountOfMoney" class="form-control" th:field="*{amountOfMoney}"
                                required autofocus="autofocus" />
                     </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-success" th:text="#{submit}"></button>
+                    <button type="submit" class="btn btn-success" th:text="#{page.submit}"></button>
                 </div>
 
                 </form>
