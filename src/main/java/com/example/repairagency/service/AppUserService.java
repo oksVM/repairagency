@@ -10,7 +10,6 @@ import java.util.List;
 
 public interface AppUserService extends UserDetailsService {
 
-    List<AppUser> findAllCustomers();
     AppUser saveNewCustomer(AppUserRegistrationDto appUserRegistrationDto) throws UserAlreadyExistAuthenticationException;
     AppUser findById(Long id);
     AppUser updateDeposit(Integer money, Long id);

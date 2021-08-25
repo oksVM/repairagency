@@ -40,7 +40,7 @@ public class MasterController {
     public String allOrdersPaginated(@PathVariable(value = "pageNo") int pageNo, Model model){
         int pageSize = 5;
 
-        Page<Order> page = orderService.findAllMasterOrders(pageNo, pageSize);
+        Page<Order> page = orderService.findAllCurrentMasterOrders(pageNo, pageSize);
         List<Order> orderList = page.getContent();
 
         model.addAttribute("currentPage", pageNo );

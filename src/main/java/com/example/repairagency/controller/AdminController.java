@@ -6,7 +6,7 @@ import com.example.repairagency.model.AppUser;
 import com.example.repairagency.model.Order;
 import com.example.repairagency.service.AppUserService;
 import com.example.repairagency.service.OrderService;
-import com.example.repairagency.service.ReviewService;
+import com.example.repairagency.service.ReviewServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
@@ -29,13 +29,13 @@ public class AdminController {
 
     private AppUserService appUserService;
     private OrderService orderService;
-    private ReviewService reviewService;
+    private ReviewServiceImpl reviewServiceImpl;
 
     @Autowired
-    public AdminController(AppUserService appUserService, OrderService orderService, ReviewService reviewService) {
+    public AdminController(AppUserService appUserService, OrderService orderService, ReviewServiceImpl reviewServiceImpl) {
         this.appUserService = appUserService;
         this.orderService = orderService;
-        this.reviewService = reviewService;
+        this.reviewServiceImpl = reviewServiceImpl;
     }
 
     @GetMapping()
@@ -182,7 +182,7 @@ public class AdminController {
     public String showReviews(@PathVariable("id") Long id, Model model){
         try{
             model.addAttribute("master", appUserService.findById(id));
-            model.addAttribute("review", reviewService.findAllByMasterId(id));
+            model.addAttribute("review", reviewServiceImpl.findAllByMasterId(id));
         } catch (UsernameNotFoundException u){
             //TODO
         }

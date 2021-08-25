@@ -61,10 +61,6 @@ public class OrderServiceImpl implements OrderService{
                         .loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName())).getId(), pageable);
     }
 
-    public List<Order> findAllOrders() {
-        return orderRepository.findAll();
-    }
-
     @Override
     public Page<Order> findAllOrdersPaginated(String keyWord, int pageNo, int pageSize, String sortField, String sortDirection) {
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name())? Sort.by(sortField):
@@ -120,7 +116,7 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public Page<Order> findAllMasterOrders(int pageNo, int pageSize) {
+    public Page<Order> findAllCurrentMasterOrders(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo-1, pageSize);
         return orderRepository
                 .findAllByMasterId(((AppUser) appUserService
