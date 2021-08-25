@@ -1,6 +1,7 @@
 package com.example.repairagency.controller;
 
 import com.example.repairagency.dto.AppUserRegistrationDto;
+import com.example.repairagency.dto.DepositDTO;
 import com.example.repairagency.exception.UserAlreadyExistAuthenticationException;
 import com.example.repairagency.model.AppUser;
 import com.example.repairagency.model.Order;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -90,19 +92,22 @@ public class AdminController {
     @GetMapping("customers/deposit/{id}")
     public String depositForm(@PathVariable("id") Long id, Model model){
         try{
-        model.addAttribute("customer", appUserService.findById(id));
+            model.addAttribute("money", new DepositDTO());
+            model.addAttribute("customer", appUserService.findById(id));
         } catch (UsernameNotFoundException u){
             //TODO
         }
         return "admin/customerDeposit";
     }
 
-   /* @PostMapping ("customers/deposit/{id}")
-    public String addMoneyToDeposit(@Min(1) @RequestParam("money") Integer money, @PathVariable("id") Long id){
-        appUserService.updateDeposit(money,id);
-        return "redirect:/admin/customers/deposit/{id}";
+    @PostMapping ("customers/deposit/{id}")
+    public String addMoneyToDeposit(@ModelAttribute("money") @Valid DepositDTO depositDTO, BindingResult bindingResult, @PathVariable("id") Long id){
+        if (bindingResult.hasErrors())
+            return "redirect:/admin/customers/deposit/{id}?error";
+        appUserService.updateDeposit(depositDTO,id);
+        return "redirect:/admin/customers/deposit/{id}?success";
     }
-*/
+
 
     @GetMapping("/orders")
     public String viewAllOrders(Model model){

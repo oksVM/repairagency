@@ -68,16 +68,22 @@
                 </tbody>
             </table>
 
-            <form th:action="@{/admin/customers/deposit/{id}(id=${id})}" th:object="${customer}" method="POST">
+            <form th:action="@{/admin/customers/deposit/{id}(id=${id})}" th:object="${money}" method="POST">
+                    <div th:if="${param.error}">
+                        <div class="alert alert-danger" th:text="#{error.deposit}"></div>
+                    </div>
+                    <div th:if="${param.success}">
+                        <div class="alert alert-info" th:text="#{success.deposit}"></div>
+                    </div>
 
-                <div class="form-group">
-                    <label class="control-label" for="depositAdd" th:text="#{add.money.to.deposit}"> Add money </label>
-                    <input name="money" th:type="number" id="depositAdd" class="form-control"
-                           required autofocus="autofocus" />
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-success" th:text="#{submit}">Submit</button>
-                </div>
+                    <div class="form-group">
+                        <label class="control-label" for="amountOfMoney" th:text="#{add.money.to.deposit}"></label>
+                        <input type="number" id="amountOfMoney" class="form-control" th:field="*{amountOfMoney}"
+                               required autofocus="autofocus" />
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success" th:text="#{submit}"></button>
+                    </div>
             </form>
 
         </div>
