@@ -40,11 +40,16 @@
             <div th:if="${param.success}">
                 <div class="alert alert-info" th:text="#{successfully.registered}">You've successfully registered!</div>
             </div>
-
+            <div th:if="${alreadyExist}">
+                <div class="alert alert-danger" role="alert" th:text="#{username.already.exists}"></div>
+            </div>
 
             <h1 th:text="#{registration.for.new}">Registration for new users</h1>
 
             <form th:action="@{/registration}" method="POST" th:object="${user}">
+                <div th:if="${alreadyExist}">
+                    <div class="alert alert-danger" role="alert" th:text="#{username.already.exists}"></div>
+                </div>
               <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
                   <p th:each="err : ${#fields.errors('firstName')}"
                      th:text="#{first.name.should.be}" >Validation error</p>

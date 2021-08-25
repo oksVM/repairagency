@@ -38,7 +38,9 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-
+            <div th:if="${param.success}">
+                <div class="alert alert-info" th:text="#{success.order}"></div>
+            </div>
             <h1 th:text="#{create.new.order}">Create new order</h1>
             <form th:action="@{/customer/order/save}" method="POST" th:object="${order}" >
                 <div class="form-group">

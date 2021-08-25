@@ -30,18 +30,17 @@ public class AppUserRegistrationController {
 
     @PostMapping
     public String registerUserAccount(@ModelAttribute("user")
-                                      @Valid AppUserRegistrationDto appUserRegistrationDto, BindingResult bindingResult) {
+                                      @Valid AppUserRegistrationDto appUserRegistrationDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) return "registration";
 
         try {
             appUserService.saveNewCustomer(appUserRegistrationDto);
         } catch (UserAlreadyExistAuthenticationException exception) {
+            model.addAttribute("alreadyExist", true);
             bindingResult.rejectValue("email", "userData.email", "An account already exists for this email.");
             return "registration";
-
         }
         return "redirect:/registration?success";
-
     }
 }
 

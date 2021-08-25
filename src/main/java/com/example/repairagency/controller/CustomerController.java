@@ -1,6 +1,7 @@
 package com.example.repairagency.controller;
 
 
+import com.example.repairagency.dto.DepositDTO;
 import com.example.repairagency.exception.NotEnoughMoneyException;
 import com.example.repairagency.model.AppUser;
 import com.example.repairagency.model.Order;
@@ -14,15 +15,16 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 @Controller
-@Validated
 @RequestMapping("/customer")
 @PreAuthorize("hasAuthority('customer')")
 public class CustomerController {
@@ -55,7 +57,7 @@ public class CustomerController {
     @PostMapping("/order/save")
     public String newOrder (@ModelAttribute("order") Order order) {
             orderService.save(order);
-        return "redirect:/customer/order/new";
+        return "redirect:/customer/order/new?success";
     }
 
 
@@ -97,14 +99,18 @@ public class CustomerController {
 
     @GetMapping("/update_deposit")
     public String addMoneyToDeposit (Model model){
+        model.addAttribute("money", new DepositDTO());
         model.addAttribute("customer", appUserService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
         return "customer/deposit";
     }
 
     @PostMapping("/update_deposit")
-    public String addMoneyToDeposit(@Min(1) @RequestParam("money") Integer money){
-        appUserService.updateDeposit(money,((AppUser) appUserService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName())).getId() );
-        return "redirect:/customer/update_deposit";
+    public String addMoneyToDeposit(@ModelAttribute("money") @Valid DepositDTO depositDTO, BindingResult bindingResult){
+        if (bindingResult.hasErrors())
+            //return "customer/deposit";
+            return "redirect:/customer/update_deposit?error";
+        appUserService.updateDeposit(depositDTO,((AppUser) appUserService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName())).getId() );
+        return "redirect:/customer/update_deposit?success";
     }
 
     @PostMapping("/orders/feedback/{id}")

@@ -53,19 +53,19 @@ public class AdminController {
 
 
     @PostMapping("/master_registration")
-    public String registerUserAccount(@ModelAttribute("user")
-                                      @Valid AppUserRegistrationDto appUserRegistrationDto, BindingResult bindingResult) {
+    public String registerMasterAccount(@ModelAttribute("user")
+                                      @Valid AppUserRegistrationDto appUserRegistrationDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) return "admin/masterRegistration";
 
         try {
             appUserService.saveNewMaster(appUserRegistrationDto);
         } catch (UserAlreadyExistAuthenticationException exception) {
-            bindingResult.rejectValue("email", "userData.email", "An account already exists for this email.");
+            model.addAttribute("alreadyExist", true);
             return "admin/masterRegistration";
         }
         return "redirect:/admin/master_registration?success";
-
     }
+
 
     @GetMapping("/customers")
     public String allCustomers(Model model){
@@ -97,12 +97,12 @@ public class AdminController {
         return "admin/customerDeposit";
     }
 
-    @PostMapping ("customers/deposit/{id}")
+   /* @PostMapping ("customers/deposit/{id}")
     public String addMoneyToDeposit(@Min(1) @RequestParam("money") Integer money, @PathVariable("id") Long id){
         appUserService.updateDeposit(money,id);
         return "redirect:/admin/customers/deposit/{id}";
     }
-
+*/
 
     @GetMapping("/orders")
     public String viewAllOrders(Model model){
