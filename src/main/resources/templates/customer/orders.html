@@ -10,29 +10,7 @@
           crossorigin="anonymous">
 </head>
 <body>
-<!-- navigation bar-->
-<nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed"
-                    data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-                    aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span> <span
-                    class="icon-bar"></span> <span class="icon-bar"></span> <span
-                    class="icon-bar"></span>
-            </button>
-
-        </div>
-        <div id="navbar1" class="collapse navbar-collapse">
-            <a class="navbar-link" href="#" th:href="@{/homepage}" th:text="#{page.home}">Home</a>
-            <a class="navbar-link"  href="#" th:href="@{'?locale=en'}">EN</a>
-            <a class="navbar-link"  href="#" th:href="@{'?locale=ua'}">UA</a>
-            <a sec:authorize="isAuthenticated()"><a th:href="@{/logout}" th:text="#{page.logout}">Logout</a></a>
-        </div>
-    </div>
-</nav>
-<br>
-<br>
+<div th:replace="common :: header"></div>
 
 <div class="container text-center">
     <div><h1 th:text="#{page.orders.list}">Orders List</h1></div>
