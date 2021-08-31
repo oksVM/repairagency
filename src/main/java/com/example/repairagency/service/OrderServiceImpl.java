@@ -100,7 +100,7 @@ public class OrderServiceImpl implements OrderService{
         AppUser currentAppUser = ((AppUser) appUserService
                 .loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
         if(order.getPrice()>currentAppUser.getAmountOfMoney()){
-            throw new NotEnoughMoneyException("not enought money");
+            throw new NotEnoughMoneyException();
         }
         currentAppUser.setAmountOfMoney(currentAppUser.getAmountOfMoney()-order.getPrice());
         appUserRepository.save(currentAppUser);

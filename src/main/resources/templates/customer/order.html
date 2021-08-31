@@ -57,19 +57,13 @@
         </div>
     </form>
 </div>
+
     <div th:if="${order.orderStatus == T(com.example.repairagency.model.OrderStatus).DONE}">
-        <!--<form th:action="@{/customer/orders/feedback/{id}(id=${id})}" th:object="${review}" method="POST">-->
         <form th:action="@{/customer/orders/feedback/{id}(id=${id})}" method="POST">
-            <!--<div class="form-group">
-                <label class="control-label" for="leaveFeedback" th:text="#{leave.review}"> Leave review </label>
-                <input name="feedback" th:type="text" id="leaveFeedback" class="form-control"
-                       required autofocus="autofocus" />
-            </div>-->
             <div class="form-group">
                 <label class="control-label" for="orderDesc" th:text="#{page.leave.review}"> Review </label>
                 <input type="text" th:name="feedback"  id="orderDesc" class="form-control"/>
             </div>
-
             <div class="form-group">
                 <button type="submit" class="btn btn-success" th:text="#{page.submit}">Submit</button>
             </div>

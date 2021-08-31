@@ -36,13 +36,11 @@
             <h1 th:text="#{page.user.login.page}"> User Login Page </h1>
             <form th:action="@{/login}" method="post">
 
-                <!-- error message -->
                 <div th:if="${param.error}">
                     <div class="alert alert-danger" th:text="#{error.username.or.password}">Invalid username or
                         password.</div>
                 </div>
 
-                <!-- logout message -->
                 <div th:if="${param.logout}">
                     <div class="alert alert-info" th:text="#{success.logged.out}">You have been logged out.</div>
                 </div>

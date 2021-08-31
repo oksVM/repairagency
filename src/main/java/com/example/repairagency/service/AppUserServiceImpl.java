@@ -23,10 +23,10 @@ import java.util.NoSuchElementException;
 @Service
 public class AppUserServiceImpl implements AppUserService {
 
-    private AppUserRepository appUserRepository;
+    private final AppUserRepository appUserRepository;
     private final PasswordEncoder passwordEncoder;
-    private ReviewRepository reviewRepository;
-    private OrderRepository orderRepository;
+    private final ReviewRepository reviewRepository;
+    private final OrderRepository orderRepository;
 
     @Autowired
     public AppUserServiceImpl(AppUserRepository appUserRepository, PasswordEncoder passwordEncoder, ReviewRepository reviewRepository, OrderRepository orderRepository) {
@@ -40,8 +40,7 @@ public class AppUserServiceImpl implements AppUserService {
     @Override
     public AppUser saveNewCustomer(AppUserRegistrationDto appUserRegistrationDto) throws UserAlreadyExistAuthenticationException {
         if (appUserRepository.findByEmail(appUserRegistrationDto.getEmail()).isPresent()) {
-            throw new UserAlreadyExistAuthenticationException("There is an account with that email address: "
-                    + appUserRegistrationDto.getEmail());
+            throw new UserAlreadyExistAuthenticationException(appUserRegistrationDto.getEmail());
         }
 
        return appUserRepository.save(AppUser.builder()
@@ -70,8 +69,7 @@ public class AppUserServiceImpl implements AppUserService {
     @Override
     public AppUser saveNewMaster(AppUserRegistrationDto appUserRegistrationDto) throws UserAlreadyExistAuthenticationException {
         if (appUserRepository.findByEmail(appUserRegistrationDto.getEmail()).isPresent()) {
-            throw new UserAlreadyExistAuthenticationException("There is an account with that email address: "
-                    + appUserRegistrationDto.getEmail());
+            throw new UserAlreadyExistAuthenticationException(appUserRegistrationDto.getEmail());
         }
 
         return appUserRepository.save(AppUser.builder()
