@@ -1,6 +1,7 @@
 package com.example.repairagency.service;
 
 import com.example.repairagency.dto.PriceDto;
+import com.example.repairagency.exception.NotEnoughMoneyException;
 import com.example.repairagency.model.*;
 import com.example.repairagency.repository.OrderRepository;
 import org.junit.jupiter.api.Test;
@@ -55,16 +56,6 @@ class OrderServiceImplTest {
         Mockito.when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
         assertThat(orderService.setPrice(priceDto, 1L).getPrice()).isEqualTo(100);
         assertThat(orderService.setPrice(priceDto, 1L).getOrderStatus()).isEqualTo(OrderStatus.WAIT_FOR_PAYMENT);
-
-    }
-
-    @Test
-    void payForOrderSuccessTest() {
-
-    }
-
-    @Test
-    void payForOrderExceptionTest() {
 
     }
 
