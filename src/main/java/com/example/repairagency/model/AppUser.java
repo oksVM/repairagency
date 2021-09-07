@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
@@ -32,6 +33,7 @@ import java.util.Set;
     @Enumerated(value = EnumType.STRING)
     @Column(name = "role", nullable = false)
     private Role role;
+    @Min(0)
     @Column(name = "amount_of_money")
     private Integer amountOfMoney;
     @Column(name = "professional_area")

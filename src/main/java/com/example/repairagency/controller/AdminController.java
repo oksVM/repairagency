@@ -11,6 +11,7 @@ import com.example.repairagency.service.AppUserService;
 import com.example.repairagency.service.OrderService;
 import com.example.repairagency.service.ReviewService;
 import com.example.repairagency.service.ReviewServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
@@ -30,7 +31,10 @@ import java.util.NoSuchElementException;
 @Controller
 @RequestMapping("/admin")
 @PreAuthorize("hasAuthority('admin')")
+@Slf4j
 public class AdminController {
+
+
 
     private AppUserService appUserService;
     private OrderService orderService;
@@ -58,11 +62,17 @@ public class AdminController {
     @PostMapping("/master_registration")
     public String registerMasterAccount(@ModelAttribute("user")
                                       @Valid AppUserRegistrationDto appUserRegistrationDto, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) return "admin/masterRegistration";
+        if (bindingResult.hasErrors()) {
+
+            log.error("Invalid values from user.");
+            return "admin/masterRegistration";
+        }
 
         try {
             appUserService.saveNewMaster(appUserRegistrationDto);
         } catch (UserAlreadyExistAuthenticationException exception) {
+
+            log.error("User with email = {} already exist", appUserRegistrationDto.getEmail());
             model.addAttribute("alreadyExist", true);
             return "admin/masterRegistration";
         }
@@ -103,9 +113,13 @@ public class AdminController {
 
     @PostMapping ("customers/deposit/{id}")
     public String addMoneyToDeposit(@ModelAttribute("money") @Valid DepositDTO depositDTO, BindingResult bindingResult, @PathVariable("id") Long id){
-        if (bindingResult.hasErrors())
+        if (bindingResult.hasErrors()){
+
+            log.error("{} is incorrect values for amount of money", depositDTO.getAmountOfMoney());
             return "redirect:/admin/customers/deposit/{id}?error";
+        }
         appUserService.updateDeposit(depositDTO,id);
+        log.info("Was added {} to user deposit with id = {}", depositDTO.getAmountOfMoney(), id);
         return "redirect:/admin/customers/deposit/{id}?success";
     }
 
@@ -140,32 +154,35 @@ public class AdminController {
 
     @GetMapping("orders/{id}")
     public String orderProcessing(@PathVariable("id") Long id, Model model){
-        try{
             model.addAttribute("price", new PriceDto());
             model.addAttribute("order", orderService.findOrderById(id));
             model.addAttribute("mastersList", appUserService.findAllMasters());
-        } catch (NoSuchElementException u){
-            //TODO
-        }
+
         return "admin/order";
     }
 
     @PostMapping ("orders/setprice/{id}")
-    public String setPrice(@ModelAttribute("money") @Valid PriceDto depositDTO, BindingResult bindingResult, @PathVariable("id") Long id){
-        if (bindingResult.hasErrors())
+    public String setPrice(@ModelAttribute("money") @Valid PriceDto priceDTO, BindingResult bindingResult, @PathVariable("id") Long id){
+        if (bindingResult.hasErrors()){
+            log.error("{} is incorrect values for price", priceDTO.getAmountOfMoney());
             return "redirect:/admin/orders/{id}?error";
-        orderService.setPrice(depositDTO,id);
+        }
+
+        orderService.setPrice(priceDTO,id);
+        log.info("For order with id = {} was appointed price = {}", id, priceDTO.getAmountOfMoney());
         return "redirect:/admin/orders/{id}?successPrice";
     }
 
     @PostMapping ("orders/setmaster/{id}")
     public String setMaster(@RequestParam("master") Long masterId, @PathVariable("id") Long id){
         orderService.setMaster(masterId,id);
+        log.info("For order with id = {} was appointed master with id = {}", id, masterId);
         return "redirect:/admin/orders/{id}?successSetMaster";
     }
     @PostMapping("/order/save")
     public String newOrder (@ModelAttribute("order") Order order) {
         orderService.save(order);
+        log.info("New order has been created");
         return "redirect:/customer/order/new";
     }
 

@@ -5,14 +5,19 @@ import com.example.repairagency.model.Order;
 import com.example.repairagency.model.OrderStatus;
 import com.example.repairagency.model.Review;
 import com.example.repairagency.repository.ReviewRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Service for handling all manipulations  with reviews
+ */
 @Service
+@Slf4j
 public class ReviewServiceImpl implements ReviewService{
 
     private ReviewRepository reviewRepository;
@@ -26,13 +31,25 @@ public class ReviewServiceImpl implements ReviewService{
         this.appUserService = appUserService;
     }
 
-
+    /**
+     * methods for obtaining reviews by master
+     * @param id
+     * @param pageNo
+     * @param pageSize
+     * @return reviews per page
+     */
     @Override
     public Page<Review> findAllReviewsByMasterId(Long id,int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo-1, pageSize);
         return reviewRepository.findAllByMasterId(id, pageable);
     }
 
+    /**
+     * methods for saving review
+     * @param feedback
+     * @param orderId
+     * @return saved Review
+     */
     @Override
     @Transactional
     public Review leaveFeedback(String feedback, Long orderId) {

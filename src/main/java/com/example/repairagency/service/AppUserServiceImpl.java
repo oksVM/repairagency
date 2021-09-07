@@ -7,6 +7,7 @@ import com.example.repairagency.model.*;
 import com.example.repairagency.repository.AppUserRepository;
 import com.example.repairagency.repository.OrderRepository;
 import com.example.repairagency.repository.ReviewRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,12 +16,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
-import java.util.NoSuchElementException;
 
+/**
+ * Service for handling all manipulations  with appUsers
+ */
 @Service
+@Slf4j
 public class AppUserServiceImpl implements AppUserService {
 
     private final AppUserRepository appUserRepository;
@@ -101,7 +105,7 @@ public class AppUserServiceImpl implements AppUserService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-       return appUserRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(""));
+       return appUserRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User doesn't exist"));
     }
 }
 

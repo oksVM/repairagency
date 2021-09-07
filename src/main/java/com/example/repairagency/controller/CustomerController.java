@@ -10,6 +10,7 @@ import com.example.repairagency.service.AppUserService;
 import com.example.repairagency.service.OrderService;
 import com.example.repairagency.service.OrderServiceImpl;
 import com.example.repairagency.service.ReviewService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,12 +23,14 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 @Controller
 @RequestMapping("/customer")
 @PreAuthorize("hasAuthority('customer')")
+@Slf4j
 public class CustomerController {
     AppUserService appUserService;
     OrderService orderService;
@@ -60,6 +63,7 @@ public class CustomerController {
     @PostMapping("/order/save")
     public String newOrder (@ModelAttribute("order") Order order) {
             orderService.save(order);
+        log.info("New order with name = {} is created", order.getOrderName());
         return "redirect:/customer/order/new?success";
     }
 
@@ -86,11 +90,8 @@ public class CustomerController {
 
     @GetMapping("order/{id}")
     public String orderProcessing(@PathVariable("id") Long id, Model model){
-        try{
             model.addAttribute("order", orderService.findOrderById(id));
-        } catch (NoSuchElementException u){
-            //TODO
-        }
+
         return "customer/order";
     }
 
@@ -98,11 +99,11 @@ public class CustomerController {
     public String payForOrder(@PathVariable("id") Long id){
         try{
             orderService.payForOrder(id);
-        } catch (NotEnoughMoneyException exception){
-            //model.addAttribute("notEnoughMoney", true);
-            //bindingResult.rejectValue("email", "userData.email", "An account already exists for this email.");
+            } catch (NotEnoughMoneyException | SQLException exception){
+            log.error("Unsuccessful payment for order with id = {}", id);
             return "redirect:/customer/order/{id}?errorPayment";
         }
+        log.error("Order with id = {} have been paid", id);
         return "redirect:/customer/order/{id}?successPayment";
     }
 
@@ -115,16 +116,19 @@ public class CustomerController {
 
     @PostMapping("/update_deposit")
     public String addMoneyToDeposit(@ModelAttribute("money") @Valid DepositDTO depositDTO, BindingResult bindingResult){
-        if (bindingResult.hasErrors())
-            //return "customer/deposit";
+        if (bindingResult.hasErrors()) {
+            log.error("{} is incorrect values for amount of money", depositDTO.getAmountOfMoney());
             return "redirect:/customer/update_deposit?error";
-        appUserService.updateDeposit(depositDTO,((AppUser) appUserService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName())).getId() );
+        }
+        appUserService.updateDeposit(depositDTO,((AppUser) appUserService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName())).getId());
+        log.info("To current customer deposit was added {} ", depositDTO.getAmountOfMoney());
         return "redirect:/customer/update_deposit?success";
     }
 
     @PostMapping("/orders/feedback/{id}")
     public String leaveFeedback(@RequestParam("feedback") String feedback,  @PathVariable("id") Long orderId){
         reviewService.leaveFeedback (feedback, orderId);
+        log.info("Review = {} was submitted for order with id = {}", feedback, orderId);
         return "redirect:/customer/order/{id}?successReview";
     }
 
