@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.OffsetDateTime;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 /**
  * Service for handling all manipulations  with order
@@ -82,15 +83,15 @@ public class OrderServiceImpl implements OrderService {
      * @return
      */
     @Override
-    public Page<Order> findAllOrdersPaginated(String keyWord, int pageNo, int pageSize, String sortField, String sortDirection) {
+    public Page<Order> findAllOrdersPaginated(Optional<String> keyWord, int pageNo, int pageSize, String sortField, String sortDirection) {
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name())? Sort.by(sortField):
                 Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNo-1, pageSize, sort);
 
-        if(keyWord.isBlank()){
-            return orderRepository.findAll(pageable);
+        if(keyWord.isPresent()){
+            return orderRepository.findAll(keyWord.get(),pageable);
         }
-        return orderRepository.findAll(keyWord,pageable);
+        return orderRepository.findAll(pageable);
     }
 
     @Override

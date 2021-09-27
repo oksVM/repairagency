@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 import static com.example.repairagency.constants.Constants.ITEMS_PER_PAGE;
 
@@ -83,9 +84,8 @@ public class AdminController {
 
     @GetMapping("/customers/page/{pageNo}")
     public String allCustomersPaginated(@PathVariable(value = "pageNo") int pageNo, Model model) {
-        int pageSize = 5;
 
-        Page<AppUser> page = appUserService.findAllCustomersPaginated(pageNo, pageSize);
+        Page<AppUser> page = appUserService.findAllCustomersPaginated(pageNo, ITEMS_PER_PAGE);
         List<AppUser> appUsersList = page.getContent();
 
         model.addAttribute("currentPage", pageNo);
@@ -132,7 +132,7 @@ public class AdminController {
                                      @RequestParam("sortDir") String sortDir, @Param("keyWord") String keyWord,
                                      Model model) {
 
-        Page<Order> page = orderService.findAllOrdersPaginated(keyWord, pageNo, ITEMS_PER_PAGE, sortField, sortDir);
+        Page<Order> page = orderService.findAllOrdersPaginated(Optional.ofNullable(keyWord), pageNo, ITEMS_PER_PAGE, sortField, sortDir);
         List<Order> orderList = page.getContent();
 
         model.addAttribute("keyWord", keyWord);
@@ -189,9 +189,8 @@ public class AdminController {
 
     @GetMapping("/masters/page/{pageNo}")
     public String allMastersPaginated(@PathVariable(value = "pageNo") int pageNo, Model model) {
-        int pageSize = 5;
 
-        Page<AppUser> page = appUserService.findAllMastersPaginated(pageNo, pageSize);
+        Page<AppUser> page = appUserService.findAllMastersPaginated(pageNo, ITEMS_PER_PAGE);
         List<AppUser> mastersList = page.getContent();
 
         model.addAttribute("currentPage", pageNo);
@@ -210,9 +209,8 @@ public class AdminController {
 
     @GetMapping("/masters/reviews/{id}/page/{pageNo}")
     public String allMasterReviewsPaginated(@PathVariable("id") Long id, @PathVariable(value = "pageNo") int pageNo, Model model) {
-        int pageSize = 5;
 
-        Page<Review> page = reviewService.findAllReviewsByMasterId(id, pageNo, pageSize);
+        Page<Review> page = reviewService.findAllReviewsByMasterId(id, pageNo, ITEMS_PER_PAGE);
         List<Review> reviewsList = page.getContent();
         model.addAttribute("master", appUserService.findById(id));
         model.addAttribute("currentPage", pageNo);

@@ -6,12 +6,13 @@ import com.example.repairagency.model.Order;
 import org.springframework.data.domain.Page;
 
 import java.sql.SQLException;
+import java.util.Optional;
 
 public interface OrderService {
 
     Order save(Order order);
     Page<Order> findAllCurrentCustomerOrders(int pageNo, int pageSize);
-    Page<Order> findAllOrdersPaginated(String keyWord, int pageNo, int pageSize, String sortField, String sortDirection);
+    Page<Order> findAllOrdersPaginated(Optional<String> keyWord, int pageNo, int pageSize, String sortField, String sortDirection);
     Order findOrderById(Long id);
     Order setPrice(PriceDto price, Long id);
     Order payForOrder(Long id) throws NotEnoughMoneyException, SQLException;

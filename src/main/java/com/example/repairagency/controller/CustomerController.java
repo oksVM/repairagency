@@ -22,6 +22,8 @@ import javax.validation.Valid;
 import java.sql.SQLException;
 import java.util.List;
 
+import static com.example.repairagency.constants.Constants.ITEMS_PER_PAGE;
+
 @Controller
 @RequestMapping("/customer")
 @PreAuthorize("hasAuthority('customer')")
@@ -70,9 +72,8 @@ public class CustomerController {
 
     @GetMapping("/orders/page/{pageNo}")
     public String allOrdersPaginated(@PathVariable(value = "pageNo") int pageNo, Model model){
-        int pageSize = 5;
 
-        Page<Order> page = orderService.findAllCurrentCustomerOrders(pageNo, pageSize);
+        Page<Order> page = orderService.findAllCurrentCustomerOrders(pageNo, ITEMS_PER_PAGE);
         List<Order> orderList = page.getContent();
 
         model.addAttribute("currentPage", pageNo );

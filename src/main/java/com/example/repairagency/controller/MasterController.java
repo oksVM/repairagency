@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import static com.example.repairagency.constants.Constants.ITEMS_PER_PAGE;
+
 @Controller
 @RequestMapping("/master")
 @PreAuthorize("hasAuthority('master')")
@@ -40,9 +42,8 @@ public class MasterController {
 
     @GetMapping("/orders/page/{pageNo}")
     public String allOrdersPaginated(@PathVariable(value = "pageNo") int pageNo, Model model){
-        int pageSize = 5;
 
-        Page<Order> page = orderService.findAllCurrentMasterOrders(pageNo, pageSize);
+        Page<Order> page = orderService.findAllCurrentMasterOrders(pageNo, ITEMS_PER_PAGE);
         List<Order> orderList = page.getContent();
 
         model.addAttribute("currentPage", pageNo );
