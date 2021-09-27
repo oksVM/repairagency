@@ -15,5 +15,4 @@ public class DepositDto {
         @NotNull(message = "cannot be null.")
         @Min(value = 1)
         private Integer amountOfMoney;
-
 }

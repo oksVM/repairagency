@@ -1,10 +1,13 @@
-package com.example.repairagency.service;
+package com.example.repairagency.service.impl;
 
 import com.example.repairagency.model.AppUser;
 import com.example.repairagency.model.Order;
 import com.example.repairagency.model.OrderStatus;
 import com.example.repairagency.model.Review;
 import com.example.repairagency.repository.ReviewRepository;
+import com.example.repairagency.service.AppUserService;
+import com.example.repairagency.service.OrderService;
+import com.example.repairagency.service.ReviewService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,11 +21,11 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Slf4j
-public class ReviewServiceImpl implements ReviewService{
+public class ReviewServiceImpl implements ReviewService {
 
-    private ReviewRepository reviewRepository;
-    private OrderService orderService;
-    private AppUserService appUserService;
+    private final ReviewRepository reviewRepository;
+    private final OrderService orderService;
+    private final AppUserService appUserService;
 
     @Autowired
     public ReviewServiceImpl(ReviewRepository reviewRepository, OrderService orderService, AppUserService appUserService) {

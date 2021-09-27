@@ -6,6 +6,7 @@ import com.example.repairagency.exception.UserAlreadyExistAuthenticationExceptio
 import com.example.repairagency.model.AppUser;
 import com.example.repairagency.model.Role;
 import com.example.repairagency.repository.AppUserRepository;
+import com.example.repairagency.service.impl.AppUserServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

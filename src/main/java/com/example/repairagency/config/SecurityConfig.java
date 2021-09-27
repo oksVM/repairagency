@@ -29,7 +29,7 @@ import java.util.Collection;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity (prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/registration", "/login","/starthomepage").permitAll()
+                .antMatchers("/registration", "/login", "/starthomepage").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -71,13 +71,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public DaoAuthenticationProvider daoAuthenticationProvider(){
+    public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(appUserService);
         provider.setPasswordEncoder(passwordEncoder);
         return provider;
     }
-
 
 
 }

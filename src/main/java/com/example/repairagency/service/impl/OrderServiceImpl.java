@@ -1,4 +1,4 @@
-package com.example.repairagency.service;
+package com.example.repairagency.service.impl;
 
 
 import com.example.repairagency.dto.PriceDto;
@@ -8,6 +8,8 @@ import com.example.repairagency.model.Order;
 import com.example.repairagency.model.OrderStatus;
 import com.example.repairagency.repository.AppUserRepository;
 import com.example.repairagency.repository.OrderRepository;
+import com.example.repairagency.service.AppUserService;
+import com.example.repairagency.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,11 +29,11 @@ import java.util.NoSuchElementException;
  */
 @Service
 @Slf4j
-public class OrderServiceImpl implements OrderService{
+public class OrderServiceImpl implements OrderService {
 
-    private OrderRepository orderRepository;
-    private AppUserService appUserService;
-    private AppUserRepository appUserRepository;
+    private final OrderRepository orderRepository;
+    private final AppUserService appUserService;
+    private final AppUserRepository appUserRepository;
 
     @Autowired
     public OrderServiceImpl(OrderRepository orderRepository, AppUserService appUserService, AppUserRepository appUserRepository) {
@@ -85,10 +87,10 @@ public class OrderServiceImpl implements OrderService{
                 Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNo-1, pageSize, sort);
 
-        if(keyWord!=null){
-            return orderRepository.findAll(keyWord,pageable);
+        if(keyWord.isBlank()){
+            return orderRepository.findAll(pageable);
         }
-        return orderRepository.findAll(pageable);
+        return orderRepository.findAll(keyWord,pageable);
     }
 
     @Override
@@ -170,6 +172,4 @@ public class OrderServiceImpl implements OrderService{
         orderRepository.save(order);
         return order;
     }
-
-
 }

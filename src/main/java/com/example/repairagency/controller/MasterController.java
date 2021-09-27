@@ -24,8 +24,8 @@ import java.util.NoSuchElementException;
 @Slf4j
 public class MasterController {
 
-    AppUserService appUserService;
-    OrderService orderService;
+    private final AppUserService appUserService;
+    private final OrderService orderService;
 
     @Autowired
     public MasterController(AppUserService appUserService, OrderService orderService) {

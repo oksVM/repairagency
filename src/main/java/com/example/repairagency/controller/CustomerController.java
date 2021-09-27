@@ -27,9 +27,9 @@ import java.util.List;
 @PreAuthorize("hasAuthority('customer')")
 @Slf4j
 public class CustomerController {
-    AppUserService appUserService;
-    OrderService orderService;
-    ReviewService reviewService;
+    private final AppUserService appUserService;
+    private final OrderService orderService;
+    private final ReviewService reviewService;
 
     @Autowired
     public CustomerController(AppUserService appUserService, OrderService orderService, ReviewService reviewService) {

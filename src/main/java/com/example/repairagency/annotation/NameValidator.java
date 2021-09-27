@@ -14,25 +14,26 @@ public class NameValidator implements ConstraintValidator<ValidName, String> {
     private final MessageSource messageSource;
 
     @Autowired
-    public NameValidator(MessageSource messageSource){
+    public NameValidator(MessageSource messageSource) {
         this.messageSource = messageSource;
     }
-        private Pattern pattern;
-        private Matcher matcher;
+
+    private Pattern pattern;
+    private Matcher matcher;
 
 
-        @Override
-        public void initialize(ValidName constraintAnnotation) {
-        }
+    @Override
+    public void initialize(ValidName constraintAnnotation) {
+    }
 
-        @Override
-        public boolean isValid(String name, ConstraintValidatorContext context) {
-            return (validateName(name));
-        }
+    @Override
+    public boolean isValid(String name, ConstraintValidatorContext context) {
+        return (validateName(name));
+    }
 
-        private boolean validateName(String name) {
-            pattern = Pattern.compile(messageSource.getMessage("name.regex", null, LocaleContextHolder.getLocale()));
-            matcher = pattern.matcher(name);
-            return matcher.matches();
-        }
+    private boolean validateName(String name) {
+        pattern = Pattern.compile(messageSource.getMessage("name.regex", null, LocaleContextHolder.getLocale()));
+        matcher = pattern.matcher(name);
+        return matcher.matches();
+    }
 }

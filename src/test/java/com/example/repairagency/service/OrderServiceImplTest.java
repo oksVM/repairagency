@@ -3,6 +3,7 @@ package com.example.repairagency.service;
 import com.example.repairagency.dto.PriceDto;
 import com.example.repairagency.model.*;
 import com.example.repairagency.repository.OrderRepository;
+import com.example.repairagency.service.impl.OrderServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

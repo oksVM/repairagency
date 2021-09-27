@@ -18,7 +18,7 @@ import javax.validation.Valid;
 @Slf4j
 public class AppUserRegistrationController {
 
-    private AppUserService appUserService;
+    private final AppUserService appUserService;
 
     public AppUserRegistrationController(AppUserService appUserService) {
         this.appUserService = appUserService;

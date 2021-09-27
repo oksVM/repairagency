@@ -15,10 +15,9 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AppUserRegistrationDto {
-@ValidName
-    //@Size(min = 3, max = 50, message = "first.name.should.be")
+
+    @ValidName
     private String firstName;
-    //@Size(min = 5, max = 50, message = "last.name.should.be")
     @ValidName
     private String lastName;
     @ValidEmail

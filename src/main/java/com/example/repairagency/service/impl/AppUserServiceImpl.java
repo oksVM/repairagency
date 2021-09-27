@@ -1,4 +1,4 @@
-package com.example.repairagency.service;
+package com.example.repairagency.service.impl;
 
 import com.example.repairagency.dto.AppUserRegistrationDto;
 import com.example.repairagency.dto.DepositDto;
@@ -7,6 +7,7 @@ import com.example.repairagency.model.*;
 import com.example.repairagency.repository.AppUserRepository;
 import com.example.repairagency.repository.OrderRepository;
 import com.example.repairagency.repository.ReviewRepository;
+import com.example.repairagency.service.AppUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -58,13 +59,13 @@ public class AppUserServiceImpl implements AppUserService {
 
     @Override
     public AppUser findById(Long id) throws UsernameNotFoundException{
-        return appUserRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException(""));
+        return appUserRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("user with id: " + id + "was not found"));
     }
 
     @Override
     @Transactional
     public AppUser updateDeposit(DepositDto money, Long id) {
-        AppUser updatedAppUser = appUserRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException(""));
+        AppUser updatedAppUser = appUserRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("user with id: " + id + "was not found"));
         updatedAppUser.setAmountOfMoney(updatedAppUser.getAmountOfMoney()+money.getAmountOfMoney());
         appUserRepository.save(updatedAppUser);
         return updatedAppUser;
@@ -105,7 +106,7 @@ public class AppUserServiceImpl implements AppUserService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-       return appUserRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User doesn't exist"));
+       return appUserRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("user with email: " + email + "was not found"));
     }
 }
 
