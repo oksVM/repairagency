@@ -14,65 +14,33 @@
 
 <div th:replace="common :: header"></div>
 
-<div class="container">
+<div class="container text-center">
     <h1 th:text="#{page.welcome.to.our.repair.agency}">Welcome</h1>
-    <h4 th:text="#{page.you.login}"> Welcome </h4> <h4 sec:authentication="principal.firstName"> User</h4>
-    <h4 th:text="#{page.your.role}"> Role </h4> <h4 sec:authentication="principal.role"> User</h4>
-    <li th:if="${ #authorization.expression('isAuthenticated()') and #strings.contains(#authentication.principal.role,'CUSTOMER')}">
-        <div id="header"></div>
-        <div class="container">
-            <ul class="list-inline d-flex justify-content-center">
-        <li class="list-group-item list-group-item-warning">
-                <a th:href="@{/customer/order/new}" th:text="#{page.create.new.order}">New Order</a></li>
+    <h2 th:text="#{page.your.role}"> Role </h2> <h2 sec:authentication="principal.role"> User</h2>
+    <div th:if="${ #authorization.expression('isAuthenticated()') and #strings.contains(#authentication.principal.role,'CUSTOMER')}">
         <br>
-        <li class="list-group-item list-group-item-warning">
-            <a  th:href="@{/customer/orders}" th:text="#{page.orders.list}">Orders list</a></li>
+        <h4> <a th:href="@{/customer/order/new}" th:text="#{page.create.new.order}"></a></h4>
         <br>
-        <li class="list-group-item list-group-item-warning">
-                <a  th:href="@{/customer/update_deposit}" th:text="#{page.deposit}">Deposit</a></li>
-            </ul>
-        </div>
-
+        <h4>  <a th:href="@{/customer/orders}" th:text="#{page.orders.list}"></a></h4>
+        <br>
+        <h4><a  th:href="@{/customer/update_deposit}" th:text="#{page.deposit}"></a></h4>
     </div>
-<div class="container">
-    <header></header>
-    <main class="row">
-        <article class="col-8">
-            <p></p>
-        </article>
-        <aside class="col-4"></aside>
-    </main>
-</div>
-
-
     <div th:if="${ #authorization.expression('isAuthenticated()') and #strings.contains(#authentication.principal.role,'ADMIN')}">
-        <div class="container">
-            <ul class="list-inline d-flex justify-content-center">
-                <li class="list-group-item list-group-item-warning">
-                    <a th:href="@{/admin/master_registration}" th:text="#{page.registration.for.new.master}">New master</a></li>
         <br>
-                <li class="list-group-item list-group-item-warning">
-                    <a  th:href="@{/admin/customers}" th:text="#{page.customers.accounts}">Customers</a></li>
+        <h4> <a th:href="@{/admin/master_registration}" th:text="#{page.registration.for.new.master}">New master</a></h4>
         <br>
-                <li class="list-group-item list-group-item-warning">
-                    <a  th:href="@{/admin/masters}" th:text="#{page.masters.accounts}">Masters</a></li>
+        <h4> <a  th:href="@{/admin/customers}" th:text="#{page.customers.accounts}">Customers</a></h4>
         <br>
-                <li class="list-group-item list-group-item-warning">
-                    <a  th:href="@{/admin/orders}" th:text="#{page.orders.list}">Orders list</a></li>
+        <h4> <a  th:href="@{/admin/masters}" th:text="#{page.masters.accounts}">Masters</a></h4>
         <br>
-        </ul>
-    </div>
+        <h4>  <a  th:href="@{/admin/orders}" th:text="#{page.orders.list}">Orders list</a></h4>
+        <br>
     </div>
     <div th:if="${ #authorization.expression('isAuthenticated()') and #strings.contains(#authentication.principal.role,'MASTER')}">
-        <div class="container">
-            <ul class="list-inline d-flex justify-content-center">
-                <li class="list-group-item list-group-item-warning">
-                    <a  th:href="@{/master/orders}" th:text="#{page.orders.list}">Orders list</a></li>
-            </ul>
-        </div>
         <br>
+        <h4> <a  th:href="@{/master/orders}" th:text="#{page.orders.list}">Orders list</a></h4>
     </div>
-
+</div>
 </div>
 </body>
 </html>
