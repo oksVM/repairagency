@@ -1,7 +1,7 @@
 package com.example.repairagency.service;
 
 import com.example.repairagency.dto.AppUserRegistrationDto;
-import com.example.repairagency.dto.DepositDTO;
+import com.example.repairagency.dto.DepositDto;
 import com.example.repairagency.exception.UserAlreadyExistAuthenticationException;
 import com.example.repairagency.model.*;
 import com.example.repairagency.repository.AppUserRepository;
@@ -63,7 +63,7 @@ public class AppUserServiceImpl implements AppUserService {
 
     @Override
     @Transactional
-    public AppUser updateDeposit(DepositDTO money, Long id) {
+    public AppUser updateDeposit(DepositDto money, Long id) {
         AppUser updatedAppUser = appUserRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException(""));
         updatedAppUser.setAmountOfMoney(updatedAppUser.getAmountOfMoney()+money.getAmountOfMoney());
         appUserRepository.save(updatedAppUser);

@@ -1,14 +1,12 @@
 package com.example.repairagency.controller;
 
 
-import com.example.repairagency.dto.DepositDTO;
+import com.example.repairagency.dto.DepositDto;
 import com.example.repairagency.exception.NotEnoughMoneyException;
 import com.example.repairagency.model.AppUser;
 import com.example.repairagency.model.Order;
-import com.example.repairagency.model.Review;
 import com.example.repairagency.service.AppUserService;
 import com.example.repairagency.service.OrderService;
-import com.example.repairagency.service.OrderServiceImpl;
 import com.example.repairagency.service.ReviewService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +16,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Controller
 @RequestMapping("/customer")
@@ -109,13 +104,13 @@ public class CustomerController {
 
     @GetMapping("/update_deposit")
     public String addMoneyToDeposit (Model model){
-        model.addAttribute("money", new DepositDTO());
+        model.addAttribute("money", new DepositDto());
         model.addAttribute("customer", appUserService.loadUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
         return "customer/deposit";
     }
 
     @PostMapping("/update_deposit")
-    public String addMoneyToDeposit(@ModelAttribute("money") @Valid DepositDTO depositDTO, BindingResult bindingResult){
+    public String addMoneyToDeposit(@ModelAttribute("money") @Valid DepositDto depositDTO, BindingResult bindingResult){
         if (bindingResult.hasErrors()) {
             log.error("{} is incorrect values for amount of money", depositDTO.getAmountOfMoney());
             return "redirect:/customer/update_deposit?error";

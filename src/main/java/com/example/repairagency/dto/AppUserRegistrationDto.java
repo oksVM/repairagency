@@ -2,6 +2,7 @@ package com.example.repairagency.dto;
 
 
 import com.example.repairagency.annotation.ValidEmail;
+import com.example.repairagency.annotation.ValidName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,10 +15,11 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AppUserRegistrationDto {
-
-    @Size(min = 3, max = 50, message = "first.name.should.be")
+@ValidName
+    //@Size(min = 3, max = 50, message = "first.name.should.be")
     private String firstName;
-    @Size(min = 5, max = 50, message = "last.name.should.be")
+    //@Size(min = 5, max = 50, message = "last.name.should.be")
+    @ValidName
     private String lastName;
     @ValidEmail
     private String email;

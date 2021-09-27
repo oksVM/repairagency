@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DepositDTO {
+public class DepositDto {
         @NotNull(message = "cannot be null.")
         @Min(value = 1)
         private Integer amountOfMoney;

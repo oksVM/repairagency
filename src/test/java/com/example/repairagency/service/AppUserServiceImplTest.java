@@ -1,12 +1,11 @@
 package com.example.repairagency.service;
 
 import com.example.repairagency.dto.AppUserRegistrationDto;
-import com.example.repairagency.dto.DepositDTO;
+import com.example.repairagency.dto.DepositDto;
 import com.example.repairagency.exception.UserAlreadyExistAuthenticationException;
 import com.example.repairagency.model.AppUser;
 import com.example.repairagency.model.Role;
 import com.example.repairagency.repository.AppUserRepository;
-import com.example.repairagency.security.PasswordConfig;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -84,7 +83,7 @@ class AppUserServiceImplTest {
 
     @Test
     void updateDepositSuccess(){
-        DepositDTO depositDTO = DepositDTO.builder()
+        DepositDto depositDTO = DepositDto.builder()
                 .amountOfMoney(100)
                 .build();
 

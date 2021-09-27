@@ -1,7 +1,7 @@
 package com.example.repairagency.controller;
 
 import com.example.repairagency.dto.AppUserRegistrationDto;
-import com.example.repairagency.dto.DepositDTO;
+import com.example.repairagency.dto.DepositDto;
 import com.example.repairagency.dto.PriceDto;
 import com.example.repairagency.exception.UserAlreadyExistAuthenticationException;
 import com.example.repairagency.model.AppUser;
@@ -10,13 +10,11 @@ import com.example.repairagency.model.Review;
 import com.example.repairagency.service.AppUserService;
 import com.example.repairagency.service.OrderService;
 import com.example.repairagency.service.ReviewService;
-import com.example.repairagency.service.ReviewServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,9 +22,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Controller
 @RequestMapping("/admin")
@@ -103,7 +99,7 @@ public class AdminController {
     @GetMapping("customers/deposit/{id}")
     public String depositForm(@PathVariable("id") Long id, Model model){
         try{
-            model.addAttribute("money", new DepositDTO());
+            model.addAttribute("money", new DepositDto());
             model.addAttribute("customer", appUserService.findById(id));
         } catch (UsernameNotFoundException u){
             //TODO
@@ -112,7 +108,7 @@ public class AdminController {
     }
 
     @PostMapping ("customers/deposit/{id}")
-    public String addMoneyToDeposit(@ModelAttribute("money") @Valid DepositDTO depositDTO, BindingResult bindingResult, @PathVariable("id") Long id){
+    public String addMoneyToDeposit(@ModelAttribute("money") @Valid DepositDto depositDTO, BindingResult bindingResult, @PathVariable("id") Long id){
         if (bindingResult.hasErrors()){
 
             log.error("{} is incorrect values for amount of money", depositDTO.getAmountOfMoney());

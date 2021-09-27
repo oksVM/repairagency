@@ -1,7 +1,6 @@
 package com.example.repairagency.service;
 
 import com.example.repairagency.dto.PriceDto;
-import com.example.repairagency.exception.NotEnoughMoneyException;
 import com.example.repairagency.model.*;
 import com.example.repairagency.repository.OrderRepository;
 import org.junit.jupiter.api.Test;
